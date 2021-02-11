@@ -14,9 +14,9 @@ SequenceableCollection >> shape [
       (self allSatisfy: [ :e | e isArray not ])
          ifFalse: [ ^ self error: 'Non-conformant array (jagged)' ].
       ^ dim
-	].
+	 ].
    nextDims := self collect: #shape.
-   (nextDims allSatisfy: [ :d | nextDims first = d ]) ifFalse: [ 
+   (nextDims allSatisfy: [ :d | nextDims first = d ]) ifFalse: [ "allEqual"
       ^ self error: 'Non-confornmant array (jagged)'
    ].
    ^ dim , (nextDims first)
