@@ -8,16 +8,13 @@ SequenceableCollection >> rank [
 { #category : #'*Pharo-NDArray' }
 SequenceableCollection >> shape [
    | dim nextDims |
-   dim := Array with: (self size).
+   dim := Array with: self size.
    dim first = 0 ifTrue: [ ^ dim ].
    self first isArray ifFalse: [ 
-      (self allSatisfy: [ :e | e isArray not ])
-         ifFalse: [ ^ self error: 'Non-conformant array (jagged)' ].
-      ^ dim
-   ].
+      (self anySatisfy: #isArray) ifTrue: [ ^ JaggedArray signal ].
+      ^ dim 
+      ].
    nextDims := self collect: #shape.
-   (nextDims allSatisfy: [ :d | nextDims first = d ]) ifFalse: [ "allEqual"
-      ^ self error: 'Non-confornmant array (jagged)'
-   ].
-   ^ dim , (nextDims first)
+   nextDims allEqual ifFalse: [ ^ JaggedArray signal ].
+   ^ dim , nextDims first
 ]
