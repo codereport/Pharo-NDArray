@@ -12,8 +12,7 @@ SequenceableCollection >> shape [
    dim first = 0 ifTrue: [ ^ dim ].
    self first isArray ifFalse: [ 
       (self anySatisfy: #isArray) ifTrue: [ ^ JaggedArray signal ].
-      ^ dim 
-      ].
+      ^ dim ]. 
    nextDims := self collect: #shape.
    nextDims allEqual ifFalse: [ ^ JaggedArray signal ].
    ^ dim , nextDims first
