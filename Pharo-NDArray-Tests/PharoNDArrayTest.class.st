@@ -22,3 +22,11 @@ PharoNDArrayTest >> testShape [
    self assert: #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5 6))) shape equals: #(2 2 3).
    self should: [ #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5))) shape ] raise: JaggedArray
 ]
+
+{ #category : #tests }
+PharoNDArrayTest >> testWithShapeWith [
+   self assert: (NDArray withShape: #(2 3) with: #(42)) asArray equals: #(#(42 42 42) #(42 42 42)).
+   self assert: (NDArray withShape: #(3) with: 10 iota) asArray equals: #(1 2 3).
+   self assert: (NDArray withShape: #(2 3) with: 6 iota) asArray equals: #(#(1 2 3) #(4 5 6)).
+   self assert: (NDArray withShape: #(2 2 3) with: 6 iota) asArray equals: #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5 6)))
+]

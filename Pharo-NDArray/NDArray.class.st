@@ -24,6 +24,14 @@ NDArray class >> withShape: aCollection with: anArray [
    ^ super new withShape: aCollection with: anArray
 ]
 
+{ #category : #converting }
+NDArray >> asArray [
+   | arr |
+   arr := data.
+   shape allButFirst reversed do: [ :n | arr := (arr groupsOf: n) asArray ].
+   ^ arr
+]
+
 { #category : #'instance creation' }
 NDArray >> printOn: aStream [
    super printOn: aStream.
@@ -33,10 +41,15 @@ NDArray >> printOn: aStream [
    shape printOn: aStream
 ]
 
+{ #category : #accessing }
+NDArray >> rank [
+	^ shape size
+]
+
 { #category : #'instance creation' }
 NDArray >> withAll: aCollection [
-   data := aCollection.
-   shape := data shape 
+   data := aCollection flattened.
+   shape := aCollection shape
 ]
 
 { #category : #initialization }
