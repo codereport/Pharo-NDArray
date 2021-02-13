@@ -13,6 +13,13 @@ PharoNDArrayTest >> testRank [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testRavel [
+   self assert: (NDArray withAll: #(1 2 3)) ravel asArray equals: #(1 2 3).
+   self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) ravel asArray equals: 6 iota asArray.
+   self assert: (NDArray withAll: #(#(#(1 2 3) #(4 5 6)) #(#(7 8 9) #(10 11 12)))) ravel asArray equals: 12 iota    asArray
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testShape [
    self assert: #() shape equals: #(0).
    self assert: #(1 2 3) shape equals: #(3).

@@ -46,6 +46,11 @@ NDArray >> rank [
 	^ shape size
 ]
 
+{ #category : #'as yet unclassified' }
+NDArray >> ravel [
+	shape := Array with: (shape product)
+]
+
 { #category : #'instance creation' }
 NDArray >> withAll: aCollection [
    data := aCollection flattened.
