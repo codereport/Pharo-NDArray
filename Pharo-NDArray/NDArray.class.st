@@ -32,6 +32,12 @@ NDArray >> asArray [
    ^ arr
 ]
 
+{ #category : #converting }
+NDArray >> asInteger [
+   (self rank ~~ 0) ifTrue: [ ^ self error: 'NDArray asInteger must have empty shape' ].
+   ^ data first
+]
+
 { #category : #'instance creation' }
 NDArray >> printOn: aStream [
    super printOn: aStream.
@@ -51,10 +57,18 @@ NDArray >> ravel [
 	shape := Array with: (shape product)
 ]
 
+{ #category : #enumerating }
+NDArray >> reduce: aBlock [
+   data := data groupsOf: shape last 
+        :> collect: [ :e | e reduce: aBlock ] 
+        :> asArray.
+   shape := shape allButLast
+]
+
 { #category : #'instance creation' }
 NDArray >> withAll: aCollection [
    data := aCollection flattened.
-   shape := aCollection shape
+   shape := aCollection shape 
 ]
 
 { #category : #initialization }
