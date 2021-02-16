@@ -28,6 +28,13 @@ PharoNDArrayTest >> testReduce [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testReshape [
+   self assert: ((NDArray withShape: #(2 3) with: #(42)) reshape: #(3)) asArray equals: #(42 42 42).
+   self assert: ((NDArray withShape: #(2) with: #(42)) reshape: #(3)) asArray equals: #(42 42 42).
+   self assert: ((NDArray withShape: #(2 2) with: #(42)) reshape: #(4)) asArray equals: #(42 42 42 42).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testShape [
    self assert: #() shape equals: #(0).
    self assert: #(1 2 3) shape equals: #(3).

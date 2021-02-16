@@ -65,6 +65,16 @@ NDArray >> reduce: aBlock [
    shape := shape allButLast
 ]
 
+{ #category : #'as yet unclassified' }
+NDArray >> reshape: aCollection [
+   | m n |
+   n := aCollection product.
+   m := shape product.
+   shape := aCollection.
+   n < m ifTrue: [ data := data first: n ].
+   n > m ifTrue: [ data := data cycle: n ].
+]
+
 { #category : #'instance creation' }
 NDArray >> withAll: aCollection [
    data := aCollection flattened.
