@@ -67,12 +67,10 @@ NDArray >> reduce: aBlock [
 
 { #category : #'as yet unclassified' }
 NDArray >> reshape: aCollection [
-   | m n |
+   | n |
    n := aCollection product.
-   m := shape product.
+   n ~~ (shape product) ifTrue: [ data := data cycle: n ].
    shape := aCollection.
-   n < m ifTrue: [ data := data first: n ].
-   n > m ifTrue: [ data := data cycle: n ].
 ]
 
 { #category : #'instance creation' }
