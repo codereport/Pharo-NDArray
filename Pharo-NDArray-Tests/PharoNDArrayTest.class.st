@@ -5,6 +5,40 @@ Class {
 }
 
 { #category : #tests }
+PharoNDArrayTest >> testEquals [
+   self assert: ((NDArray withAll: #(1 2 3)) = 1) asArray equals: #(true false false).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) = 2) asArray equals: #(#(false true false) #(false true false)).
+   self
+      assert: ((NDArray withAll: #(#(1 2) #(4 5))) = 5) asArray
+      equals: #(#(false false) #(false true))
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testFilter [
+   | arr |
+   self assert: (NDArray withAll: #(1 3)) equals: (NDArray withAll: #(1 3)).
+   self assert: ((NDArray withAll: #(1 2 3)) filter: #(true false true)) equals: (NDArray withAll: #(1 3)).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) = 2) asArray equals: #(#(false true false) #(false true false)).
+   self assert: ((NDArray withAll: #(#(1 2) #(4 5))) = 5) asArray equals: #(#(false false) #(false true)).
+   arr := #(1 2 3) asNDArray.
+   self assert: (arr filter: arr % 2) equals: (NDArray withAll: #(1 3))
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testModulus [
+   self assert: ((NDArray withAll: #(1 2 3)) % 2) asArray equals: #(1 0 1).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) % 4) asArray equals: #(#(1 2 3) #(0 1 2)).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) % 3) asArray equals: #(#(1 2 0) #(1 2 0))
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testPlus [
+   self assert: ((NDArray withAll: #(1 2 3)) + 1) asArray equals: #(2 3 4).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) + 10) ravel asArray equals: (6 iota collect: 10 @@ #+).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) + 10) asArray equals: #(#(11 12 13) #(14 15 16))
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testRank [
    self assert: #() rank equals: 1. 
    self assert: #(1 2 3) rank equals: 1.

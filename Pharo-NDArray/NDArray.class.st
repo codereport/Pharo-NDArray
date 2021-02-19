@@ -9,11 +9,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-NDArray class >> new [
-   ^ self shouldNotImplement 
-]
-
-{ #category : #'instance creation' }
 NDArray class >> withAll: anArray [
    "Create NDArray from anArray"
    ^ super new withAll: anArray 
@@ -22,6 +17,22 @@ NDArray class >> withAll: anArray [
 { #category : #initialization }
 NDArray class >> withShape: aCollection with: anArray [
    ^ super new withShape: aCollection with: anArray
+]
+
+{ #category : #'as yet unclassified' }
+NDArray >> % anObject [
+   ^ self class new withShape: shape with: (data collect: #% @@ anObject)
+]
+
+{ #category : #arithmetic }
+NDArray >> + anObject [
+   ^ self class new withShape: shape with: (data collect: anObject @@ #+)
+]
+
+{ #category : #arithmetic }
+NDArray >> = anObject [
+   anObject class = NDArray ifTrue: [ ^ shape = anObject shape and: data = anObject data ].
+   ^ self class new withShape: shape with: (data collect: anObject @@ #=)
 ]
 
 { #category : #converting }
@@ -36,6 +47,21 @@ NDArray >> asArray [
 NDArray >> asInteger [
    (self rank ~~ 0) ifTrue: [ ^ self error: 'NDArray asInteger must have empty shape' ].
    ^ data first
+]
+
+{ #category : #accessing }
+NDArray >> data [
+	^ data
+]
+
+{ #category : #accessing }
+NDArray >> filter: aCollection [ 
+   | newData |
+   self rank > 1 ifTrue: [ ^ self error: 'Rank Error' ]. "TODO: Create Rank Exception"
+   newData := data zip: aCollection asArray
+           :> select: [ :a :b | b asBoolean ]
+           :> collect: #first.
+   ^ self class new withShape: newData shape with: newData
 ]
 
 { #category : #'instance creation' }
@@ -54,23 +80,28 @@ NDArray >> rank [
 
 { #category : #'as yet unclassified' }
 NDArray >> ravel [
-	shape := Array with: (shape product)
+   ^ self class new withAll: data
 ]
 
 { #category : #enumerating }
 NDArray >> reduce: aBlock [
-   data := data groupsOf: shape last 
-        :> collect: [ :e | e reduce: aBlock ] 
-        :> asArray.
-   shape := shape allButLast
+   | newData |
+   newData := data groupsOf: shape last 
+           :> collect: [ :e | e reduce: aBlock ] as: Array.
+   ^ self class new withShape: shape allButLast with: newData
 ]
 
 { #category : #'as yet unclassified' }
 NDArray >> reshape: aCollection [
-   | n |
+   | n newData |
    n := aCollection product.
-   n ~~ (shape product) ifTrue: [ data := data cycle: n ].
-   shape := aCollection.
+   newData := n ~~ shape product ifTrue: [ data cycle: n ] ifFalse: [ data ].
+   ^ self class new withShape: aCollection with: newData
+]
+
+{ #category : #accessing }
+NDArray >> shape [
+	^ shape
 ]
 
 { #category : #'instance creation' }

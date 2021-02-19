@@ -1,6 +1,11 @@
 Extension { #name : #SequenceableCollection }
 
 { #category : #'*Pharo-NDArray' }
+SequenceableCollection >> asNDArray [
+	^ NDArray withAll: self
+]
+
+{ #category : #'*Pharo-NDArray' }
 SequenceableCollection >> rank [
    ^ self shape size.
 ]
