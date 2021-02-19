@@ -51,7 +51,7 @@ NDArray >> asInteger [
 
 { #category : #accessing }
 NDArray >> data [
-	^ data
+   ^ data
 ]
 
 { #category : #accessing }
@@ -101,7 +101,7 @@ NDArray >> reshape: aCollection [
 
 { #category : #accessing }
 NDArray >> shape [
-	^ shape
+   ^ shape
 ]
 
 { #category : #'instance creation' }
