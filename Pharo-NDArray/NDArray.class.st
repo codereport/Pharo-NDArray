@@ -19,7 +19,7 @@ NDArray class >> withShape: aCollection with: anArray [
    ^ super new withShape: aCollection with: anArray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #arithmetic }
 NDArray >> % anObject [
    ^ self class new withShape: shape with: (data collect: #% @@ anObject)
 ]
@@ -29,7 +29,7 @@ NDArray >> + anObject [
    ^ self class new withShape: shape with: (data collect: anObject @@ #+)
 ]
 
-{ #category : #arithmetic }
+{ #category : #comparing }
 NDArray >> = anObject [
    anObject class = NDArray ifTrue: [ ^ shape = anObject shape and: data = anObject data ].
    ^ self class new withShape: shape with: (data collect: anObject @@ #=)
@@ -78,7 +78,7 @@ NDArray >> rank [
 	^ shape size
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #structuring }
 NDArray >> ravel [
    ^ self class new withAll: data
 ]
@@ -91,7 +91,7 @@ NDArray >> reduce: aBlock [
    ^ self class new withShape: shape allButLast with: newData
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #structuring }
 NDArray >> reshape: aCollection [
    | n newData |
    n := aCollection product.
