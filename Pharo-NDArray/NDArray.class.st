@@ -1,6 +1,8 @@
 Class {
 	#name : #NDArray,
 	#superclass : #Object,
+	#traits : 'ComposeSyntax',
+	#classTraits : 'ComposeSyntax classTrait',
 	#instVars : [
 		'data',
 		'shape'

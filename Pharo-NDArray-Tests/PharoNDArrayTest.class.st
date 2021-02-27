@@ -1,6 +1,8 @@
 Class {
 	#name : #PharoNDArrayTest,
 	#superclass : #TestCase,
+	#traits : 'ComposeSyntax',
+	#classTraits : 'ComposeSyntax classTrait',
 	#category : #'Pharo-NDArray-Tests'
 }
 
