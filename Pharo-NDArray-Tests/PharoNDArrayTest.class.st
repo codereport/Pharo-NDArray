@@ -8,8 +8,8 @@ Class {
 
 { #category : #tests }
 PharoNDArrayTest >> assert: actual equals: expected [
-	expected isArray ifTrue: [ ^ super assert: actual asArray equals: expected ].
-	^ super assert: actual asArray equals: expected
+   expected isArray ifTrue: [ ^ super assert: actual asArray equals: expected ].
+   ^ super assert: actual equals: expected
 ]
 
 { #category : #tests }
@@ -24,10 +24,10 @@ PharoNDArrayTest >> testEquals [
 { #category : #tests }
 PharoNDArrayTest >> testFilter [
    | arr |
-   self assert: (NDArray withAll: #(1 3)) equals: (NDArray withAll: #(1 3)).
-   self assert: ((NDArray withAll: #(1 2 3)) filter: #(true false true)) equals: (NDArray withAll: #(1 3)).
+   self assert: (NDArray withAll: #(1 3)) equals: #(1 3).
+   self assert: ((NDArray withAll: #(1 2 3)) filter: #(true false true)) equals: #(1 3).
    arr := #(1 2 3) asNDArray.
-   self assert: (arr filter: arr % 2) equals: (NDArray withAll: #(1 3))
+   self assert: (arr filter: arr % 2) equals: #(1 3)
 ]
 
 { #category : #tests }
