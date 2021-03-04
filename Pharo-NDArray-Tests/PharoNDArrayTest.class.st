@@ -94,6 +94,13 @@ PharoNDArrayTest >> testReverse [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testRotate [
+   self assert: ((NDArray withAll: #(1 2 3)) rotate: 1) equals: #(2 3 1).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) rotate: 2) equals: #(#(3 1 2) #(3 1 2)).
+   self assert: (12 iota asNDArray reshape: #(2 3) :> rotate: 1) equals: #((2 3 1) (5 6 4))
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testShape [
    self assert: #() shape equals: #(0).
    self assert: #(1 2 3) shape equals: #(3).

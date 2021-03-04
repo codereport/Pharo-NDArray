@@ -112,11 +112,19 @@ NDArray >> reshape: aCollection [
    ^ self class new withShape: aCollection with: newData
 ]
 
-{ #category : #enumerating }
+{ #category : #structuring }
 NDArray >> reverse [
    | newData |
    newData := data groupsOf: shape last 
            :> collect: [ :e | e reversed ] as: Array.
+   ^ self class new withShape: shape with: newData
+]
+
+{ #category : #structuring }
+NDArray >> rotate: anInteger [
+   | newData |
+   newData := data groupsOf: shape last 
+           :> collect: [ :e | e rotate: anInteger ] as: Array.
    ^ self class new withShape: shape with: newData
 ]
 
