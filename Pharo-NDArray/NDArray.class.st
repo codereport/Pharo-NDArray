@@ -74,7 +74,7 @@ NDArray >> filter: aCollection [
 
 { #category : #accessing }
 NDArray >> first [
-	^ data first
+   ^ data first
 ]
 
 { #category : #'instance creation' }
@@ -88,7 +88,7 @@ NDArray >> printOn: aStream [
 
 { #category : #accessing }
 NDArray >> rank [
-	^ shape size
+   ^ shape size
 ]
 
 { #category : #structuring }
