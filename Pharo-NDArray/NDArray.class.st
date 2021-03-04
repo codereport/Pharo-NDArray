@@ -21,17 +21,17 @@ NDArray class >> withShape: aCollection with: anArray [
    ^ super new withShape: aCollection with: anArray
 ]
 
-{ #category : #arithmetic }
+{ #category : #'verbs (scalar)' }
 NDArray >> % anObject [
    ^ self class new withShape: shape with: (data collect: #% @@ anObject)
 ]
 
-{ #category : #arithmetic }
+{ #category : #'verbs (scalar)' }
 NDArray >> + anObject [
    ^ self class new withShape: shape with: (data collect: anObject @@ #+)
 ]
 
-{ #category : #comparing }
+{ #category : #'verbs (scalar)' }
 NDArray >> = anObject [
    anObject class = NDArray ifTrue: [ ^ shape = anObject shape and: data = anObject data ].
    ^ self class new withShape: shape with: (data collect: anObject @@ #=)
@@ -62,7 +62,7 @@ NDArray >> data [
    ^ data
 ]
 
-{ #category : #accessing }
+{ #category : #'verbs (dyadic)' }
 NDArray >> filter: aCollection [ 
    | newData |
    self rank > 1 ifTrue: [ ^ self error: 'Rank Error' ]. "TODO: Create Rank Exception"
@@ -72,9 +72,14 @@ NDArray >> filter: aCollection [
    ^ self class new withShape: newData shape with: newData
 ]
 
-{ #category : #accessing }
+{ #category : #'verbs (monadic)' }
 NDArray >> first [
    ^ data first
+]
+
+{ #category : #trains }
+NDArray >> fork: unaryLeftBlock with: binaryBlock with: unaryRightBlock [
+   ^ binaryBlock value: (unaryLeftBlock value: self) value: (unaryRightBlock value: self)
 ]
 
 { #category : #'instance creation' }
@@ -91,12 +96,12 @@ NDArray >> rank [
    ^ shape size
 ]
 
-{ #category : #structuring }
+{ #category : #'verbs (monadic)' }
 NDArray >> ravel [
    ^ self class new withAll: data
 ]
 
-{ #category : #enumerating }
+{ #category : #adverbs }
 NDArray >> reduce: aBlock [
    | newData |
    newData := data groupsOf: shape last 
@@ -104,7 +109,7 @@ NDArray >> reduce: aBlock [
    ^ self class new withShape: shape allButLast with: newData
 ]
 
-{ #category : #structuring }
+{ #category : #'verbs (dyadic)' }
 NDArray >> reshape: aCollection [
    | n newData |
    n := aCollection product.
@@ -112,7 +117,7 @@ NDArray >> reshape: aCollection [
    ^ self class new withShape: aCollection with: newData
 ]
 
-{ #category : #structuring }
+{ #category : #'verbs (monadic)' }
 NDArray >> reverse [
    | newData |
    newData := data groupsOf: shape last 
@@ -120,7 +125,7 @@ NDArray >> reverse [
    ^ self class new withShape: shape with: newData
 ]
 
-{ #category : #structuring }
+{ #category : #'verbs (dyadic)' }
 NDArray >> rotate: anInteger [
    | newData |
    newData := data groupsOf: shape last 

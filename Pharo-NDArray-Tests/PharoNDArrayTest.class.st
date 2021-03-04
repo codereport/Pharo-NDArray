@@ -40,6 +40,12 @@ PharoNDArrayTest >> testFirst [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFork [
+   self assert: (#(1 2 3) asNDArray fork: #yourself with: #= with: #first) equals: #(true false false)
+   "self assert: (#(1 2 3) asNDArray fork: #first with: #= with: #yourself) equals: #(true false false) fails atm"
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testModulus [
    self assert: (NDArray withAll: #(1 2 3)) % 2  equals: #(1 0 1).
    self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) % 4  equals: #(#(1 2 3) #(0 1 2)).
