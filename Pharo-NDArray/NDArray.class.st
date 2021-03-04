@@ -46,6 +46,12 @@ NDArray >> asArray [
 ]
 
 { #category : #converting }
+NDArray >> asBoolean [
+   self rank ~~ 0 ifTrue: [ ^ self error: 'Rank Error' ]. "TODO: Create Rank Exception"
+   ^ data first
+]
+
+{ #category : #converting }
 NDArray >> asInteger [
    (self rank ~~ 0) ifTrue: [ ^ self error: 'NDArray asInteger must have empty shape' ].
    ^ data first
@@ -64,6 +70,11 @@ NDArray >> filter: aCollection [
            :> select: [ :a :b | b asBoolean ]
            :> collect: #first.
    ^ self class new withShape: newData shape with: newData
+]
+
+{ #category : #accessing }
+NDArray >> first [
+	^ data first
 ]
 
 { #category : #'instance creation' }
@@ -99,6 +110,14 @@ NDArray >> reshape: aCollection [
    n := aCollection product.
    newData := n ~~ shape product ifTrue: [ data cycle: n ] ifFalse: [ data ].
    ^ self class new withShape: aCollection with: newData
+]
+
+{ #category : #enumerating }
+NDArray >> reverse [
+   | newData |
+   newData := data groupsOf: shape last 
+           :> collect: [ :e | e reversed ] as: Array.
+   ^ self class new withShape: shape with: newData
 ]
 
 { #category : #accessing }

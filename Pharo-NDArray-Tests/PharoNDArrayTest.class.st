@@ -9,6 +9,8 @@ Class {
 { #category : #tests }
 PharoNDArrayTest >> assert: actual equals: expected [
    expected isArray ifTrue: [ ^ super assert: actual asArray equals: expected ].
+   expected isBoolean ifTrue: [ ^ super assert: actual asBoolean equals: expected ].
+   expected isInteger ifTrue: [ ^ super assert: actual asInteger equals: expected ].
    ^ super assert: actual equals: expected
 ]
 
@@ -28,6 +30,13 @@ PharoNDArrayTest >> testFilter [
    self assert: ((NDArray withAll: #(1 2 3)) filter: #(true false true)) equals: #(1 3).
    arr := #(1 2 3) asNDArray.
    self assert: (arr filter: arr % 2) equals: #(1 3)
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testFirst [
+   self assert: (NDArray withAll: #(1 2 3)) first equals: 1.
+   self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) first equals: 1.
+   self assert: (NDArray withAll: #(#(1 2) #(4 5))) first equals: 1
 ]
 
 { #category : #tests }
@@ -62,16 +71,26 @@ PharoNDArrayTest >> testRavel [
 { #category : #tests }
 PharoNDArrayTest >> testReduce [
    "self assert: ((NDArray withAll: #()) reduce: #+) asArray equals: 0."
-   self assert: ((NDArray withAll: #(1 2 3)) reduce: #+) asInteger equals: 6.
-   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) reduce: #+) asArray equals: #(6 15).
-   self assert: ((NDArray withShape: #(2 2 3) with: 12 iota) reduce: #+) asArray equals: #(#(6 15) #(24 33))
+   self assert: ((NDArray withAll: #(1 2 3)) reduce: #+) equals: 6.
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) reduce: #+) equals: #(6 15).
+   self assert: ((NDArray withShape: #(2 2 3) with: 12 iota) reduce: #+) equals: #(#(6 15) #(24 33)).
+   self assert: (5 iota asNDArray = 1 reduce: #and:) equals: false.
+   self assert: (#(1) asNDArray reshape: #(5) :> = 1 :> reduce: #and:) equals: true.
+   self assert: (1 asNDArray reshape: #(5) :> = 1 :> reduce: #and:) equals: true
 ]
 
 { #category : #tests }
 PharoNDArrayTest >> testReshape [
-   self assert: ((NDArray withShape: #(2 3) with: #(42)) reshape: #(3)) asArray equals: #(42 42 42).
-   self assert: ((NDArray withShape: #(2) with: #(42)) reshape: #(3)) asArray equals: #(42 42 42).
-   self assert: ((NDArray withShape: #(2 2) with: #(42)) reshape: #(4)) asArray equals: #(42 42 42 42).
+   self assert: ((NDArray withShape: #(2 3) with: #(42)) reshape: #(3)) equals: #(42 42 42).
+   self assert: ((NDArray withShape: #(2) with: #(42)) reshape: #(3)) equals: #(42 42 42).
+   self assert: ((NDArray withShape: #(2 2) with: #(42)) reshape: #(4)) equals: #(42 42 42 42)
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testReverse [
+   self assert: (NDArray withAll: #(1 2 3)) reverse equals: #(3 2 1).
+   self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) reverse equals: #(#(3 2 1) #(3 2 1)).
+   self assert: (12 iota asNDArray reshape: #(2 3) :> reverse) equals: #((3 2 1) (6 5 4))
 ]
 
 { #category : #tests }
@@ -87,8 +106,8 @@ PharoNDArrayTest >> testShape [
 
 { #category : #tests }
 PharoNDArrayTest >> testWithShapeWith [
-   self assert: (NDArray withShape: #(2 3) with: #(42)) asArray equals: #(#(42 42 42) #(42 42 42)).
-   self assert: (NDArray withShape: #(3) with: 10 iota) asArray equals: #(1 2 3).
-   self assert: (NDArray withShape: #(2 3) with: 6 iota) asArray equals: #(#(1 2 3) #(4 5 6)).
-   self assert: (NDArray withShape: #(2 2 3) with: 6 iota) asArray equals: #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5 6)))
+   self assert: (NDArray withShape: #(2 3) with: #(42)) equals: #(#(42 42 42) #(42 42 42)).
+   self assert: (NDArray withShape: #(3) with: 10 iota) equals: #(1 2 3).
+   self assert: (NDArray withShape: #(2 3) with: 6 iota) equals: #(#(1 2 3) #(4 5 6)).
+   self assert: (NDArray withShape: #(2 2 3) with: 6 iota) equals: #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5 6)))
 ]
