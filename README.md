@@ -17,7 +17,7 @@
 
 Package for multidimensional arrays and common array programming language algorithms.
 
-### Example:
+## Example
 ```smalltalk
 NDArray withAll: 9 iota "Step 1"
    :> reshape: #(3 3)   "Step 2"
@@ -46,6 +46,30 @@ Each step of the above code creates the following:
 "Step 5"
 36 45 54 "Array (no longer NDArray)"
 ```
-### Algorithms:
+## API
 
-`TODO`
+### Adverbs
+
+* `reduce:`
+
+### Verbs (Scalar)
+
+* `%`
+* `+`
+* `=`
+
+### Verbs (Monadic)
+
+* `first`
+* `ravel`
+* `reverse`
+
+### Verbs (Dyadic)
+
+* `filter:`
+* `reshape:`
+* `rotate:`
+
+### Trains
+
+* `fork:with:with:`
