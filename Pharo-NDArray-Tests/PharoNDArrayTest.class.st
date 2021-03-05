@@ -41,8 +41,9 @@ PharoNDArrayTest >> testFirst [
 
 { #category : #tests }
 PharoNDArrayTest >> testFork [
-   self assert: (#(1 2 3) asNDArray fork: #yourself with: #= with: #first) equals: #(true false false)
-   "self assert: (#(1 2 3) asNDArray fork: #first with: #= with: #yourself) equals: #(true false false) fails atm"
+   self assert: (#(1 2 3) asNDArray fork: #yourself with: #= with: #first) equals: #(true false false).
+   self assert: (#(1 2 3) asNDArray fork: #first with: [ :a :b | b = a ] with: #yourself) equals: #(true false false)
+   "                                                   ^^^^^^^^^^^^^^^^^ TODO: need to think about this"
 ]
 
 { #category : #tests }

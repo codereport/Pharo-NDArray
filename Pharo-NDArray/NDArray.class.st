@@ -37,6 +37,12 @@ NDArray >> = anObject [
    ^ self class new withShape: shape with: (data collect: anObject @@ #=)
 ]
 
+{ #category : #arithmetic }
+NDArray >> adaptToNumber: anInteger andSend: aSymbol [
+   aSymbol = #+ ifTrue: [ ^ self + anInteger ].
+   aSymbol = #= ifTrue: [ ^ self + anInteger ].
+]
+
 { #category : #converting }
 NDArray >> asArray [
    | arr |
@@ -78,8 +84,10 @@ NDArray >> first [
 ]
 
 { #category : #trains }
-NDArray >> fork: unaryLeftBlock with: binaryBlock with: unaryRightBlock [
-   ^ binaryBlock value: (unaryLeftBlock value: self) value: (unaryRightBlock value: self)
+NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
+   rightBlock numArgs = leftBlock numArgs ifFalse: [ ^ self error: 'Arity Error' ].
+   ^ binaryBlock value: (leftBlock value: self) value: (rightBlock value: self)
+
 ]
 
 { #category : #'instance creation' }
