@@ -146,6 +146,17 @@ NDArray >> shape [
    ^ shape
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> unique [
+   | atoms newData newShape |
+   self rank = 0 ifTrue: [ ^ self ].
+   self rank = 1 ifTrue: [ ^ self class new withAll: data copyWithoutDuplicates ].
+   atoms := shape allButFirst product.
+   newData := (data groupsOf: atoms) copyWithoutDuplicates as: Array.
+   newShape := (Array with: newData size) , shape allButFirst.
+   ^ self class new withShape: newShape with: newData
+]
+
 { #category : #'instance creation' }
 NDArray >> withAll: aCollection [
    data := aCollection flattened.

@@ -119,6 +119,14 @@ PharoNDArrayTest >> testShape [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testUnique [
+   "self assert: 3 asNDArray unique equals: 3."
+   self assert: (3 iota asNDArray reshape: #(9)) unique equals: #(1 2 3).
+   self assert: (3 iota asNDArray reshape: #(3 3)) unique equals: (3 iota asNDArray reshape: #(1 3)).
+   self assert: (9 iota asNDArray reshape: #(3 3 3)) unique equals: (9 iota asNDArray reshape: #(1 3 3))
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testWithShapeWith [
    self assert: (NDArray withShape: #(2 3) with: #(42)) equals: #(#(42 42 42) #(42 42 42)).
    self assert: (NDArray withShape: #(3) with: 10 iota) equals: #(1 2 3).
