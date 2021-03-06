@@ -63,6 +63,7 @@ Each step of the above code creates the following:
 * `first`
 * `ravel`
 * `reverse`
+* `unique`
 
 ### Verbs (Dyadic)
 
