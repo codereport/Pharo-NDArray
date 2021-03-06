@@ -68,6 +68,7 @@ Each step of the above code creates the following:
 ### Verbs (Dyadic)
 
 * `filter:`
+* `matches:`
 * `reshape:`
 * `rotate:`
 
