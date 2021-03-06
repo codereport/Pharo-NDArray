@@ -63,6 +63,11 @@ NDArray >> asInteger [
    ^ data first
 ]
 
+{ #category : #converting }
+NDArray >> asNDArray [
+   ^ self
+]
+
 { #category : #accessing }
 NDArray >> data [
    ^ data
@@ -88,6 +93,12 @@ NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
    rightBlock numArgs = leftBlock numArgs ifFalse: [ ^ self error: 'Arity Error' ].
    ^ binaryBlock value: (leftBlock value: self) value: (rightBlock value: self)
 
+]
+
+{ #category : #'verbs (dyadic)' }
+NDArray >> matches: anObject [
+   self shape = anObject asNDArray shape ifFalse: [ ^ false ].
+   ^ self data = anObject asNDArray data
 ]
 
 { #category : #'instance creation' }

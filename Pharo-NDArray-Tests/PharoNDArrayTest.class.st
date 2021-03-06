@@ -47,6 +47,16 @@ PharoNDArrayTest >> testFork [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testMatches [
+   self assert: (1 asNDArray matches: 1).
+   self deny: ((NDArray withAll: #(1 2 3)) matches: 1).
+   self assert: ((NDArray withAll: #(1 2 3)) matches: #(1 2 3)).
+   self assert: ((NDArray withAll: #(1 2 3)) matches: 3 iota asNDArray).
+   self deny: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) matches: #(1 2 3) asNDArray).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) matches: (3 iota asNDArray reshape: #(2 3)))
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testModulus [
    self assert: (NDArray withAll: #(1 2 3)) % 2  equals: #(1 0 1).
    self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) % 4  equals: #(#(1 2 3) #(0 1 2)).
