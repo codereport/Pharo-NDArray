@@ -16,11 +16,12 @@ PharoNDArrayTest >> assert: actual equals: expected [
 
 { #category : #tests }
 PharoNDArrayTest >> testEquals [
-   self assert: (NDArray withAll: #(1 2 3)) = 1  equals: #(true false false).
+   self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(true false false).
    self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) = 2 equals: #(#(false true false) #(false true false)).
-   self
-      assert: (NDArray withAll: #(#(1 2) #(4 5))) = 5
-      equals: #(#(false false) #(false true))
+   self assert: (NDArray withAll: #(#(1 2) #(4 5))) = 5 equals: #(#(false false) #(false true)).
+   self assert: 'hello' asNDArray = $l equals: #(false false true true false).
+   self assert: ('hello' asNDArray = $l) ints equals: #(0 0 1 1 0).
+   self assert: ('()(())' asNDArray = $() ints equals: #(1 0 1 1 0 0)
 ]
 
 { #category : #tests }
@@ -141,5 +142,7 @@ PharoNDArrayTest >> testWithShapeWith [
    self assert: (NDArray withShape: #(2 3) with: #(42)) equals: #(#(42 42 42) #(42 42 42)).
    self assert: (NDArray withShape: #(3) with: 10 iota) equals: #(1 2 3).
    self assert: (NDArray withShape: #(2 3) with: 6 iota) equals: #(#(1 2 3) #(4 5 6)).
-   self assert: (NDArray withShape: #(2 2 3) with: 6 iota) equals: #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5 6)))
+   self assert: (NDArray withShape: #(2 2 3) with: 6 iota) equals: #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5 6))).
+   self assert: (NDArray withShape: #(6) with: 'cat') equals: #($c $a $t $c $a $t).
+   self assert: (NDArray withShape: #(2 2) with: 'cat') equals: #(($c $a) ($t $c))
 ]

@@ -2,7 +2,7 @@ Extension { #name : #SequenceableCollection }
 
 { #category : #'*Pharo-NDArray' }
 SequenceableCollection >> asNDArray [
-	^ NDArray withAll: self
+	^ NDArray withAll: self asArray 
 ]
 
 { #category : #'*Pharo-NDArray' }

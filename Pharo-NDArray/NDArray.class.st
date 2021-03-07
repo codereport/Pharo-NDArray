@@ -95,6 +95,18 @@ NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
 
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> ints [
+   | newData |
+   newData := data collect: [ :e |  e isBoolean
+                    ifTrue: [ 
+                       e
+                          ifFalse: [ 0 ]
+                          ifTrue: [ 1 ] ]
+                    ifFalse: self ].
+   ^ self class new withShape: shape with: newData
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> matches: anObject [
    self shape = anObject asNDArray shape ifFalse: [ ^ false ].
@@ -175,7 +187,7 @@ NDArray >> withAll: aCollection [
 ]
 
 { #category : #initialization }
-NDArray >> withShape: aCollection with: anArray [
+NDArray >> withShape: aCollection with: anObject [
    shape := aCollection.
-   data := anArray flattened cycle: shape product 
+   data := anObject asArray flattened cycle: shape product
 ]
