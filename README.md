@@ -61,6 +61,7 @@ Each step of the above code creates the following:
 ### Verbs (Monadic)
 
 * `first`
+* `ints`
 * `ravel`
 * `reverse`
 * `unique`
