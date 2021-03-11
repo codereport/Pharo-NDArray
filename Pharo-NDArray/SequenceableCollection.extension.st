@@ -11,6 +11,11 @@ SequenceableCollection >> rank [
 ]
 
 { #category : #'*Pharo-NDArray' }
+SequenceableCollection >> reshape: aCollection [ 
+   ^ self asNDArray reshape: aCollection 
+]
+
+{ #category : #'*Pharo-NDArray' }
 SequenceableCollection >> shape [
    | dim nextDims |
    dim := Array with: self size.

@@ -21,6 +21,8 @@ PharoNDArrayTest >> testEquals [
    self assert: (NDArray withAll: #(#(1 2) #(4 5))) = 5 equals: #(#(false false) #(false true)).
    self assert: 'hello' asNDArray = $l equals: #(false false true true false).
    self assert: ('hello' asNDArray = $l) ints equals: #(0 0 1 1 0).
+   self assert: true asInteger equals: 1.
+   self assert: false asInteger equals: 0.
    self assert: ('()(())' asNDArray = $() ints equals: #(1 0 1 1 0 0)
 ]
 
@@ -93,8 +95,9 @@ PharoNDArrayTest >> testReduce [
    self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) reduce: #+) equals: #(6 15).
    self assert: ((NDArray withShape: #(2 2 3) with: 12 iota) reduce: #+) equals: #(#(6 15) #(24 33)).
    self assert: (5 iota asNDArray = 1 reduce: #and:) equals: false.
-   self assert: (#(1) asNDArray reshape: #(5) :> = 1 :> reduce: #and:) equals: true.
-   self assert: (1 asNDArray reshape: #(5) :> = 1 :> reduce: #and:) equals: true
+   self assert: (#(1) reshape: #(5) :> = 1 :> reduce: #and:) equals: true.
+   self assert: (1 reshape: #(5) :> = 1 :> reduce: #and:) equals: true.
+   self assert: ((5 iota asNDArray = 1) ints reduce: #+) equals: 1.
 ]
 
 { #category : #tests }
@@ -108,14 +111,14 @@ PharoNDArrayTest >> testReshape [
 PharoNDArrayTest >> testReverse [
    self assert: (NDArray withAll: #(1 2 3)) reverse equals: #(3 2 1).
    self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) reverse equals: #(#(3 2 1) #(3 2 1)).
-   self assert: (12 iota asNDArray reshape: #(2 3) :> reverse) equals: #((3 2 1) (6 5 4))
+   self assert: (12 iota reshape: #(2 3) :> reverse) equals: #((3 2 1) (6 5 4))
 ]
 
 { #category : #tests }
 PharoNDArrayTest >> testRotate [
    self assert: ((NDArray withAll: #(1 2 3)) rotate: 1) equals: #(2 3 1).
    self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) rotate: 2) equals: #(#(3 1 2) #(3 1 2)).
-   self assert: (12 iota asNDArray reshape: #(2 3) :> rotate: 1) equals: #((2 3 1) (5 6 4))
+   self assert: (12 iota reshape: #(2 3) :> rotate: 1) equals: #((2 3 1) (5 6 4))
 ]
 
 { #category : #tests }

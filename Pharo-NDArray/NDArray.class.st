@@ -98,12 +98,7 @@ NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
 { #category : #'verbs (monadic)' }
 NDArray >> ints [
    | newData |
-   newData := data collect: [ :e |  e isBoolean
-                    ifTrue: [ 
-                       e
-                          ifFalse: [ 0 ]
-                          ifTrue: [ 1 ] ]
-                    ifFalse: self ].
+   newData := data collect: #asInteger.
    ^ self class new withShape: shape with: newData
 ]
 
