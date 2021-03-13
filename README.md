@@ -50,6 +50,7 @@ Each step of the above code creates the following:
 
 ### Adverbs
 
+* `outerProduct:with:`
 * `reduce:`
 
 ### Verbs (Scalar)
