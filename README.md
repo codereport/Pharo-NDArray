@@ -52,6 +52,7 @@ Each step of the above code creates the following:
 
 * `outerProduct:with:`
 * `reduce:`
+* `reduceFirst:`
 
 ### Verbs (Scalar)
 
@@ -65,6 +66,7 @@ Each step of the above code creates the following:
 * `ints`
 * `ravel`
 * `reverse`
+* `transpose`
 * `unique`
 
 ### Verbs (Dyadic)
