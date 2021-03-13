@@ -40,7 +40,7 @@ NDArray >> = anObject [
 { #category : #arithmetic }
 NDArray >> adaptToNumber: anInteger andSend: aSymbol [
    aSymbol = #+ ifTrue: [ ^ self + anInteger ].
-   aSymbol = #= ifTrue: [ ^ self + anInteger ].
+   aSymbol = #= ifTrue: [ ^ self = anInteger ].
 ]
 
 { #category : #converting }
@@ -106,6 +106,15 @@ NDArray >> ints [
 NDArray >> matches: anObject [
    self shape = anObject asNDArray shape ifFalse: [ ^ false ].
    ^ self data = anObject asNDArray data
+]
+
+{ #category : #'as yet unclassified' }
+NDArray >> outerProduct: anObject with: aBinaryBlock [
+   | newData |
+   " error on ranks"
+   newData := OrderedCollection new.
+   self data do: [ :e | newData add: (aBinaryBlock value: e value: anObject asNDArray) ].
+   ^ NDArray new withShape: {self data size. anObject size} with: (newData collect: #asArray) flattened 
 ]
 
 { #category : #'instance creation' }
