@@ -71,10 +71,24 @@ PharoNDArrayTest >> testModulus [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testMultipleVerbs [
+   self assert: (#(1 0) outerProduct: #(1 0 1 1 0 0) with: #=
+      :> ints 
+      :> reduceFirst: #-
+      :> scan: #+) equals: #(1 0 1 2 1 0).
+   self assert: (#(1 0) outerProduct: #(1 0 1 1 0 0) with: #=
+      :> ints 
+      :> reduceFirst: #-
+      :> scan: #+
+      :> reduce: #max:) equals: 2
+   "self assert: ('()' outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))"
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testOuterProduct [
-   self assert: (#(1 0) asNDArray outerProduct: #(1 0 1 1 0 0) with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
+   self assert: (#(1 0) outerProduct: #(1 0 1 1 0 0) with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
    "self assert: (4 iota asNDArray = 4 iota) ints equals: #(1 1 1 1)."
-   self assert: ((4 iota asNDArray outerProduct: 4 iota with: #=) ints reduce: #+) equals: #(1 1 1 1)
+   self assert: ((4 iota outerProduct: 4 iota with: #=) ints reduce: #+) equals: #(1 1 1 1)
    "self assert: ('()' asNDArray outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
    self assert: ('()' outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))"
 ]
@@ -143,6 +157,16 @@ PharoNDArrayTest >> testRotate [
    self assert: ((NDArray withAll: #(1 2 3)) rotate: 1) equals: #(2 3 1).
    self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) rotate: 2) equals: #(#(3 1 2) #(3 1 2)).
    self assert: (12 iota reshape: #(2 3) :> rotate: 1) equals: #((2 3 1) (5 6 4))
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testScan [
+   "self assert: ((NDArray withAll: #()) reduce: #+) asArray equals: 0."
+   self assert: ((NDArray withAll: #(1 2 3)) scan: #+) equals: #(1 3 6).
+   self assert: ((NDArray withAll: #(1 1 1 1 1)) scan: #+) equals: #(1 2 3 4 5).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) scan: #+) equals: #(#(1 3 6) #(4 9 15)).
+   self assert: (5 iota asNDArray = 1 scan: #and:) ints equals: #(1 0 0 0 0).
+   self assert: (#(1) reshape: #(5) :> = 1 :> scan: #or:) ints equals: #(1 1 1 1 1)
 ]
 
 { #category : #tests }

@@ -6,6 +6,11 @@ SequenceableCollection >> asNDArray [
 ]
 
 { #category : #'*Pharo-NDArray' }
+SequenceableCollection >> outerProduct: anObject with: aBinaryBlock [
+   ^ self asNDArray outerProduct: anObject with: aBinaryBlock
+]
+
+{ #category : #'*Pharo-NDArray' }
 SequenceableCollection >> rank [
    ^ self shape size.
 ]

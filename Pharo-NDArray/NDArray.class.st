@@ -111,10 +111,13 @@ NDArray >> matches: anObject [
 { #category : #adverbs }
 NDArray >> outerProduct: anObject with: aBinaryBlock [
    | newData |
-   " error on ranks"
-   newData := OrderedCollection new.
-   self data do: [ :e | newData add: (aBinaryBlock value: e value: anObject asNDArray) ].
-   ^ NDArray new withShape: {self data size. anObject size} with: (newData collect: #asArray) flattened 
+   (self rank > 1 or: anObject rank > 1) ifTrue: [ ^ RankError signal ].
+   newData := data collect: [ :e | aBinaryBlock value: e value: anObject asNDArray ].
+   ^ self class new
+        withShape: {
+              self data size.
+              anObject size}
+        with: (newData collect: #asArray) flattened
 ]
 
 { #category : #'instance creation' }
@@ -170,6 +173,14 @@ NDArray >> rotate: anInteger [
    | newData |
    newData := data groupsOf: shape last 
            :> collect: [ :e | e rotate: anInteger ] as: Array.
+   ^ self class new withShape: shape with: newData
+]
+
+{ #category : #adverbs }
+NDArray >> scan: aBinaryBlock [
+   | newData |
+   newData := data groupsOf: shape last 
+           :> collect: [ :e | e scan: aBinaryBlock ] as: Array.
    ^ self class new withShape: shape with: newData
 ]
 
