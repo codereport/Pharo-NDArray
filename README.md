@@ -65,7 +65,7 @@ Each step of the above code creates the following:
 * `first`
 * `ints`
 * `ravel`
-* `reverse
+* `reverse`
 * `transpose`
 * `unique`
 
