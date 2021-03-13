@@ -117,6 +117,14 @@ PharoNDArrayTest >> testReduce [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testReduceFirst [
+   "self assert: (1 asNDArray reduceFirst: #+) equals: 1."
+   self assert: (3 iota asNDArray reduceFirst: #+) equals: 6.
+   self assert: (9 iota reshape: #(3 3) :> reduceFirst: #+) equals: #(12 15 18).
+   self assert: (6 iota reshape: #(2 3) :> reduceFirst: #+) equals: #(5 7 9)
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testReshape [
    self assert: ((NDArray withShape: #(2 3) with: #(42)) reshape: #(3)) equals: #(42 42 42).
    self assert: ((NDArray withShape: #(2) with: #(42)) reshape: #(3)) equals: #(42 42 42).
@@ -146,6 +154,14 @@ PharoNDArrayTest >> testShape [
    self should: [ #(#(1 2 3) #(4 5)) shape ] raise: JaggedArray.
    self assert: #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5 6))) shape equals: #(2 2 3).
    self should: [ #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5))) shape ] raise: JaggedArray
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testTranspose [
+   self assert: 1 asNDArray transpose equals: 1.
+   self assert: 3 iota asNDArray transpose equals: #(1 2 3).
+   self assert: (9 iota reshape: #(3 3) :> transpose) equals: #(#(1 4 7) #(2 5 8) #(3 6 9)).
+   self assert: (6 iota reshape: #(2 3) :> transpose :> reduce: #+) equals: #(5 7 9)
 ]
 
 { #category : #tests }

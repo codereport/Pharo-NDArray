@@ -76,7 +76,7 @@ NDArray >> data [
 { #category : #'verbs (dyadic)' }
 NDArray >> filter: aCollection [ 
    | newData |
-   self rank > 1 ifTrue: [ ^ self error: 'Rank Error' ]. "TODO: Create Rank Exception"
+   self rank > 1 ifTrue: [ ^ RankError signal ].
    newData := data zip: aCollection asArray
            :> select: [ :a :b | b asBoolean ]
            :> collect: #first.
@@ -108,7 +108,7 @@ NDArray >> matches: anObject [
    ^ self data = anObject asNDArray data
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adverbs }
 NDArray >> outerProduct: anObject with: aBinaryBlock [
    | newData |
    " error on ranks"
@@ -144,6 +144,11 @@ NDArray >> reduce: aBlock [
    ^ self class new withShape: shape allButLast with: newData
 ]
 
+{ #category : #adverbs }
+NDArray >> reduceFirst: aBinaryBlock [ 
+   ^ self transpose reduce: aBinaryBlock
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> reshape: aCollection [
    | n newData |
@@ -171,6 +176,17 @@ NDArray >> rotate: anInteger [
 { #category : #accessing }
 NDArray >> shape [
    ^ shape
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> transpose [
+   | chunkedData newData |
+   self rank < 2 ifTrue: [ ^ self copy ].
+   self rank > 3 ifTrue: [ ^ RankError signal ].
+   chunkedData := self data groupsOf: shape last.
+   newData := OrderedCollection new.
+   1 to: shape last do: [ :i | newData add: (chunkedData collect: [ :row | row at: i ]) ].
+   ^ self class new withShape: shape reversed with: newData flattened
 ]
 
 { #category : #'verbs (monadic)' }
