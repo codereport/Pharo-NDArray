@@ -184,7 +184,8 @@ PharoNDArrayTest >> testShape [
 PharoNDArrayTest >> testSumEvens [
    | vals |
    vals := #(42 1729 4104) asNDArray.
-   self assert: (vals filter: (vals % 2 :> not) :> reduce: #+) equals: 4146
+   self assert: (vals filter: (vals % 2 :> not) :> reduce: #+) equals: 4146.
+   self assert: (vals filterPred: #even :> reduce: #+) equals: 4146
 ]
 
 { #category : #tests }

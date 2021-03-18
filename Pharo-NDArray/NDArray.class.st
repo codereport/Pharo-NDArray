@@ -83,6 +83,11 @@ NDArray >> filter: aCollection [
    ^ self class new withShape: newData shape with: newData
 ]
 
+{ #category : #'verbs (dyadic)' }
+NDArray >> filterPred: aUnaryBlock [
+   ^ self filter: (self data collect: [ :e | aUnaryBlock value: e ])
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> first [
    ^ data first
