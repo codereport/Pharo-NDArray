@@ -57,6 +57,7 @@ Each step of the above code creates the following:
 
 ### Verbs (Scalar)
 
+* `not`
 * `%`
 * `+`
 * `=`
