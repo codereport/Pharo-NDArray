@@ -53,6 +53,7 @@ Each step of the above code creates the following:
 * `outerProduct:with:`
 * `reduce:`
 * `reduceFirst:`
+* `scan:`
 
 ### Verbs (Scalar)
 
