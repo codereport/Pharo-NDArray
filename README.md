@@ -74,6 +74,7 @@ Each step of the above code creates the following:
 ### Verbs (Dyadic)
 
 * `filter:`
+* `filterPred:`
 * `matches:`
 * `reshape:`
 * `rotate:`
