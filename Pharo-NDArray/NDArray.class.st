@@ -108,6 +108,12 @@ NDArray >> matches: anObject [
    ^ self data = anObject asNDArray data
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> not [
+   "error if not boolean array"
+   ^ self class new withShape: shape with: (data collect: 1 @@ #-)
+]
+
 { #category : #adverbs }
 NDArray >> outerProduct: anObject with: aBinaryBlock [
    | newData |

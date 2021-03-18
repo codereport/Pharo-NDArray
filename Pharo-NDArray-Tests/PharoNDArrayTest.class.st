@@ -181,6 +181,13 @@ PharoNDArrayTest >> testShape [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testSumEvens [
+   | vals |
+   vals := #(42 1729 4104) asNDArray.
+   self assert: (vals filter: (vals % 2 :> not) :> reduce: #+) equals: 4146
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testTranspose [
    self assert: 1 asNDArray transpose equals: 1.
    self assert: 3 iota asNDArray transpose equals: #(1 2 3).
