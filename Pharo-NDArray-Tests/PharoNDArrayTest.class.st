@@ -11,6 +11,8 @@ PharoNDArrayTest >> assert: actual equals: expected [
    expected isArray ifTrue: [ ^ super assert: actual asArray equals: expected ].
    expected isBoolean ifTrue: [ ^ super assert: actual asBoolean equals: expected ].
    expected isInteger ifTrue: [ ^ super assert: actual asInteger equals: expected ].
+   expected class = NDArray ifTrue: [ 
+      ^ super assert: (actual data = expected data and: actual shape = expected shape) ].
    ^ super assert: actual equals: expected
 ]
 
@@ -26,6 +28,7 @@ PharoNDArrayTest >> testEquals [
    self assert: false asInteger equals: 0.
    self assert: ('()(())' asNDArray = $() ints equals: #(1 0 1 1 0 0).
    self assert: (2 = #(1 2 3) asNDArray) ints equals: #(0 1 0).
+   self assert: (1 asNDArray = 3 iota asNDArray) ints equals: #(1 0 0)
    "self assert: (2 asNDArray = #(1 2 3)) ints equals: #(0 1 0)"
    "self assert: #(1 2 3) asNDArray = #(0 2 3) asNDArray equals: #(false true true)"
 ]
@@ -80,7 +83,7 @@ PharoNDArrayTest >> testMultipleVerbs [
       :> ints 
       :> reduceFirst: #-
       :> scan: #+
-      :> reduce: #max:) equals: 2
+      :> reduce: #max:) equals: 2.
    "self assert: ('()' outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))"
 ]
 
@@ -88,9 +91,9 @@ PharoNDArrayTest >> testMultipleVerbs [
 PharoNDArrayTest >> testOuterProduct [
    self assert: (#(1 0) outerProduct: #(1 0 1 1 0 0) with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
    "self assert: (4 iota asNDArray = 4 iota) ints equals: #(1 1 1 1)."
-   self assert: ((4 iota outerProduct: 4 iota with: #=) ints reduce: #+) equals: #(1 1 1 1)
-   "self assert: ('()' asNDArray outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
-   self assert: ('()' outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))"
+   self assert: ((4 iota outerProduct: 4 iota with: #=) ints reduce: #+) equals: #(1 1 1 1).
+   self assert: ('()' asNDArray outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
+   "self assert: ('()' outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))"
 ]
 
 { #category : #tests }
@@ -185,7 +188,9 @@ PharoNDArrayTest >> testSumEvens [
    | vals |
    vals := #(42 1729 4104) asNDArray.
    self assert: (vals filter: (vals % 2 :> not) :> reduce: #+) equals: 4146.
-   self assert: (vals filterPred: #even :> reduce: #+) equals: 4146
+   self assert: (vals filterPred: #even :> reduce: #+) equals: 4146.
+   self assert: ((vals fork: [ :e | e ] with: #filter: with: [ :e | e % 2 :> not ]) reduce: #+) equals: 4146.
+   self assert: ((vals fork: #yourself with: #filter: with: [ :e | e % 2 :> not ]) reduce: #+) equals: 4146
 ]
 
 { #category : #tests }
@@ -199,9 +204,9 @@ PharoNDArrayTest >> testTranspose [
 { #category : #tests }
 PharoNDArrayTest >> testUnique [
    "self assert: 3 asNDArray unique equals: 3."
-   self assert: (3 iota asNDArray reshape: #(9)) unique equals: #(1 2 3).
-   self assert: (3 iota asNDArray reshape: #(3 3)) unique equals: (3 iota asNDArray reshape: #(1 3)).
-   self assert: (9 iota asNDArray reshape: #(3 3 3)) unique equals: (9 iota asNDArray reshape: #(1 3 3))
+   self assert: (3 iota reshape: #(9)) unique equals: #(1 2 3).
+   self assert: (3 iota reshape: #(3 3)) unique equals: (3 iota reshape: #(1 3)).
+"   self assert: (9 iota reshape: #(3 3 3)) unique equals: (9 iota reshape: #(1 3 3))"
 ]
 
 { #category : #tests }

@@ -33,8 +33,10 @@ NDArray >> + anObject [
 
 { #category : #'verbs (scalar)' }
 NDArray >> = anObject [
-   anObject class = NDArray ifTrue: [ ^ shape = anObject shape and: data = anObject data ].
-   ^ self class new withShape: shape with: (data collect: anObject @@ #=)
+   (self rank = anObject rank and: self shape ~~ anObject shape) ifTrue: [ ^ ShapeError signal ].
+   anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: anObject first @@ #=) ].
+   self rank = 0 ifTrue: [ ^ self class new withShape: anObject shape with: (anObject data collect: self first @@ #=) ].
+   ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
 { #category : #arithmetic }
@@ -95,9 +97,8 @@ NDArray >> first [
 
 { #category : #trains }
 NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
-   rightBlock numArgs = leftBlock numArgs ifFalse: [ ^ self error: 'Arity Error' ].
+   rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ].
    ^ binaryBlock value: (leftBlock value: self) value: (rightBlock value: self)
-
 ]
 
 { #category : #'verbs (monadic)' }
@@ -123,7 +124,7 @@ NDArray >> not [
 NDArray >> outerProduct: anObject with: aBinaryBlock [
    | newData |
    (self rank > 1 or: anObject rank > 1) ifTrue: [ ^ RankError signal ].
-   newData := data collect: [ :e | aBinaryBlock value: e value: anObject asNDArray ].
+   newData := data collect: [ :e | aBinaryBlock value: e asNDArray value: anObject asNDArray ].
    ^ self class new
         withShape: {
               self data size.
