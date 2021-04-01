@@ -216,9 +216,9 @@ NDArray >> transpose [
 NDArray >> unique [
    | atoms newData newShape |
    self rank = 0 ifTrue: [ ^ self ].
-   self rank = 1 ifTrue: [ ^ self class new withAll: data copyWithoutDuplicates ].
+   self rank = 1 ifTrue: [ ^ self class new withAll: data unique ].
    atoms := shape allButFirst product.
-   newData := (data groupsOf: atoms) copyWithoutDuplicates as: Array.
+   newData := (data groupsOf: atoms) asArray unique.
    newShape := (Array with: newData size) , shape allButFirst.
    ^ self class new withShape: newShape with: newData
 ]
