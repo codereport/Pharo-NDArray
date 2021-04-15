@@ -230,6 +230,11 @@ NDArray >> sign [
    ^ self class new withShape: shape with: (data collect: #sign)
 ]
 
+{ #category : #accessing }
+NDArray >> size [
+   ^ shape last
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> transpose [
    | chunkedData newData |
@@ -250,6 +255,16 @@ NDArray >> unique [
    newData := (data groupsOf: atoms) asArray unique.
    newShape := (Array with: newData size) , shape allButFirst.
    ^ self class new withShape: newShape with: newData
+]
+
+{ #category : #'as yet unclassified' }
+NDArray >> windowed: anInteger reduce: aBinaryBlock [ 
+   | coll |
+   coll := OrderedCollection new.
+   1 to: (self size - anInteger + 1) do: [ :i |
+      coll add: ((data copyFrom: i to: i + anInteger - 1) reduce: aBinaryBlock).
+   ].
+   ^ self class new withAll: coll asArray 
 ]
 
 { #category : #'instance creation' }

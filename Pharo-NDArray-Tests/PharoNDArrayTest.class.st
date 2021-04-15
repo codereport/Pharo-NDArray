@@ -17,6 +17,19 @@ PharoNDArrayTest >> assert: actual equals: expected [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testAllEqual [
+   | v u |
+   v := #(1 2 3 4) asNDArray.
+   u := #(1 1 1 1) asNDArray.
+   self assert: ((v eq: (v first)) reduce: #and:) equals: false.
+   self assert: ((v unique) size == 1) equals: false.
+   self assert: ((v reduce: #max:) == (v reduce: #min:)) equals: false.
+   self assert: ((u eq: (u first)) reduce: #and:) equals: true.
+   self assert: ((u unique) size == 1) equals: true.
+   self assert: ((u reduce: #max:) == (u reduce: #min:)) equals: false.
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testArraySign [
    self assert: (#(1 -1 2 -3) asNDArray sign reduce: #*) equals: 1.
    self assert: (#(1 -1 2 -3 -4) asNDArray sign reduce: #*) equals: -1.
@@ -79,6 +92,13 @@ PharoNDArrayTest >> testMatches [
    self assert: ((NDArray withAll: #(1 2 3)) matches: 3 iota asNDArray).
    self deny: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) matches: #(1 2 3) asNDArray).
    self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) matches: (3 iota asNDArray reshape: #(2 3)))
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testMaxWealth [
+   self assert: (((9 iota asNDArray reshape: #(3 3)) reduce: #+) reduce: #max:) equals: 24.
+   self assert: (((10 asNDArray reshape: #(3 3)) reduce: #+) reduce: #max:) equals: 30.
+   self assert: (((9 iota asNDArray reshape: #(3 3)) transpose reduce: #+) reduce: #max:) equals: 18
 ]
 
 { #category : #tests }
@@ -222,6 +242,16 @@ PharoNDArrayTest >> testUnique [
    self assert: (3 iota reshape: #(9)) unique equals: #(1 2 3).
    self assert: (3 iota reshape: #(3 3)) unique equals: (3 iota reshape: #(1 3)).
 "   self assert: (9 iota reshape: #(3 3 3)) unique equals: (9 iota reshape: #(1 3 3))"
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testWindowedReduce [
+   | v |
+   v := #(1 2 3 4) asNDArray.
+   self assert: (v windowed: 1 reduce: #+) equals: v.
+   self assert: (v windowed: 2 reduce: #+) equals: #(3 5 7).
+   self assert: (v windowed: 3 reduce: #+) equals: #(6 9).
+
 ]
 
 { #category : #tests }
