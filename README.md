@@ -83,6 +83,7 @@ Each step of the above code creates the following:
 * `filter:`
 * `filterPred:`
 * `matches:`
+* `parition:`
 * `reshape:`
 * `rotate:`
 
