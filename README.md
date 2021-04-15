@@ -54,6 +54,7 @@ Each step of the above code creates the following:
 * `reduce:`
 * `reduceFirst:`
 * `scan:`
+* `windowed:reduce:`
 
 ### Verbs (Scalar)
 
@@ -73,6 +74,7 @@ Each step of the above code creates the following:
 * `ints`
 * `ravel`
 * `reverse`
+* `size`
 * `transpose`
 * `unique`
 
