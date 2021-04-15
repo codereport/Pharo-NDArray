@@ -50,6 +50,7 @@ Each step of the above code creates the following:
 
 ### Adverbs
 
+* `collect`
 * `outerProduct:with:`
 * `reduce:`
 * `reduceFirst:`
