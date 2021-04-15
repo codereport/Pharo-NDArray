@@ -32,6 +32,11 @@ NDArray >> + anObject [
 ]
 
 { #category : #'verbs (scalar)' }
+NDArray >> - anObject [
+   ^ self class new withShape: shape with: (data collect: #- @@ anObject)
+]
+
+{ #category : #'verbs (scalar)' }
 NDArray >> = anObject [
    (self rank = anObject rank and: self shape ~~ anObject shape) ifTrue: [ ^ ShapeError signal ].
    anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: anObject first @@ #=) ].
@@ -199,6 +204,11 @@ NDArray >> scan: aBinaryBlock [
 { #category : #accessing }
 NDArray >> shape [
    ^ shape
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> sign [
+   ^ self class new withShape: shape with: (data collect: #sign)
 ]
 
 { #category : #'verbs (monadic)' }

@@ -17,6 +17,13 @@ PharoNDArrayTest >> assert: actual equals: expected [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testArraySign [
+   self assert: (#(1 -1 2 -3) asNDArray sign reduce: #*) equals: 1.
+   self assert: (#(1 -1 2 -3 -4) asNDArray sign reduce: #*) equals: -1.
+   self assert: ((9 iota asNDArray - 5) sign reduce: #*) equals: 0
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testEquals [
    self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(true false false).
    self assert: 1 = (NDArray withAll: #(1 2 3)) equals: #(true false false).
