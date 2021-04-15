@@ -87,6 +87,13 @@ NDArray >> asString [
    ^ String newFrom: data
 ]
 
+{ #category : #'verbs (dyadic)' }
+NDArray >> collect: aUnaryBlock [
+   | newData |
+   newData := data collect: aUnaryBlock.
+   ^ self class new withShape: shape with: newData
+]
+
 { #category : #accessing }
 NDArray >> data [
    ^ data
@@ -188,6 +195,7 @@ NDArray >> ravel [
 { #category : #adverbs }
 NDArray >> reduce: aBlock [
    | newData |
+   self rank = 1 ifTrue: [ ^ data reduce: aBlock ].
    newData := data groupsOf: shape last 
            :> collect: [ :e | e reduce: aBlock ] as: Array.
    ^ self class new withShape: shape allButLast with: newData

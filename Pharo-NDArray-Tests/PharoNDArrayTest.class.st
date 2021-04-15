@@ -22,11 +22,15 @@ PharoNDArrayTest >> testAllEqual [
    v := #(1 2 3 4) asNDArray.
    u := #(1 1 1 1) asNDArray.
    self assert: ((v eq: (v first)) reduce: #and:) equals: false.
-   self assert: ((v unique) size == 1) equals: false.
-   self assert: ((v reduce: #max:) == (v reduce: #min:)) equals: false.
+   self assert: ((v unique) size = 1) equals: false.
+   self assert: ((v reduce: #max:) = (v reduce: #min:)) equals: false.
+   self assert: ((v windowed: 2 reduce: #=) reduce: #and:) equals: false.
+   self assert: ((v rotate: 1) matches: v) equals: false.
    self assert: ((u eq: (u first)) reduce: #and:) equals: true.
-   self assert: ((u unique) size == 1) equals: true.
-   self assert: ((u reduce: #max:) == (u reduce: #min:)) equals: false.
+   self assert: ((u unique) size = 1) equals: true.
+   self assert: ((u reduce: #max:) = (u reduce: #min:)) equals: true.
+   self assert: ((u windowed: 2 reduce: #=) reduce: #and:) equals: true.
+   self assert: ((u rotate: 1) matches: u) equals: true.
 ]
 
 { #category : #tests }
@@ -92,6 +96,14 @@ PharoNDArrayTest >> testMatches [
    self assert: ((NDArray withAll: #(1 2 3)) matches: 3 iota asNDArray).
    self deny: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) matches: #(1 2 3) asNDArray).
    self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) matches: (3 iota asNDArray reshape: #(2 3)))
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testMaxConsecutiveOnes [
+   | arr |
+   arr := #(1 1 0 0 1 1 1 0 1 1 1 1 0 0 0) asNDArray.
+   self assert: (((arr partition: arr) collect: [ :e | e reduce: #+ ]) reduce: #max:) equals: 4.
+
 ]
 
 { #category : #tests }
