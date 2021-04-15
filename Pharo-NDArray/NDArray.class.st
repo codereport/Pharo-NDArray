@@ -157,9 +157,9 @@ NDArray >> outerProduct: anObject with: aBinaryBlock [
         with: (newData collect: #asArray) flattened
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'verbs (dyadic)' }
 NDArray >> partition: anNDArray [ 
-   ^ data with: anNDArray data collect: [ :a :b | Point x: a y: b ]
+   ^ data with: anNDArray data collect: #@
       :> groupByRuns: #y
       :> select: [ :e | e first y asBoolean ]
       :> collect: [ :e | (e collect: #x) asNDArray ]
@@ -267,7 +267,7 @@ NDArray >> unique [
    ^ self class new withShape: newShape with: newData
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adverbs }
 NDArray >> windowed: anInteger reduce: aBinaryBlock [ 
    | coll |
    coll := OrderedCollection new.
