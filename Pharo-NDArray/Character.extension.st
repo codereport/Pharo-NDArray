@@ -6,6 +6,11 @@ Character >> asNDArray [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Character >> first [
+   ^ self
+]
+
+{ #category : #'*Pharo-NDArray' }
 Character >> rank [
    ^ 0
 ]

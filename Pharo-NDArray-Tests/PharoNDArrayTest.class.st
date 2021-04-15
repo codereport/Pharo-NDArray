@@ -64,6 +64,14 @@ PharoNDArrayTest >> testFork [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFourWords [
+   | arr |
+   arr := 'I love APL. It is my favorite' asNDArray.
+   "this is technically wrong"
+   self assert: (arr filter: (((arr eq: Character space) ints scan: #+) < 3)) asString equals: 'I love APL.'
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testMatches [
    self assert: (1 asNDArray matches: 1).
    self deny: ((NDArray withAll: #(1 2 3)) matches: 1).
