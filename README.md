@@ -62,10 +62,13 @@ Each step of the above code creates the following:
 * `%`
 * `+`
 * `-`
-* `=`
+* `<`
+* `=` (to be removed)
+* `eq:`
 
 ### Verbs (Monadic)
 
+* `asString`
 * `first`
 * `ints`
 * `ravel`
