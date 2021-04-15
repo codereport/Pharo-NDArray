@@ -43,9 +43,10 @@ NDArray >> < anObject [
 
 { #category : #'verbs (scalar)' }
 NDArray >> = anObject [
-   (self rank = anObject rank and: self shape ~~ anObject shape) ifTrue: [ ^ ShapeError signal ].
+   (self rank = anObject rank and: [self shape ~= anObject shape]) ifTrue: [ ^ ShapeError signal ].
    anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: anObject first @@ #=) ].
    self rank = 0 ifTrue: [ ^ self class new withShape: anObject shape with: (anObject data collect: self first @@ #=) ].
+   (self rank = anObject rank and: [self shape = anObject shape]) ifTrue: [ ^ self data = anObject data ].
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
@@ -154,6 +155,15 @@ NDArray >> outerProduct: anObject with: aBinaryBlock [
               self data size.
               anObject size}
         with: (newData collect: #asArray) flattened
+]
+
+{ #category : #'as yet unclassified' }
+NDArray >> partition: anNDArray [ 
+   ^ data with: anNDArray data collect: [ :a :b | Point x: a y: b ]
+      :> groupByRuns: #y
+      :> select: [ :e | e first y asBoolean ]
+      :> collect: [ :e | (e collect: #x) asNDArray ]
+      :> asNDArray
 ]
 
 { #category : #'instance creation' }

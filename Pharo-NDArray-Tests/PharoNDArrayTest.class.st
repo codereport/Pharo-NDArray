@@ -132,6 +132,14 @@ PharoNDArrayTest >> testOuterProduct [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testPartition [
+   | result |
+   result := {#(1 2) asNDArray. #(4 5) asNDArray} asNDArray.
+   self assert: (#(1 2 3 4 5) asNDArray partition: #(1 1 0 1 1) asNDArray) equals: result.
+
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testPlus [
    self assert: (NDArray withAll: #(1 2 3)) + 1 equals: #(2 3 4).
    self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) + 10) ravel equals: (6 iota collect: 10 @@ #+).
