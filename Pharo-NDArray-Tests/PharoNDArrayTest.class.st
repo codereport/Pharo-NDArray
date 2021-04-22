@@ -249,6 +249,16 @@ PharoNDArrayTest >> testSumEvens [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testTimes [
+   self assert: (NDArray withAll: #(1 2 3)) * 1 equals: #(1 2 3).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) * 10) ravel equals: (6 iota collect: 10 @@ #*).
+   self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) * 10 equals: #(#(10 20 30) #(40 50 60)).
+   self assert: 1 * (NDArray withAll: #(1 2 3)) equals: #(1 2 3).
+   self assert: 10 * ((NDArray withAll: #(#(1 2 3) #(4 5 6)))) ravel equals: (6 iota collect: 10 @@ #*).
+   self assert: 10 * (NDArray withAll: #(#(1 2 3) #(4 5 6))) equals: #(#(10 20 30) #(40 50 60))
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testTranspose [
    self assert: 1 asNDArray transpose equals: 1.
    self assert: 3 iota asNDArray transpose equals: #(1 2 3).

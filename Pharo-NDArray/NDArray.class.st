@@ -27,6 +27,11 @@ NDArray >> % anObject [
 ]
 
 { #category : #'verbs (scalar)' }
+NDArray >> * anObject [
+   ^ self class new withShape: shape with: (data collect: anObject @@ #*)
+]
+
+{ #category : #'verbs (scalar)' }
 NDArray >> + anObject [
    ^ self class new withShape: shape with: (data collect: anObject @@ #+)
 ]
@@ -54,6 +59,7 @@ NDArray >> = anObject [
 NDArray >> adaptToNumber: anInteger andSend: aSymbol [
    aSymbol = #+ ifTrue: [ ^ self + anInteger ].
    aSymbol = #= ifTrue: [ ^ self = anInteger ].
+   aSymbol = #* ifTrue: [ ^ self * anInteger ].
 ]
 
 { #category : #converting }
