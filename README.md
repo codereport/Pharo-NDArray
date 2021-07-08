@@ -65,9 +65,9 @@ Each step of the above code creates the following:
 ### Verbs (Scalar Dyadic)
 
 * `%`
+* `*`
 * `+`
 * `-`
-* `*`
 * `<`
 * `>`
 * `=` (to be removed)
