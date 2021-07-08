@@ -68,6 +68,8 @@ Each step of the above code creates the following:
 * `<`
 * `=` (to be removed)
 * `eq:`
+* `min:`
+* `max:`
 
 ### Verbs (Monadic)
 
