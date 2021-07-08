@@ -154,6 +154,11 @@ NDArray >> matches: anObject [
 ]
 
 { #category : #accessing }
+NDArray >> max: anInteger [ 
+   ^ self class new withShape: shape with: (data collect: anInteger @@ #max:)
+]
+
+{ #category : #accessing }
 NDArray >> min: anInteger [ 
    ^ self class new withShape: shape with: (data collect: anInteger @@ #min:)
 ]

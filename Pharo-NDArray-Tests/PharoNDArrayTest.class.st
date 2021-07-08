@@ -99,6 +99,15 @@ PharoNDArrayTest >> testMatches [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testMax [
+   self assert: ((NDArray withAll: #(1 2 3)) max: 2) equals: #(2 2 3).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) max: 3) ravel equals: #(3 3 3 4 5 6).
+   "self assert: (2 min: (NDArray withAll: #(1 2 3))) equals: #(1 2 2).
+   self assert: 10 + ((NDArray withAll: #(#(1 2 3) #(4 5 6)))) ravel equals: (6 iota collect: 10 @@ #+).
+   self assert: 10 + (NDArray withAll: #(#(1 2 3) #(4 5 6))) equals: #(#(11 12 13) #(14 15 16))"
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testMaxConsecutiveOnes [
    | arr |
    arr := #(1 1 0 0 1 1 1 0 1 1 1 1 0 0 0) asNDArray.
