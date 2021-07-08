@@ -55,11 +55,18 @@ NDArray >> = anObject [
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
+{ #category : #'verbs (dyadic)' }
+NDArray >> > anObject [
+   ^ self class new withShape: shape with: (data collect: #> @@ anObject)
+]
+
 { #category : #arithmetic }
 NDArray >> adaptToNumber: anInteger andSend: aSymbol [
    aSymbol = #+ ifTrue: [ ^ self + anInteger ].
    aSymbol = #= ifTrue: [ ^ self = anInteger ].
    aSymbol = #* ifTrue: [ ^ self * anInteger ].
+   aSymbol = #< ifTrue: [ ^ self > anInteger ].
+   aSymbol = #> ifTrue: [ ^ self < anInteger ].
    aSymbol = #min: ifTrue: [ ^ self min: anInteger ].
 ]
 
