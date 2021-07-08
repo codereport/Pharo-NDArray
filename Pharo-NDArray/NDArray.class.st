@@ -153,12 +153,12 @@ NDArray >> matches: anObject [
    ^ self data = anObject asNDArray data
 ]
 
-{ #category : #accessing }
+{ #category : #'verbs (dyadic)' }
 NDArray >> max: anInteger [ 
    ^ self class new withShape: shape with: (data collect: anInteger @@ #max:)
 ]
 
-{ #category : #accessing }
+{ #category : #'verbs (dyadic)' }
 NDArray >> min: anInteger [ 
    ^ self class new withShape: shape with: (data collect: anInteger @@ #min:)
 ]
