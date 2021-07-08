@@ -21,32 +21,32 @@ NDArray class >> withShape: aCollection with: anArray [
    ^ super new withShape: aCollection with: anArray
 ]
 
-{ #category : #'verbs (scalar)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> % anObject [
    ^ self class new withShape: shape with: (data collect: #% @@ anObject)
 ]
 
-{ #category : #'verbs (scalar)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> * anObject [
    ^ self class new withShape: shape with: (data collect: anObject @@ #*)
 ]
 
-{ #category : #'verbs (scalar)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> + anObject [
    ^ self class new withShape: shape with: (data collect: anObject @@ #+)
 ]
 
-{ #category : #'verbs (scalar)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> - anObject [
    ^ self class new withShape: shape with: (data collect: #- @@ anObject)
 ]
 
-{ #category : #'verbs (scalar)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> < anObject [
    ^ self class new withShape: shape with: (data collect: #< @@ anObject)
 ]
 
-{ #category : #'verbs (scalar)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> = anObject [
    (self rank = anObject rank and: [self shape ~= anObject shape]) ifTrue: [ ^ ShapeError signal ].
    anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: anObject first @@ #=) ].
@@ -55,7 +55,7 @@ NDArray >> = anObject [
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
-{ #category : #'verbs (dyadic)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> > anObject [
    ^ self class new withShape: shape with: (data collect: #> @@ anObject)
 ]
@@ -95,7 +95,7 @@ NDArray >> asNDArray [
    ^ self
 ]
 
-{ #category : #'verbs (scalar)' }
+{ #category : #'verbs (monadic)' }
 NDArray >> asString [
    self first class ~= Character ifTrue: [ ^ self error: 'Only Characters supported' ].
    ^ String newFrom: data
@@ -113,7 +113,7 @@ NDArray >> data [
    ^ data
 ]
 
-{ #category : #'verbs (scalar)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> eq: anObject [
    anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: anObject first @@ #=) ].
    self rank = 0 ifTrue: [ ^ self class new withShape: anObject shape with: (anObject data collect: self first @@ #=) ].
@@ -160,12 +160,12 @@ NDArray >> matches: anObject [
    ^ self data = anObject asNDArray data
 ]
 
-{ #category : #'verbs (dyadic)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> max: anInteger [ 
    ^ self class new withShape: shape with: (data collect: anInteger @@ #max:)
 ]
 
-{ #category : #'verbs (dyadic)' }
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> min: anInteger [ 
    ^ self class new withShape: shape with: (data collect: anInteger @@ #min:)
 ]
@@ -175,7 +175,7 @@ NDArray >> mix [
 	self shouldBeImplemented.
 ]
 
-{ #category : #'verbs (monadic)' }
+{ #category : #'verbs (scalar monadic)' }
 NDArray >> not [
    "error if not boolean array"
    ^ self class new withShape: shape with: (data collect: 1 @@ #-)
@@ -272,7 +272,7 @@ NDArray >> shape [
    ^ shape
 ]
 
-{ #category : #'verbs (monadic)' }
+{ #category : #'verbs (scalar monadic)' }
 NDArray >> sign [
    ^ self class new withShape: shape with: (data collect: #sign)
 ]
