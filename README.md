@@ -57,15 +57,19 @@ Each step of the above code creates the following:
 * `scan:`
 * `windowed:reduce:`
 
-### Verbs (Scalar)
+### Verbs (Scalar Monadic)
 
 * `not`
 * `sign`
+
+### Verbs (Scalar Dyadic)
+
 * `%`
 * `+`
 * `-`
 * `*`
 * `<`
+* `>`
 * `=` (to be removed)
 * `eq:`
 * `min:`
@@ -76,6 +80,7 @@ Each step of the above code creates the following:
 * `asString`
 * `first`
 * `ints`
+* `mix`
 * `ravel`
 * `reverse`
 * `size`
