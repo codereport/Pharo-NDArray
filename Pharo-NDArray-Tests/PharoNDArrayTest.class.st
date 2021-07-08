@@ -132,6 +132,12 @@ PharoNDArrayTest >> testMin [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testMix [
+   self assert: ((4 iota asNDArray) partition: #(1 0 1 0) asNDArray) mix equals: #((1) (3)) asNDArray.
+
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testModulus [
    self assert: (NDArray withAll: #(1 2 3)) % 2  equals: #(1 0 1).
    self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) % 4  equals: #(#(1 2 3) #(0 1 2)).

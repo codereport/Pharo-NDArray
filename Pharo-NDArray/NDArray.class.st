@@ -171,6 +171,11 @@ NDArray >> min: anInteger [
 ]
 
 { #category : #'verbs (monadic)' }
+NDArray >> mix [
+	self shouldBeImplemented.
+]
+
+{ #category : #'verbs (monadic)' }
 NDArray >> not [
    "error if not boolean array"
    ^ self class new withShape: shape with: (data collect: 1 @@ #-)
