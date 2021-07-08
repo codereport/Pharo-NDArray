@@ -114,6 +114,15 @@ PharoNDArrayTest >> testMaxWealth [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testMin [
+   self assert: ((NDArray withAll: #(1 2 3)) min: 1) equals: #(1 1 1).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) min: 3) ravel equals: #(1 2 3 3 3 3).
+   "self assert: (2 min: (NDArray withAll: #(1 2 3))) equals: #(1 2 2).
+   self assert: 10 + ((NDArray withAll: #(#(1 2 3) #(4 5 6)))) ravel equals: (6 iota collect: 10 @@ #+).
+   self assert: 10 + (NDArray withAll: #(#(1 2 3) #(4 5 6))) equals: #(#(11 12 13) #(14 15 16))"
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testModulus [
    self assert: (NDArray withAll: #(1 2 3)) % 2  equals: #(1 0 1).
    self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) % 4  equals: #(#(1 2 3) #(0 1 2)).

@@ -60,6 +60,7 @@ NDArray >> adaptToNumber: anInteger andSend: aSymbol [
    aSymbol = #+ ifTrue: [ ^ self + anInteger ].
    aSymbol = #= ifTrue: [ ^ self = anInteger ].
    aSymbol = #* ifTrue: [ ^ self * anInteger ].
+   aSymbol = #min: ifTrue: [ ^ self min: anInteger ].
 ]
 
 { #category : #converting }
@@ -150,6 +151,11 @@ NDArray >> ints [
 NDArray >> matches: anObject [
    self shape = anObject asNDArray shape ifFalse: [ ^ false ].
    ^ self data = anObject asNDArray data
+]
+
+{ #category : #accessing }
+NDArray >> min: anInteger [ 
+   ^ self class new withShape: shape with: (data collect: anInteger @@ #min:)
 ]
 
 { #category : #'verbs (monadic)' }
