@@ -14,7 +14,8 @@ Class {
 	#classTraits : 'ComposeSyntax classTrait',
 	#instVars : [
 		'data',
-		'shape'
+		'shape',
+		'isNested'
 	],
 	#category : #'Pharo-NDArray'
 }
