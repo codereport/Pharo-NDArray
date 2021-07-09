@@ -331,7 +331,7 @@ NDArray >> windowed: anInteger reduce: aBinaryBlock [
 { #category : #'instance creation' }
 NDArray >> withAll: aCollection [
    data := aCollection flattened.
-   shape := aCollection shape 
+   shape := aCollection shape
 ]
 
 { #category : #initialization }
