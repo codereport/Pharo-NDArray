@@ -1,3 +1,12 @@
+"
+A class for representing n-dimensional arrays.
+ 
+Internal Representation and Key Implementation Points.
+
+  Instance Variables
+	data:		Array
+	shape:	Array
+"
 Class {
 	#name : #NDArray,
 	#superclass : #Object,
@@ -58,6 +67,11 @@ NDArray >> = anObject [
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> > anObject [
    ^ self class new withShape: shape with: (data collect: #> @@ anObject)
+]
+
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> abs [
+   ^ self class new withShape: shape with: (data collect: #abs)
 ]
 
 { #category : #arithmetic }

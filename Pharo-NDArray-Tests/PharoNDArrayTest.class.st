@@ -17,6 +17,13 @@ PharoNDArrayTest >> assert: actual equals: expected [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testAbsoluteValue [
+   self assert: (NDArray withAll: #(1 -2 3)) abs equals: #(1 2 3).
+   self assert: (NDArray withAll: #(#(-1 -2 -3) #(4 5 6))) abs ravel equals: 6 iota asNDArray.
+   self assert: (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) abs equals: #(#(1 2 3) #(4 5 6)).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testAllEqual [
    | v u |
    v := #(1 2 3 4) asNDArray.
