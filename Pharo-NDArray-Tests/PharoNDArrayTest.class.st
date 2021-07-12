@@ -87,6 +87,12 @@ PharoNDArrayTest >> testFirst [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFloor [
+   self assert: (NDArray withAll: #(1 -2.2 3.6)) floor equals: #(1 -3 3).
+   self assert: (NDArray withAll: #(#(-1.1 -2 -3.6) #(4.4 5.5 6.7))) floor equals: #(#(-2 -2 -4) #(4 5 6)).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFork [
    self assert: (#(1 2 3) asNDArray fork: #yourself with: #= with: #first) equals: #(true false false).
    self assert: (#(1 2 3) asNDArray fork: #first with: [ :a :b | b = a ] with: #yourself) equals: #(true false false)

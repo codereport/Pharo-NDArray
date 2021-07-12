@@ -160,6 +160,11 @@ NDArray >> first [
    ^ data first
 ]
 
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> floor [
+   ^ self class new withShape: shape with: (data collect: #floor)
+]
+
 { #category : #trains }
 NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
    rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ].
