@@ -115,6 +115,11 @@ NDArray >> asString [
    ^ String newFrom: data
 ]
 
+{ #category : #'truncation and round off' }
+NDArray >> ceiling [
+   ^ self class new withShape: shape with: (data collect: #ceiling)
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> collect: aUnaryBlock [
    | newData |

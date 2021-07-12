@@ -48,6 +48,12 @@ PharoNDArrayTest >> testArraySign [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testCeiling [
+   self assert: (NDArray withAll: #(1 -2.2 3.6)) ceiling equals: #(1 -2 4).
+   self assert: (NDArray withAll: #(#(-1.1 -2 -3.6) #(4.4 5.5 6.7))) ceiling equals: #(#(-1 -2 -3) #(5 6 7)).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testEquals [
    self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(true false false).
    self assert: 1 = (NDArray withAll: #(1 2 3)) equals: #(true false false).
