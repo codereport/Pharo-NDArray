@@ -59,6 +59,9 @@ Each step of the above code creates the following:
 
 ### Verbs (Scalar Monadic)
 
+* `abs`
+* `ceiling`
+* `floor`
 * `not`
 * `sign`
 
