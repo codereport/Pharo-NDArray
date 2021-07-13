@@ -115,7 +115,7 @@ NDArray >> asString [
    ^ String newFrom: data
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : #'verbs (scalar monadic)' }
 NDArray >> ceiling [
    ^ self class new withShape: shape with: (data collect: #ceiling)
 ]
@@ -140,7 +140,7 @@ NDArray >> eq: anObject [
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : #'verbs (scalar monadic)' }
 NDArray >> exp [
    ^ self class new withShape: shape with: (data collect: #exp)
 ]
