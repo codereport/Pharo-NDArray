@@ -225,6 +225,13 @@ PharoNDArrayTest >> testRavel [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testReciprocal [ 
+   self assert: (NDArray withAll: #(1 -2 3)) reciprocal equals: {1. -1/2. 1/3}.
+   self assert: (NDArray withAll: #(#(-1 -2 -3) #(4 5 6))) reciprocal ravel equals: {-1. -1/2. -1/3. 1/4. 1/5. 1/6}.
+   self assert: (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) reciprocal equals: {{1. 1/2. 1/3}. {-1/4. -1/5. -1/6}}
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testReduce [
    "self assert: ((NDArray withAll: #()) reduce: #+) asArray equals: 0."
    self assert: ((NDArray withAll: #(1 2 3)) reduce: #+) equals: 6.

@@ -250,6 +250,11 @@ NDArray >> ravel [
    ^ self class new withAll: data
 ]
 
+{ #category : #arithmetic }
+NDArray >> reciprocal [
+   ^ self class new withShape: shape with: (data collect: #reciprocal)
+]
+
 { #category : #adverbs }
 NDArray >> reduce: aBlock [
    | newData |
