@@ -259,6 +259,13 @@ PharoNDArrayTest >> testReverse [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testRoll [
+   self assert: (NDArray withAll: #(1 1 1)) roll equals: #(1 1 1).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) roll ravel sum <= 21).
+   self should: [ (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) roll ] raise: RangeError
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testRotate [
    self assert: ((NDArray withAll: #(1 2 3)) rotate: 1) equals: #(2 3 1).
    self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) rotate: 2) equals: #(#(3 1 2) #(3 1 2)).

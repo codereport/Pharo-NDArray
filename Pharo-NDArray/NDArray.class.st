@@ -280,6 +280,13 @@ NDArray >> reverse [
    ^ self class new withShape: shape with: newData
 ]
 
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> roll [
+   (data anySatisfy: #negative) ifTrue: [ ^ RangeError signal ].
+   ^ self class new withShape: shape with: (data collect: [ :e | (1 to: e) atRandom ])
+
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> rotate: anInteger [
    | newData |
