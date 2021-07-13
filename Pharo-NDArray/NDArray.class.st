@@ -140,6 +140,11 @@ NDArray >> eq: anObject [
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
+{ #category : #'mathematical functions' }
+NDArray >> exp [
+   ^ self class new withShape: shape with: (data collect: #exp)
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> filter: aCollection [ 
    | newData |

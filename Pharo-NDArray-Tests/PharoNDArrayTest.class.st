@@ -71,6 +71,11 @@ PharoNDArrayTest >> testEquals [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testExp [
+   self assert: ((NDArray withAll: #(1 -2 3)) exp * 100) floor equals: #(271 13 2008).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFilter [
    | arr |
    self assert: (NDArray withAll: #(1 3)) equals: #(1 3).
