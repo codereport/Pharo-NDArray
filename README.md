@@ -64,6 +64,7 @@ Each step of the above code creates the following:
 * `exp`
 * `floor`
 * `not`
+* `roll`
 * `sign`
 
 ### Verbs (Scalar Dyadic)
@@ -88,6 +89,7 @@ Each step of the above code creates the following:
 * `ravel`
 * `reverse`
 * `size`
+* `sum`
 * `transpose`
 * `unique`
 
