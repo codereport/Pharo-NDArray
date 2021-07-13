@@ -64,6 +64,7 @@ Each step of the above code creates the following:
 * `exp`
 * `floor`
 * `not`
+* `reciprocal`
 * `roll`
 * `sign`
 
