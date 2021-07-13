@@ -312,6 +312,11 @@ NDArray >> size [
 ]
 
 { #category : #'verbs (monadic)' }
+NDArray >> sum [
+   ^ self reduce: #+
+]
+
+{ #category : #'verbs (monadic)' }
 NDArray >> transpose [
    | chunkedData newData |
    self rank < 2 ifTrue: [ ^ self copy ].

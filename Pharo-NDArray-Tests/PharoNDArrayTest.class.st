@@ -287,6 +287,14 @@ PharoNDArrayTest >> testShape [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testSum [
+   self assert: (NDArray withAll: #(1 2 3)) sum equals: 6.
+   self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) sum equals: #(6 15).
+   self assert: (NDArray withShape: #(2 2 3) with: 12 iota) sum equals: #(#(6 15) #(24 33)).
+   self assert: (5 iota asNDArray = 1) ints sum equals: 1.
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testSumEvens [
    | vals |
    vals := #(42 1729 4104) asNDArray.
