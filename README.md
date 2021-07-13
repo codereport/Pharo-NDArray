@@ -61,6 +61,7 @@ Each step of the above code creates the following:
 
 * `abs`
 * `ceiling`
+* `exp`
 * `floor`
 * `not`
 * `sign`
