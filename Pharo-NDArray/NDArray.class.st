@@ -287,7 +287,7 @@ NDArray >> reverse [
 
 { #category : #'verbs (scalar monadic)' }
 NDArray >> roll [
-   (data anySatisfy: #negative) ifTrue: [ ^ RangeError signal ].
+   (data anySatisfy: #negative) ifTrue: [ ^ DomainError signal ].
    ^ self class new withShape: shape with: (data collect: [ :e | (1 to: e) atRandom ])
 
 ]

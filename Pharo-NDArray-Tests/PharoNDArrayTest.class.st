@@ -269,7 +269,7 @@ PharoNDArrayTest >> testReverse [
 PharoNDArrayTest >> testRoll [
    self assert: (NDArray withAll: #(1 1 1)) roll equals: #(1 1 1).
    self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) roll ravel sum <= 21).
-   self should: [ (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) roll ] raise: RangeError
+   self should: [ (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) roll ] raise: DomainError
 ]
 
 { #category : #tests }
