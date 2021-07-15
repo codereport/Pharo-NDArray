@@ -14,7 +14,8 @@ Class {
 	#classTraits : 'ComposeSyntax classTrait',
 	#instVars : [
 		'data',
-		'shape'
+		'shape',
+		'isNested'
 	],
 	#category : #'Pharo-NDArray'
 }
@@ -145,7 +146,7 @@ NDArray >> exp [
    ^ self class new withShape: shape with: (data collect: #exp)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'verbs (scalar monadic)' }
 NDArray >> factorial [
    (data anySatisfy: #negative) ifTrue: [ ^ DomainError signal ].
    ^ self class new withShape: shape with: (data collect: #factorial)
