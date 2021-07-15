@@ -17,6 +17,13 @@ PharoNDArrayTest >> assert: actual equals: expected [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testAbsoluteValue [
+   self assert: (NDArray withAll: #(1 -2 3)) abs equals: #(1 2 3).
+   self assert: (NDArray withAll: #(#(-1 -2 -3) #(4 5 6))) abs ravel equals: 6 iota asNDArray.
+   self assert: (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) abs equals: #(#(1 2 3) #(4 5 6)).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testAllEqual [
    | v u |
    v := #(1 2 3 4) asNDArray.
@@ -41,6 +48,12 @@ PharoNDArrayTest >> testArraySign [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testCeiling [
+   self assert: (NDArray withAll: #(1 -2.2 3.6)) ceiling equals: #(1 -2 4).
+   self assert: (NDArray withAll: #(#(-1.1 -2 -3.6) #(4.4 5.5 6.7))) ceiling equals: #(#(-1 -2 -3) #(5 6 7)).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testEquals [
    self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(true false false).
    self assert: 1 = (NDArray withAll: #(1 2 3)) equals: #(true false false).
@@ -55,6 +68,11 @@ PharoNDArrayTest >> testEquals [
    self assert: (1 asNDArray = 3 iota asNDArray) ints equals: #(1 0 0)
    "self assert: (2 asNDArray = #(1 2 3)) ints equals: #(0 1 0)"
    "self assert: #(1 2 3) asNDArray = #(0 2 3) asNDArray equals: #(false true true)"
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testExp [
+   self assert: ((NDArray withAll: #(1 -2 3)) exp * 100) floor equals: #(271 13 2008).
 ]
 
 { #category : #tests }
@@ -79,6 +97,12 @@ PharoNDArrayTest >> testFirst [
    self assert: (NDArray withAll: #(1 2 3)) first equals: 1.
    self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) first equals: 1.
    self assert: (NDArray withAll: #(#(1 2) #(4 5))) first equals: 1
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testFloor [
+   self assert: (NDArray withAll: #(1 -2.2 3.6)) floor equals: #(1 -3 3).
+   self assert: (NDArray withAll: #(#(-1.1 -2 -3.6) #(4.4 5.5 6.7))) floor equals: #(#(-2 -2 -4) #(4 5 6)).
 ]
 
 { #category : #tests }
@@ -209,6 +233,13 @@ PharoNDArrayTest >> testRavel [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testReciprocal [ 
+   self assert: (NDArray withAll: #(1 -2 3)) reciprocal equals: {1. -1/2. 1/3}.
+   self assert: (NDArray withAll: #(#(-1 -2 -3) #(4 5 6))) reciprocal ravel equals: {-1. -1/2. -1/3. 1/4. 1/5. 1/6}.
+   self assert: (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) reciprocal equals: {{1. 1/2. 1/3}. {-1/4. -1/5. -1/6}}
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testReduce [
    "self assert: ((NDArray withAll: #()) reduce: #+) asArray equals: 0."
    self assert: ((NDArray withAll: #(1 2 3)) reduce: #+) equals: 6.
@@ -243,6 +274,13 @@ PharoNDArrayTest >> testReverse [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testRoll [
+   self assert: (NDArray withAll: #(1 1 1)) roll equals: #(1 1 1).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) roll ravel sum <= 21).
+   self should: [ (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) roll ] raise: DomainError
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testRotate [
    self assert: ((NDArray withAll: #(1 2 3)) rotate: 1) equals: #(2 3 1).
    self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) rotate: 2) equals: #(#(3 1 2) #(3 1 2)).
@@ -268,6 +306,14 @@ PharoNDArrayTest >> testShape [
    self should: [ #(#(1 2 3) #(4 5)) shape ] raise: JaggedArray.
    self assert: #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5 6))) shape equals: #(2 2 3).
    self should: [ #(#(#(1 2 3) #(4 5 6)) #(#(1 2 3) #(4 5))) shape ] raise: JaggedArray
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testSum [
+   self assert: (NDArray withAll: #(1 2 3)) sum equals: 6.
+   self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) sum equals: #(6 15).
+   self assert: (NDArray withShape: #(2 2 3) with: 12 iota) sum equals: #(#(6 15) #(24 33)).
+   self assert: (5 iota asNDArray = 1) ints sum equals: 1.
 ]
 
 { #category : #tests }

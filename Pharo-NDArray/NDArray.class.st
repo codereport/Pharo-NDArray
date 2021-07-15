@@ -1,3 +1,12 @@
+"
+A class for representing n-dimensional arrays.
+ 
+Internal Representation and Key Implementation Points.
+
+  Instance Variables
+	data:		Array
+	shape:	Array
+"
 Class {
 	#name : #NDArray,
 	#superclass : #Object,
@@ -60,6 +69,11 @@ NDArray >> > anObject [
    ^ self class new withShape: shape with: (data collect: #> @@ anObject)
 ]
 
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> abs [
+   ^ self class new withShape: shape with: (data collect: #abs)
+]
+
 { #category : #arithmetic }
 NDArray >> adaptToNumber: anInteger andSend: aSymbol [
    aSymbol = #+ ifTrue: [ ^ self + anInteger ].
@@ -101,6 +115,11 @@ NDArray >> asString [
    ^ String newFrom: data
 ]
 
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> ceiling [
+   ^ self class new withShape: shape with: (data collect: #ceiling)
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> collect: aUnaryBlock [
    | newData |
@@ -119,6 +138,11 @@ NDArray >> eq: anObject [
    self rank = 0 ifTrue: [ ^ self class new withShape: anObject shape with: (anObject data collect: self first @@ #=) ].
    (self rank = anObject rank and: self shape ~~ anObject shape) ifTrue: [ ^ ShapeError signal ].
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
+]
+
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> exp [
+   ^ self class new withShape: shape with: (data collect: #exp)
 ]
 
 { #category : #'as yet unclassified' }
@@ -145,6 +169,11 @@ NDArray >> filterPred: aUnaryBlock [
 { #category : #'verbs (monadic)' }
 NDArray >> first [
    ^ data first
+]
+
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> floor [
+   ^ self class new withShape: shape with: (data collect: #floor)
 ]
 
 { #category : #trains }
@@ -227,6 +256,11 @@ NDArray >> ravel [
    ^ self class new withAll: data
 ]
 
+{ #category : #arithmetic }
+NDArray >> reciprocal [
+   ^ self class new withShape: shape with: (data collect: #reciprocal)
+]
+
 { #category : #adverbs }
 NDArray >> reduce: aBlock [
    | newData |
@@ -255,6 +289,13 @@ NDArray >> reverse [
    newData := data groupsOf: shape last 
            :> collect: [ :e | e reversed ] as: Array.
    ^ self class new withShape: shape with: newData
+]
+
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> roll [
+   (data anySatisfy: #negative) ifTrue: [ ^ DomainError signal ].
+   ^ self class new withShape: shape with: (data collect: [ :e | (1 to: e) atRandom ])
+
 ]
 
 { #category : #'verbs (dyadic)' }
@@ -286,6 +327,11 @@ NDArray >> sign [
 { #category : #accessing }
 NDArray >> size [
    ^ shape last
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> sum [
+   ^ self reduce: #+
 ]
 
 { #category : #'verbs (monadic)' }
@@ -323,7 +369,7 @@ NDArray >> windowed: anInteger reduce: aBinaryBlock [
 { #category : #'instance creation' }
 NDArray >> withAll: aCollection [
    data := aCollection flattened.
-   shape := aCollection shape 
+   shape := aCollection shape
 ]
 
 { #category : #initialization }

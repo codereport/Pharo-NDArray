@@ -59,7 +59,13 @@ Each step of the above code creates the following:
 
 ### Verbs (Scalar Monadic)
 
+* `abs`
+* `ceiling`
+* `exp`
+* `floor`
 * `not`
+* `reciprocal`
+* `roll`
 * `sign`
 
 ### Verbs (Scalar Dyadic)
@@ -84,6 +90,7 @@ Each step of the above code creates the following:
 * `ravel`
 * `reverse`
 * `size`
+* `sum`
 * `transpose`
 * `unique`
 
