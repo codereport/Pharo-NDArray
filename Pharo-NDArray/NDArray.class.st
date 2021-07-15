@@ -121,6 +121,12 @@ NDArray >> eq: anObject [
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
+{ #category : #'as yet unclassified' }
+NDArray >> factorial [
+   (data anySatisfy: #negative) ifTrue: [ ^ DomainError signal ].
+   ^ self class new withShape: shape with: (data collect: #factorial)
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> filter: aCollection [ 
    | newData |

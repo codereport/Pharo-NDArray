@@ -58,6 +58,14 @@ PharoNDArrayTest >> testEquals [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFactorial [
+   self assert: (NDArray withAll: #(1 2 3)) factorial equals: #(1 2 6).
+   self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) factorial ravel equals: #(1 2 6 24 120 720).
+   self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) factorial equals: #(#(1 2 6) #(24 120 720)).
+   self should: [ (NDArray withAll: #(#(1 2 3) #(-4 -5 -6))) factorial ] raise: DomainError
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFilter [
    | arr |
    self assert: (NDArray withAll: #(1 3)) equals: #(1 3).
