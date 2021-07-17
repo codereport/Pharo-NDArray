@@ -62,6 +62,7 @@ Each step of the above code creates the following:
 * `abs`
 * `ceiling`
 * `exp`
+* `factorial`
 * `floor`
 * `not`
 * `reciprocal`
