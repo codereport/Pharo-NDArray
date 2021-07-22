@@ -217,6 +217,12 @@ NDArray >> not [
    ^ self class new withShape: shape with: (data collect: 1 @@ #-)
 ]
 
+{ #category : #'as yet unclassified' }
+NDArray >> notMatches: anObject [
+   self shape = anObject asNDArray shape ifFalse: [ ^ true ].
+   ^ (self data = anObject asNDArray data) not "TODO fix when != implemented"
+]
+
 { #category : #adverbs }
 NDArray >> outerProduct: anObject with: aBinaryBlock [
    | newData |

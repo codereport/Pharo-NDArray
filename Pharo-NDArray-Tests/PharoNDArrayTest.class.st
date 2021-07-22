@@ -191,6 +191,16 @@ PharoNDArrayTest >> testMultipleVerbs [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testNotMatches [
+   self deny: (1 asNDArray notMatches: 1).
+   self assert: ((NDArray withAll: #(1 2 3)) notMatches:1).
+   self deny: ((NDArray withAll: #(1 2 3)) notMatches: #(1 2 3)).
+   self deny: ((NDArray withAll: #(1 2 3)) notMatches: 3 iota asNDArray).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) notMatches: #(1 2 3) asNDArray).
+   self deny: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) notMatches: (3 iota asNDArray reshape: #(2 3)))
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testOuterProduct [
    self assert: (#(1 0) outerProduct: #(1 0 1 1 0 0) with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
    "self assert: (4 iota asNDArray = 4 iota) ints equals: #(1 1 1 1)."
