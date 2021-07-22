@@ -54,6 +54,13 @@ PharoNDArrayTest >> testCeiling [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testContainsDuplicates [
+   "Leetcode Problem 217 https://leetcode.com/problems/contains-duplicate/"
+   self assert: (#(1 2 3 1) asNDArray fork: #unique with: #notMatches: with: #yourself) equals: true.
+   self assert: ((#(1 2 3 1) asNDArray uniqueMask not eq: 1) reduce: #or:) equals: true.
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testEquals [
    self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(true false false).
    self assert: 1 = (NDArray withAll: #(1 2 3)) equals: #(true false false).
@@ -166,6 +173,7 @@ PharoNDArrayTest >> testMin [
 { #category : #tests }
 PharoNDArrayTest >> testMix [
    self assert: ((4 iota asNDArray) partition: #(1 0 1 0) asNDArray) mix equals: #((1) (3)) asNDArray.
+   self assert: ((4 iota asNDArray) partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #((1 2) (3 4)) asNDArray
 
 ]
 
