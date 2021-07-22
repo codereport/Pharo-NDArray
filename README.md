@@ -100,6 +100,7 @@ Each step of the above code creates the following:
 * `filter:`
 * `filterPred:`
 * `matches:`
+* `notMatches:`
 * `partition:`
 * `reshape:`
 * `rotate:`
