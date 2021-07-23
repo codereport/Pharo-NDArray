@@ -367,12 +367,12 @@ NDArray >> unique [
 NDArray >> uniqueMask [
    | values newData |
    self rank = 0 ifTrue: [ ^ 1 ].
-   self rank = 1 ifTrue: [ 
+   self rank = 1 ifTrue: [
       values := Set new.
-      newData := data collect: [ :e | (values includes: e) 
-         ifTrue: [ 0 ] 
-         ifFalse: [ values add: e. 1 ]] .
-         ^ self class new withShape: shape with: newData
+      newData := data collect: [ :e | (values includes: e)
+         ifTrue: [ 0 ]
+         ifFalse: [ values add: e. 1 ]].
+      ^ self class new withShape: shape with: newData
    ].
    ^ self error: 'Implement for higher ranks' 
    "^ DomainError signal
