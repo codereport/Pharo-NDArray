@@ -4,3 +4,8 @@ Extension { #name : #Object }
 Object >> isBoolean [
    ^ false
 ]
+
+{ #category : #'*Pharo-NDArray' }
+Object >> isNDArray [
+   ^ false
+]

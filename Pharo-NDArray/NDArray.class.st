@@ -190,6 +190,16 @@ NDArray >> ints [
    ^ self class new withShape: shape with: newData
 ]
 
+{ #category : #accessing }
+NDArray >> isNDArray [
+   ^ true
+]
+
+{ #category : #accessing }
+NDArray >> isNested [
+   ^ self first isNDArray
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> matches: anObject [
    self shape = anObject asNDArray shape ifFalse: [ ^ false ].
@@ -208,7 +218,15 @@ NDArray >> min: anInteger [
 
 { #category : #'verbs (monadic)' }
 NDArray >> mix [
-	self shouldBeImplemented.
+   | maxLength newShape newData |
+   self isNested ifFalse: [ ^ self ].
+   maxLength := (data collect: #size) reduce: #max:.
+   newShape := Array with: data size with: maxLength.
+   newData := data collect: [ :e | 
+                 e size = maxLength
+                    ifTrue: [ e data ]
+                    ifFalse: [ e data , (Array new: maxLength - e size withAll: 0) ] ].
+   ^ self class new withShape: newShape with: newData
 ]
 
 { #category : #'verbs (scalar monadic)' }
