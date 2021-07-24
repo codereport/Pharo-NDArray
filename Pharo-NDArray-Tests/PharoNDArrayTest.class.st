@@ -366,8 +366,18 @@ PharoNDArrayTest >> testTranspose [
 PharoNDArrayTest >> testUnique [
    "self assert: 3 asNDArray unique equals: 3."
    self assert: (3 iota reshape: #(9)) unique equals: #(1 2 3).
-   self assert: (3 iota reshape: #(3 3)) unique equals: (3 iota reshape: #(1 3)).
-"   self assert: (9 iota reshape: #(3 3 3)) unique equals: (9 iota reshape: #(1 3 3))"
+   self assert: (3 iota reshape: #(3 3)) unique equals: (3 iota reshape: #(1 3))
+   "self assert: (9 iota reshape: #(3 3 3)) unique equals: (9 iota reshape: #(1 3 3))"
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testUniqueMask [
+   self assert: 3 asNDArray uniqueMask equals: 1.
+   self assert: #(3 3 3) asNDArray uniqueMask equals: #(1 0 0).
+   self assert: (3 iota reshape: #(9)) uniqueMask equals: #(1 1 1 0 0 0 0 0 0).
+   self assert: (7 iota reshape: #(10 10)) uniqueMask equals: (10 iota asNDArray < 8) ints.
+   self assert: (7 iota reshape: #(8 10)) uniqueMask equals: (8 iota asNDArray < 8) ints.
+   self assert: (4 iota reshape: #(5 6 7)) uniqueMask equals: #(1 1 0 0 0)
 ]
 
 { #category : #tests }

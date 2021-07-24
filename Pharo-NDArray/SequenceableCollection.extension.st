@@ -32,3 +32,12 @@ SequenceableCollection >> shape [
    nextDims allEqual ifFalse: [ ^ JaggedArray signal ].
    ^ dim , nextDims first
 ]
+
+{ #category : #'*Pharo-NDArray' }
+SequenceableCollection >> uniqueMask [
+   | values |
+   values := Set new.
+   ^ self collect: [ :e | (values includes: e) 
+          ifTrue: [ 0 ] 
+         ifFalse: [ values add: e. 1 ]]
+]

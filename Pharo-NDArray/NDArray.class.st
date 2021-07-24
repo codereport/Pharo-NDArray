@@ -365,21 +365,13 @@ NDArray >> unique [
 
 { #category : #'verbs (monadic)' }
 NDArray >> uniqueMask [
-   | values newData |
+   | atoms newData newShape |
    self rank = 0 ifTrue: [ ^ 1 ].
-   self rank = 1 ifTrue: [
-      values := Set new.
-      newData := data collect: [ :e | (values includes: e)
-         ifTrue: [ 0 ]
-         ifFalse: [ values add: e. 1 ]].
-      ^ self class new withShape: shape with: newData
-   ].
-   ^ self error: 'Implement for higher ranks' 
-   "^ DomainError signal
+   self rank = 1 ifTrue: [ ^ self class new withAll: data uniqueMask ].
    atoms := shape allButFirst product.
-   newData := (data groupsOf: atoms) asArray unique.
-   newShape := (Array with: newData size) , shape allButFirst.
-   ^ self class new withShape: newShape with: newData"
+   newData := (data groupsOf: atoms) asArray uniqueMask.
+   newShape := Array with: shape first.
+   ^ self class new withShape: newShape with: newData
 ]
 
 { #category : #adverbs }
