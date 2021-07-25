@@ -94,12 +94,14 @@ Each step of the above code creates the following:
 * `sum`
 * `transpose`
 * `unique`
+* `where`
 
 ### Verbs (Dyadic)
 
 * `filter:`
 * `filterPred:`
 * `matches:`
+* `memberOf:`
 * `notMatches:`
 * `partition:`
 * `reshape:`
