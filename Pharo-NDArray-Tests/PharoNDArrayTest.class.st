@@ -100,6 +100,14 @@ PharoNDArrayTest >> testFilter [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFindDisappearedNumbers [
+   self
+      assert: (#(4 3 2 7 8 2 3 1) asNDArray fork: [ :e | e size iota asNDArray ] with: #memberOf: with: #yourself) not where
+      equals: #(5 6)
+   "vvv make it so ints is not needed"
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFirst [
    self assert: (NDArray withAll: #(1 2 3)) first equals: 1.
    self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) first equals: 1.
@@ -378,6 +386,13 @@ PharoNDArrayTest >> testUniqueMask [
    self assert: (7 iota reshape: #(10 10)) uniqueMask equals: (10 iota asNDArray < 8) ints.
    self assert: (7 iota reshape: #(8 10)) uniqueMask equals: (8 iota asNDArray < 8) ints.
    self assert: (4 iota reshape: #(5 6 7)) uniqueMask equals: #(1 1 0 0 0)
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testWhere [
+   self assert: #(1 0 1 0) asNDArray where equals: #(1 3).
+   "self assert: (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix equals: #(#(1 2) #(4 0)) asNDArray
+   self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
 ]
 
 { #category : #tests }

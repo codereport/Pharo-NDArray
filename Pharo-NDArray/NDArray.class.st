@@ -211,6 +211,17 @@ NDArray >> max: anInteger [
    ^ self class new withShape: shape with: (data collect: anInteger @@ #max:)
 ]
 
+{ #category : #'verbs (dyadic)' }
+NDArray >> memberOf: aNDArray [
+   | hashedValues newData |
+   self rank = 0 ifTrue: [ ^ RankError signal ].
+   self rank = 1 ifTrue: [ 
+      hashedValues := aNDArray data asSet.
+      newData := data collect: [ :e | hashedValues includes: e ].
+      ^ self class new withShape: shape with: newData ].
+   ^ self error: 'Implement for higher ranks'
+]
+
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> min: anInteger [ 
    ^ self class new withShape: shape with: (data collect: anInteger @@ #min:)
@@ -231,8 +242,9 @@ NDArray >> mix [
 
 { #category : #'verbs (scalar monadic)' }
 NDArray >> not [
-   "error if not boolean array"
-   ^ self class new withShape: shape with: (data collect: 1 @@ #-)
+   "should it be isBooleanValue?"
+   (data allSatisfy: #isBoolean) ifFalse: [ ^ DomainError signal ].
+   ^ (self class new withShape: shape with: (data collect: #not)) ints
 ]
 
 { #category : #'verbs (dyadic)' }
@@ -390,6 +402,17 @@ NDArray >> uniqueMask [
    newData := (data groupsOf: atoms) asArray uniqueMask.
    newShape := Array with: shape first.
    ^ self class new withShape: newShape with: newData
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> where [
+   self rank = 0 ifTrue: [ ^ RankError signal ].
+   self rank = 1 ifTrue: [ 
+      ^ data withIndexCollect: #@ 
+         :> select: [ :p | p x == 1 ]
+         :> collect: #y 
+         :> asNDArray ].
+   ^ self error: 'Implement for higher ranks'
 ]
 
 { #category : #adverbs }

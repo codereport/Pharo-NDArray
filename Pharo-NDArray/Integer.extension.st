@@ -10,3 +10,13 @@ Integer >> = aNumber [
          ifFalse: [ ^ false ] ].
    ^ aNumber adaptToInteger: self andCompare: #=
 ]
+
+{ #category : #'*Pharo-NDArray' }
+Integer >> isBoolean [
+   ^ (self = 0) or: (self = 1)
+]
+
+{ #category : #'*Pharo-NDArray' }
+Integer >> not [
+   ^ 1 - self
+]
