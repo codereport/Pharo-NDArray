@@ -101,10 +101,10 @@ PharoNDArrayTest >> testFilter [
 
 { #category : #tests }
 PharoNDArrayTest >> testFindDisappearedNumbers [
+   "LeetCode Problem Link: https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/"
    self
       assert: (#(4 3 2 7 8 2 3 1) asNDArray fork: [ :e | e size iota asNDArray ] with: #memberOf: with: #yourself) not where
       equals: #(5 6)
-   "vvv make it so ints is not needed"
 ]
 
 { #category : #tests }
