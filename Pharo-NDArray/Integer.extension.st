@@ -12,11 +12,12 @@ Integer >> = aNumber [
 ]
 
 { #category : #'*Pharo-NDArray' }
-Integer >> isBoolean [
-   ^ (self = 0) or: (self = 1)
+Integer >> isBooleanValue [
+   ^ self = 0 or: self = 1
 ]
 
 { #category : #'*Pharo-NDArray' }
 Integer >> not [
+   self isBooleanValue ifFalse: [ ^ DomainError signal ].
    ^ 1 - self
 ]

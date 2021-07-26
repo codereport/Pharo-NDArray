@@ -6,6 +6,11 @@ Object >> isBoolean [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Object >> isBooleanValue [
+   ^ false
+]
+
+{ #category : #'*Pharo-NDArray' }
 Object >> isNDArray [
    ^ false
 ]

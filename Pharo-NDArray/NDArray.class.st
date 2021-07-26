@@ -242,8 +242,7 @@ NDArray >> mix [
 
 { #category : #'verbs (scalar monadic)' }
 NDArray >> not [
-   "should it be isBooleanValue?"
-   (data allSatisfy: #isBoolean) ifFalse: [ ^ DomainError signal ].
+   (data allSatisfy: [ :e | e isBooleanValue or: e isBoolean ]) ifFalse: [ ^ DomainError signal ].
    ^ (self class new withShape: shape with: (data collect: #not)) ints
 ]
 

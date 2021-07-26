@@ -57,7 +57,7 @@ PharoNDArrayTest >> testCeiling [
 PharoNDArrayTest >> testContainsDuplicates [
    "Leetcode Problem 217 https://leetcode.com/problems/contains-duplicate/"
    self assert: (#(1 2 3 1) asNDArray fork: #unique with: #notMatches: with: #yourself) equals: true.
-   self assert: ((#(1 2 3 1) asNDArray uniqueMask not eq: 1) reduce: #or:) equals: true.
+   self assert: ((#(1 2 3 1) asNDArray uniqueMask not eq: 1) reduce: #or:) equals: true
 ]
 
 { #category : #tests }
