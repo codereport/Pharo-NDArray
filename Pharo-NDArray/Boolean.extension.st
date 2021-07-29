@@ -1,6 +1,11 @@
 Extension { #name : #Boolean }
 
 { #category : #'*Pharo-NDArray' }
+Boolean >> adaptToNumber: rcvr andSend: selector [ 
+	^ rcvr perform: selector with: self asBit
+]
+
+{ #category : #'*Pharo-NDArray' }
 Boolean >> asBoolean [
 	^ self 
 ]
