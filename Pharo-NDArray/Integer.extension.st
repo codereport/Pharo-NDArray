@@ -12,6 +12,11 @@ Integer >> = aNumber [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Integer >> and: anInteger [ 
+   ^ self * anInteger
+]
+
+{ #category : #'*Pharo-NDArray' }
 Integer >> isBooleanValue [
    ^ self = 0 or: self = 1
 ]
@@ -20,4 +25,9 @@ Integer >> isBooleanValue [
 Integer >> not [
    self isBooleanValue ifFalse: [ ^ DomainError signal ].
    ^ 1 - self
+]
+
+{ #category : #'*Pharo-NDArray' }
+Integer >> or: anInteger [ 
+   ^ self max: anInteger
 ]

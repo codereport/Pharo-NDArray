@@ -62,17 +62,17 @@ PharoNDArrayTest >> testContainsDuplicates [
 
 { #category : #tests }
 PharoNDArrayTest >> testEquals [
-   self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(true false false).
-   self assert: 1 = (NDArray withAll: #(1 2 3)) equals: #(true false false).
-   self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) = 2 equals: #(#(false true false) #(false true false)).
-   self assert: (NDArray withAll: #(#(1 2) #(4 5))) = 5 equals: #(#(false false) #(false true)).
-   self assert: 'hello' asNDArray = $l equals: #(false false true true false).
-   self assert: ('hello' asNDArray = $l) ints equals: #(0 0 1 1 0).
+   self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(1 0 0).
+   self assert: 1 = (NDArray withAll: #(1 2 3)) equals: #(1 0 0).
+   self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) = 2 equals: #(#(0 1 0) #(0 1 0)).
+   self assert: (NDArray withAll: #(#(1 2) #(4 5))) = 5 equals: #(#(0 0) #(0 1)).
+   self assert: 'hello' asNDArray = $l equals: #(0 0 1 1 0).
+   self assert: ('hello' asNDArray = $l) equals: #(0 0 1 1 0).
    self assert: true asInteger equals: 1.
    self assert: false asInteger equals: 0.
-   self assert: ('()(())' asNDArray = $() ints equals: #(1 0 1 1 0 0).
-   self assert: (2 = #(1 2 3) asNDArray) ints equals: #(0 1 0).
-   self assert: (1 asNDArray = 3 iota asNDArray) ints equals: #(1 0 0)
+   self assert: ('()(())' asNDArray = $() equals: #(1 0 1 1 0 0).
+   self assert: (2 = #(1 2 3) asNDArray) equals: #(0 1 0).
+   self assert: (1 asNDArray = 3 iota asNDArray) equals: #(1 0 0)
    "self assert: (2 asNDArray = #(1 2 3)) ints equals: #(0 1 0)"
    "self assert: #(1 2 3) asNDArray = #(0 2 3) asNDArray equals: #(false true true)"
 ]
@@ -122,8 +122,8 @@ PharoNDArrayTest >> testFloor [
 
 { #category : #tests }
 PharoNDArrayTest >> testFork [
-   self assert: (#(1 2 3) asNDArray fork: #yourself with: #= with: #first) equals: #(true false false).
-   self assert: (#(1 2 3) asNDArray fork: #first with: [ :a :b | b = a ] with: #yourself) equals: #(true false false)
+   self assert: (#(1 2 3) asNDArray fork: #yourself with: #= with: #first) equals: #(1 0 0).
+   self assert: (#(1 2 3) asNDArray fork: #first with: [ :a :b | b = a ] with: #yourself) equals: #(1 0 0)
    "                                                   ^^^^^^^^^^^^^^^^^ TODO: need to think about this"
 ]
 

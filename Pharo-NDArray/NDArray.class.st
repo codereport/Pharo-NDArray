@@ -58,10 +58,10 @@ NDArray >> < anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> = anObject [
-   (self rank = anObject rank and: [self shape ~= anObject shape]) ifTrue: [ ^ ShapeError signal ].
-   anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: anObject first @@ #=) ].
-   self rank = 0 ifTrue: [ ^ self class new withShape: anObject shape with: (anObject data collect: self first @@ #=) ].
-   (self rank = anObject rank and: [self shape = anObject shape]) ifTrue: [ ^ self data = anObject data ].
+   (self rank = anObject rank and: [ self shape ~= anObject shape ]) ifTrue: [ ^ ShapeError signal ].
+   anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: [ :e | (anObject first = e) asBit ]) ].
+   self rank = 0 ifTrue: [ ^ self class new withShape: anObject shape with: (anObject data collect: [ :e | (self first = e) asBit ]) ].
+   (self rank = anObject rank and: [ self shape = anObject shape ]) ifTrue: [ ^ (self data = anObject data) asBit ].
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
@@ -217,7 +217,7 @@ NDArray >> memberOf: aNDArray [
    self rank = 0 ifTrue: [ ^ RankError signal ].
    self rank = 1 ifTrue: [ 
       hashedValues := aNDArray data asSet.
-      newData := data collect: [ :e | hashedValues includes: e ].
+      newData := data collect: [ :e | (hashedValues includes: e) asBit ].
       ^ self class new withShape: shape with: newData ].
    ^ self error: 'Implement for higher ranks'
 ]
