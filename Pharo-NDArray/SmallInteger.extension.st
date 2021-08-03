@@ -12,6 +12,13 @@ SmallInteger >> asNDArray [
 ]
 
 { #category : #'*Pharo-NDArray' }
+SmallInteger >> ifTrue: aFullBlockClosure ifFalse: aFullBlockClosure2 [ 
+	self = 1 ifTrue: [ ^ aFullBlockClosure value ].
+	self = 0 ifTrue: [ ^ aFullBlockClosure2 value ].
+	^ self error: self asString, ' must be 0 or 1 for ifTrue:ifFalse:'
+]
+
+{ #category : #'*Pharo-NDArray' }
 SmallInteger >> shape [
 	^ #()
 ]
