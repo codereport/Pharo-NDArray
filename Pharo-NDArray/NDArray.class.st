@@ -292,7 +292,7 @@ NDArray >> ravel [
    ^ self class new withAll: data
 ]
 
-{ #category : #arithmetic }
+{ #category : #'verbs (monadic)' }
 NDArray >> reciprocal [
    ^ self class new withShape: shape with: (data collect: #reciprocal)
 ]
