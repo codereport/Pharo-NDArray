@@ -2,8 +2,9 @@ Extension { #name : #SmallInteger }
 
 { #category : #'*Pharo-NDArray' }
 SmallInteger >> asBoolean [
-   (self = 1 or: self = 0) ifFalse: [ ^ self error: 'Non-Boolean' ]. "TODO: Create exception"
-   ^ self = 1
+   self = 0 ifTrue: [ ^ false ].
+   self = 1 ifTrue: [ ^ true ].
+   ^ self error: 'Non-Boolean'  "TODO: Create exception"
 ]
 
 { #category : #'*Pharo-NDArray' }
