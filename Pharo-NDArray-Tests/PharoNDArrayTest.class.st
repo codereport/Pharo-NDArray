@@ -169,6 +169,15 @@ PharoNDArrayTest >> testMaxConsecutiveOnes [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testMaxSubArray [
+   "Leetcode Problem 53 https://leetcode.com/problems/maximum-subarray/"
+   self assert: ((#(-2 1 -3 4 -1 2 1 -5 4) asNDArray scan: [ :a :b | a + b max: b ]) reduce: #max:) equals: 6.
+   self assert: ((#(5 4 -1 7 8) asNDArray scan: [ :a :b | a + b max: b ]) reduce: #max:) equals: 23.
+   self assert: ((#(1) asNDArray scan: [ :a :b | a + b max: b ]) reduce: #max:) equals: 1.
+   self assert: ((#(-2) asNDArray scan: [ :a :b | a + b max: b ]) reduce: #max:) equals: -2
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testMaxWealth [
    self assert: (((9 iota asNDArray reshape: #(3 3)) reduce: #+) reduce: #max:) equals: 24.
    self assert: (((10 asNDArray reshape: #(3 3)) reduce: #+) reduce: #max:) equals: 30.
