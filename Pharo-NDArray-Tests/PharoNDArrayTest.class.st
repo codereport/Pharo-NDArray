@@ -12,7 +12,13 @@ PharoNDArrayTest >> assert: actual equals: expected [
    expected isBoolean ifTrue: [ ^ super assert: actual asBoolean equals: expected ].
    expected isInteger ifTrue: [ ^ super assert: actual asInteger equals: expected ].
    expected class = NDArray ifTrue: [ 
-      ^ super assert: (actual data = expected data and: actual shape = expected shape) ].
+	    "Note: all this code in the isNested block can be deleted when bug is fixed"
+      expected isNested ifTrue: [ 
+         actual isNested ifFalse: [ ^ self assert: false ].
+         actual size = expected size ifFalse: [ ^ self assert: false ].
+         ^ self assert: (actual data with: expected data collect: [ :a :b | a data = b data and: (a shape = b shape) ] 
+             :> allSatisfy: #yourself) ].
+      ^ self assert: (actual data = expected data and: (actual shape = expected shape)) ].
    ^ super assert: actual equals: expected
 ]
 
@@ -228,9 +234,10 @@ PharoNDArrayTest >> testOuterProduct [
 { #category : #tests }
 PharoNDArrayTest >> testPartition [
    | result |
-   result := {#(1 2) asNDArray. #(4 5) asNDArray} asNDArray.
-   self assert: (#(1 2 3 4 5) asNDArray partition: #(1 1 0 1 1) asNDArray) equals: result.
-
+   result := {
+                #(1 2) asNDArray.
+                #(4 5) asNDArray} asNDArray.
+   self assert: (#(1 2 3 4 5) asNDArray partition: #(1 1 0 1 1) asNDArray) equals: result
 ]
 
 { #category : #tests }
