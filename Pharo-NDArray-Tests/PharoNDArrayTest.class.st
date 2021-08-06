@@ -346,7 +346,7 @@ PharoNDArrayTest >> testSum [
    self assert: (NDArray withAll: #(1 2 3)) sum equals: 6.
    self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) sum equals: #(6 15).
    self assert: (NDArray withShape: #(2 2 3) with: 12 iota) sum equals: #(#(6 15) #(24 33)).
-   self assert: (5 iota asNDArray = 1) ints sum equals: 1.
+   self assert: (5 iota asNDArray = 1) sum equals: 1.
 ]
 
 { #category : #tests }
