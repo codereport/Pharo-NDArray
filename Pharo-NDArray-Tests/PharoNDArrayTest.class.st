@@ -408,6 +408,7 @@ PharoNDArrayTest >> testUniqueMask [
 PharoNDArrayTest >> testWhere [
    self assert: #(1 0 1 0) asNDArray where equals: #(1 3).
    self assert: (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix equals: #(#(1 2) #(4 0)) asNDArray.
+   self assert: (10 iota asNDArray % 2) where equals: 5 iota asNDArray * 2 - 1
    "self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
 ]
 
