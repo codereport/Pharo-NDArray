@@ -190,6 +190,14 @@ NDArray >> ints [
    ^ self class new withShape: shape with: newData
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> inverseWhere [
+   self data isSorted ifFalse: [ ^ DomainError signal ].
+   self rank = 0 ifTrue: [ ^ RankError signal ].
+   self rank = 1 ifTrue: [ ^ data last iota asNDArray memberOf: data ].
+   ^ self error: 'Implement for higher ranks'
+]
+
 { #category : #accessing }
 NDArray >> isNDArray [
    ^ true
@@ -216,7 +224,7 @@ NDArray >> memberOf: aNDArray [
    | hashedValues newData |
    self rank = 0 ifTrue: [ ^ RankError signal ].
    self rank = 1 ifTrue: [ 
-      hashedValues := aNDArray data asSet.
+      hashedValues := aNDArray asNDArray data asSet.
       newData := data collect: [ :e | (hashedValues includes: e) asBit ].
       ^ self class new withShape: shape with: newData ].
    ^ self error: 'Implement for higher ranks'
