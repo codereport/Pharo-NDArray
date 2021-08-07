@@ -370,6 +370,16 @@ NDArray >> sum [
    ^ self reduce: #+
 ]
 
+{ #category : #'verbs (dyadic)' }
+NDArray >> take: anInteger [
+   anInteger isNDArray ifTrue: [ ^ self error: 'take: only supports integer parameter currently' ].
+   self rank = 0 ifTrue: [ ^ data reshape: anInteger asArray ].
+   self rank = 1 ifTrue: [ 
+      data size >= anInteger ifTrue: [ ^ (data first: anInteger) asNDArray ]
+                             ifFalse: [ ^ data , (Array new: (anInteger - data size) withAll: 0) ] ].
+   ^ self error: 'Implement for higher ranks'
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> transpose [
    | chunkedData newData |
