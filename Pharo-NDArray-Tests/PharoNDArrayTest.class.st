@@ -121,6 +121,19 @@ PharoNDArrayTest >> testFirst [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFirstUniqueCharacher [
+   | a b c d |
+   a := #(1 3) asNDArray.
+   self assert: (((a outerProduct: a with: #=) reduce: #+) eq: 1) where first - 1 equals: 0.
+   b := #(1 3 1 3 2 5 5).
+   self assert: (((b outerProduct: b with: #=) reduce: #+) eq: 1) where first - 1 equals: 4.
+   c := #(1 3 2 5 2 5 4 1).
+   self assert: (((c outerProduct: c with: #=) reduce: #+) eq: 1) where first - 1 equals: 1.
+   d := #(1 3 2 5 2 5 4 1 3).
+   self assert: (((d outerProduct: d with: #=) reduce: #+) eq: 1) where first - 1 equals: 6
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFloor [
    self assert: (NDArray withAll: #(1 -2.2 3.6)) floor equals: #(1 -3 3).
    self assert: (NDArray withAll: #(#(-1.1 -2 -3.6) #(4.4 5.5 6.7))) floor equals: #(#(-2 -2 -4) #(4 5 6)).
