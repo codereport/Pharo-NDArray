@@ -374,6 +374,17 @@ NDArray >> size [
 ]
 
 { #category : #'verbs (monadic)' }
+NDArray >> split [
+   self rank = 0 ifTrue: [ ^ self ].
+   self rank = 1 ifTrue: [ ^ self enclose ].
+   self rank = 2 ifTrue: [
+      | newData |
+      newData := (data groupsOf: shape last) collect: #asNDArray as: Array.
+      ^ self class new withShape: shape allButLast with: newData ].
+   ^ self error: 'Implement for higher ranks'
+]
+
+{ #category : #'verbs (monadic)' }
 NDArray >> sum [
    ^ self reduce: #+
 ]
