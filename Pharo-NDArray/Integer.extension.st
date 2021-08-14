@@ -17,6 +17,11 @@ Integer >> and: anInteger [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Integer >> ifFalse: aFullBlockClosure [ 
+   ^ self asBoolean ifFalse: aFullBlockClosure .
+]
+
+{ #category : #'*Pharo-NDArray' }
 Integer >> isBooleanValue [
    ^ self = 0 or: self = 1
 ]

@@ -157,6 +157,9 @@ PharoNDArrayTest >> testFourWords [
 { #category : #tests }
 PharoNDArrayTest >> testInverseIota [
    self assert: #(1 2 3) asNDArray invIota equals: 3.
+   self should: [ #(2 3 4) asNDArray invIota ] raise: DomainError.
+   self should: [ #(1 3 4) asNDArray invIota ] raise: DomainError.
+   self assert: 100 iota asNDArray invIota equals: 100.
    "self assert: (#(1 3) asNDArray invWhere take: 4) equals: #(1 0 1 0)
    self assert: ((5 iota asNDArray * 2 - 1) inverseWhere take: 10) equals: 10 iota asNDArray % 2.
    self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
