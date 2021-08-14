@@ -87,6 +87,7 @@ Each step of the above code creates the following:
 * `asString`
 * `first`
 * `ints`
+* `invIota`
 * `invWhere`
 * `mix`
 * `ravel`
