@@ -190,6 +190,12 @@ NDArray >> ints [
    ^ self class new withShape: shape with: newData
 ]
 
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> invFactorial [
+   (data anySatisfy: #negative) ifTrue: [ ^ DomainError signal ].
+   ^ self class new withShape: shape with: (data collect: #invFactorial)
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> invIota [
    self rank = 0 ifTrue: [ ^ RankError signal ].
