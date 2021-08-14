@@ -274,7 +274,7 @@ NDArray >> outerProduct: anObject with: aBinaryBlock [
 
 { #category : #'verbs (dyadic)' }
 NDArray >> partition: anNDArray [ 
-   ^ data with: anNDArray data collect: #@
+   ^ data with: anNDArray asNDArray data collect: #@
       :> groupByRuns: #y
       :> select: [ :e | e first y asBoolean ]
       :> collect: [ :e | (e collect: #x) asNDArray ]

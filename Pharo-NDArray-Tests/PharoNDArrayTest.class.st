@@ -216,8 +216,8 @@ PharoNDArrayTest >> testMin [
 
 { #category : #tests }
 PharoNDArrayTest >> testMix [
-   self assert: (4 iota asNDArray partition: #(1 0 1 0) asNDArray) mix equals: #(#(1) #(3)) asNDArray.
-   self assert: (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix equals: #(#(1 2) #(4 0)) asNDArray
+   self assert: (4 iota asNDArray partition: #(1 0 1 0)) mix equals: #(#(1) #(3)) asNDArray.
+   self assert: (4 iota asNDArray partition: #(1 1 0 1)) mix equals: #(#(1 2) #(4 0)) asNDArray
    "self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
 ]
 
@@ -267,7 +267,7 @@ PharoNDArrayTest >> testPartition [
    result := {
                 #(1 2) asNDArray.
                 #(4 5) asNDArray} asNDArray.
-   self assert: (#(1 2 3 4 5) asNDArray partition: #(1 1 0 1 1) asNDArray) equals: result
+   self assert: (#(1 2 3 4 5) asNDArray partition: #(1 1 0 1 1)) equals: result
 ]
 
 { #category : #tests }
@@ -373,8 +373,8 @@ PharoNDArrayTest >> testShape [
 
 { #category : #tests }
 PharoNDArrayTest >> testSplit [
-   self assert: (4 iota asNDArray partition: #(1 0 1 0) asNDArray) equals: #(#(1) #(3)) asNDArray split.
-   self assert: (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix split equals: #(#(1 2) #(4 0)) asNDArray split
+   self assert: (4 iota asNDArray partition: #(1 0 1 0)) equals: #(#(1) #(3)) asNDArray split.
+   self assert: (4 iota asNDArray partition: #(1 1 0 1)) mix split equals: #(#(1 2) #(4 0)) asNDArray split
    "self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
 ]
 
