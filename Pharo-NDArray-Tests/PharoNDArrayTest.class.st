@@ -374,8 +374,8 @@ PharoNDArrayTest >> testShape [
 { #category : #tests }
 PharoNDArrayTest >> testSplit [
    self assert: (4 iota asNDArray partition: #(1 0 1 0) asNDArray) equals: #(#(1) #(3)) asNDArray split.
-   "self assert: (4 iota asNDArray partition: #(1 1 0 1) asNDArray) equals: #(#(1 2) #(4 0)) asNDArray split
-   self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
+   self assert: (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix split equals: #(#(1 2) #(4 0)) asNDArray split
+   "self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
 ]
 
 { #category : #tests }
