@@ -87,10 +87,12 @@ Each step of the above code creates the following:
 * `asString`
 * `first`
 * `ints`
+* `invWhere`
 * `mix`
 * `ravel`
 * `reverse`
 * `size`
+* `split`
 * `sum`
 * `transpose`
 * `unique`
@@ -106,6 +108,7 @@ Each step of the above code creates the following:
 * `partition:`
 * `reshape:`
 * `rotate:`
+* `take:`
 
 ### Trains
 
