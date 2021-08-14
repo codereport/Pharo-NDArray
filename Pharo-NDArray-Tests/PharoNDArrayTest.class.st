@@ -156,8 +156,8 @@ PharoNDArrayTest >> testFourWords [
 
 { #category : #tests }
 PharoNDArrayTest >> testInverseWhere [
-   self assert: #(1 3) asNDArray inverseWhere equals: #(1 0 1).
-   self assert: (#(1 3) asNDArray inverseWhere take: 4) equals: #(1 0 1 0).
+   self assert: #(1 3) asNDArray invWhere equals: #(1 0 1).
+   self assert: (#(1 3) asNDArray invWhere take: 4) equals: #(1 0 1 0).
    "self assert: ((5 iota asNDArray * 2 - 1) inverseWhere take: 10) equals: 10 iota asNDArray % 2.
    self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
 ]

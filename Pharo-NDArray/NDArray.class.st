@@ -191,7 +191,7 @@ NDArray >> ints [
 ]
 
 { #category : #'verbs (monadic)' }
-NDArray >> inverseWhere [
+NDArray >> invWhere [
    self data isSorted ifFalse: [ ^ DomainError signal ].
    self rank = 0 ifTrue: [ ^ RankError signal ].
    self rank = 1 ifTrue: [ ^ data last iota asNDArray memberOf: data ].
