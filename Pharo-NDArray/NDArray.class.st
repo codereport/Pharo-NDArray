@@ -464,3 +464,9 @@ NDArray >> withShape: aCollection with: anObject [
    shape := aCollection.
    data := anObject asArray flattened cycle: shape product
 ]
+
+{ #category : #'verbs (dyadic)' }
+NDArray >> without: anNDArray [
+	self rank >= 2 ifTrue: [ ^ RankError signal ].
+	^ (self data copyWithoutAll: anNDArray asNDArray data) asNDArray
+]

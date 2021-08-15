@@ -466,3 +466,12 @@ PharoNDArrayTest >> testWithShapeWith [
    self assert: (NDArray withShape: #(6) with: 'cat') equals: #($c $a $t $c $a $t).
    self assert: (NDArray withShape: #(2 2) with: 'cat') equals: #(($c $a) ($t $c))
 ]
+
+{ #category : #tests }
+PharoNDArrayTest >> testWithout [
+	self assert: (5 iota asNDArray without: 3 iota) equals: #(4 5).
+	self assert: (10 asNDArray without: 42) equals: #(10).
+	self assert: (#(1 2 3 4) asNDArray without: #(3 4 5)) equals: #(1 2).
+	self assert: (#(1 3 4) asNDArray without: #(3 4 5)) equals: #(1).
+	self assert: (#(1 3 4) asNDArray without: 4) equals: #(1 3)
+]
