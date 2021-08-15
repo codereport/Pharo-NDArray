@@ -111,6 +111,7 @@ Each step of the above code creates the following:
 * `reshape:`
 * `rotate:`
 * `take:`
+* `without:`
 
 ### Trains
 
