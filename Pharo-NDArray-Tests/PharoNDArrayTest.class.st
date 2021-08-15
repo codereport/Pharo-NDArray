@@ -155,6 +155,23 @@ PharoNDArrayTest >> testFourWords [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testInverseFactorial [
+   self assert: 720 invFactorial equals: 6.
+   self assert: #(720 24 120) asNDArray invFactorial equals: #(6 4 5).
+   self should: [ 343 invFactorial ] raise: DomainError.
+   self should: [ #(1 2 343) asNDArray invIota ] raise: DomainError.
+   self assert: 12 iota asNDArray factorial invFactorial equals: 12 iota asNDArray
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testInverseIota [
+   self assert: #(1 2 3) asNDArray invIota equals: 3.
+   self should: [ #(2 3 4) asNDArray invIota ] raise: DomainError.
+   self should: [ #(1 3 4) asNDArray invIota ] raise: DomainError.
+   self assert: 100 iota asNDArray invIota equals: 100
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testInverseWhere [
    self assert: #(1 3) asNDArray invWhere equals: #(1 0 1).
    self assert: (#(1 3) asNDArray invWhere take: 4) equals: #(1 0 1 0).

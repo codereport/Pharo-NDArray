@@ -190,6 +190,22 @@ NDArray >> ints [
    ^ self class new withShape: shape with: newData
 ]
 
+{ #category : #'verbs (scalar monadic)' }
+NDArray >> invFactorial [
+   (data anySatisfy: #negative) ifTrue: [ ^ DomainError signal ].
+   ^ self class new withShape: shape with: (data collect: #invFactorial)
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> invIota [
+   self rank = 0 ifTrue: [ ^ RankError signal ].
+   self data first = 1 ifFalse: [ ^ DomainError signal ].
+   "asBoolean vvv figure out why needed"
+   (((self windowed: 2 reduce: #-) eq: -1) reduce: #and:) asBoolean ifFalse: [ ^ DomainError signal ].
+   self rank = 1 ifTrue: [ ^ data last ].
+   ^ self error: 'Implement for higher ranks'
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> invWhere [
    self data isSorted ifFalse: [ ^ DomainError signal ].
