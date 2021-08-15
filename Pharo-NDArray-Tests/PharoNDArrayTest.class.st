@@ -155,6 +155,12 @@ PharoNDArrayTest >> testFourWords [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testHook [
+	self assert: (#(1 2 1) asNDArray hook: #= with: #reverse) equals: true. "palindrome"
+	self assert: (#(1 2 1) asNDArray hook: #= with: #reverse) equals: 1 "palindrome"
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testInverseFactorial [
    self assert: 720 invFactorial equals: 6.
    self assert: #(720 24 120) asNDArray invFactorial equals: #(6 4 5).

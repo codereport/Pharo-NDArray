@@ -183,6 +183,12 @@ NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
    ^ binaryBlock value: (leftBlock value: self) value: (rightBlock value: self)
 ]
 
+{ #category : #trains }
+NDArray >> hook: binaryBlock with: unaryBlock [
+   "rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ]."
+   ^ binaryBlock value: self value: (unaryBlock value: self)
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> ints [
    | newData |
