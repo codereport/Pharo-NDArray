@@ -57,6 +57,11 @@ NDArray >> < anObject [
 ]
 
 { #category : #'verbs (scalar dyadic)' }
+NDArray >> <= anObject [
+   ^ self class new withShape: shape with: (data collect: [ :e | (e <= anObject) asBit ])
+]
+
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> = anObject [
    (self rank = anObject rank and: [ self shape ~= anObject shape ]) ifTrue: [ ^ ShapeError signal ].
    anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: [ :e | (anObject first = e) asBit ]) ].
@@ -82,7 +87,9 @@ NDArray >> adaptToNumber: anInteger andSend: aSymbol [
    aSymbol = #* ifTrue: [ ^ self * anInteger ].
    aSymbol = #< ifTrue: [ ^ self > anInteger ].
    aSymbol = #> ifTrue: [ ^ self < anInteger ].
-   aSymbol = #min: ifTrue: [ ^ self min: anInteger ].
+   aSymbol = #<= ifTrue: [ ^ self >= anInteger ].
+   aSymbol = #>= ifTrue: [ ^ self <= anInteger ].
+   aSymbol = #min: ifTrue: [ ^ self min: anInteger ]
 ]
 
 { #category : #converting }

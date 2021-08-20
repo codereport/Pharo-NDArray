@@ -186,6 +186,16 @@ PharoNDArrayTest >> testInverseWhere [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testLessThanOrEqualTo [
+   self assert: (NDArray withAll: #(1 2 3)) <= 1 equals: #(1 0 0).
+   self assert: 1 <= (NDArray withAll: #(1 2 3)) equals: #(1 1 1).
+   self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) <= 2 equals: #(#(1 1 0) #(1 1 0)).
+   self assert: (NDArray withAll: #(#(1 2) #(4 5))) <= 5 equals: #(#(1 1) #(1 1)).
+   self assert: 2 <= #(1 2 3) asNDArray equals: #(0 1 1).
+   "self assert: 1 asNDArray <= 3 iota asNDArray equals: #(1 0 0) TODO fixme"
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testMatches [
    self assert: (1 asNDArray matches: 1).
    self deny: ((NDArray withAll: #(1 2 3)) matches: 1).
