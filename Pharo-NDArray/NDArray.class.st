@@ -53,7 +53,7 @@ NDArray >> - anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> < anObject [
-   ^ self class new withShape: shape with: (data collect: #< @@ anObject)
+   ^ self class new withShape: shape with: (data collect: [ :e | (e < anObject) asBit ])
 ]
 
 { #category : #'verbs (scalar dyadic)' }
@@ -67,7 +67,7 @@ NDArray >> = anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> > anObject [
-   ^ self class new withShape: shape with: (data collect: #> @@ anObject)
+   ^ self class new withShape: shape with: (data collect: [ :e | (e > anObject) asBit ])
 ]
 
 { #category : #'verbs (scalar monadic)' }
