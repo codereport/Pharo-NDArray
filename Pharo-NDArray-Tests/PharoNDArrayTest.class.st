@@ -155,6 +155,16 @@ PharoNDArrayTest >> testFourWords [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testGreaterThan [
+   self assert: ((NDArray withAll: #(1 2 3)) > 1) not equals: #(1 0 0).
+   self assert: (1 > (NDArray withAll: #(1 2 3))) not equals: #(1 1 1).
+   self assert: ((NDArray withAll: #(#(1 2 3) #(1 2 3))) > 2) not equals: #(#(1 1 0) #(1 1 0)).
+   self assert: ((NDArray withAll: #(#(1 2) #(4 5))) > 5) not equals: #(#(1 1) #(1 1)).
+   self assert: (2 < #(1 2 3) asNDArray) equals: #(0 0 1)
+   "self assert: 1 asNDArray <= 3 iota asNDArray equals: #(1 0 0) TODO fixme"
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testHook [
 	self assert: (#(1 2 1) asNDArray hook: #= with: #reverse) equals: true. "palindrome"
 	self assert: (#(1 2 1) asNDArray hook: #= with: #reverse) equals: 1 "palindrome"
