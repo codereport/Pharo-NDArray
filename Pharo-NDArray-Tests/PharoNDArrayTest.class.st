@@ -297,10 +297,9 @@ PharoNDArrayTest >> testNotMatches [
 
 { #category : #tests }
 PharoNDArrayTest >> testOuterProduct [
-   self assert: (#(1 0) outerProduct: #(1 0 1 1 0 0) with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
-   "self assert: (4 iota asNDArray = 4 iota) ints equals: #(1 1 1 1)."
+   self assert: (#(1 0) outerProduct: #(1 0 1 1 0 0) with: #=) equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
    self assert: ((4 iota outerProduct: 4 iota with: #=) ints reduce: #+) equals: #(1 1 1 1).
-   self assert: ('()' asNDArray outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
+   self assert: ('()' asNDArray outerProduct: '()(())' with: #=) equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))
    "self assert: ('()' outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))"
 ]
 
