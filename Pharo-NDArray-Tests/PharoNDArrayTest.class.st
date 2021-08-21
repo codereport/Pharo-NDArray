@@ -106,6 +106,13 @@ PharoNDArrayTest >> testFilter [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFinalPricesWithDiscount [
+   | arr |
+   arr := #(8 4 6 2 3) asNDArray.
+   self assert: ((arr triangleProduct: #yourself with: #>) collect: [ :e | (e without: 0) first ]) - arr equals: #(4 2 4 2 3).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFindDisappearedNumbers [
    "LeetCode Problem Link: https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/"
    self
@@ -297,9 +304,13 @@ PharoNDArrayTest >> testNotMatches [
 
 { #category : #tests }
 PharoNDArrayTest >> testOuterProduct [
+   | arr |
+   arr := 3 iota asNDArray.
    self assert: (#(1 0) outerProduct: #(1 0 1 1 0 0) with: #=) equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
    self assert: ((4 iota outerProduct: 4 iota with: #=) ints reduce: #+) equals: #(1 1 1 1).
-   self assert: ('()' asNDArray outerProduct: '()(())' with: #=) equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))
+   self assert: ('()' asNDArray outerProduct: '()(())' with: #=) equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
+   self assert: (arr outerProduct: arr with: #=) equals: #(#(1 0 0) #(0 1 0) #(0 0 1)).
+   self assert: (arr outerProduct: arr with: #<=) equals: #(#(1 0 0) #(0 1 0) #(0 0 1))
    "self assert: ('()' outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))"
 ]
 

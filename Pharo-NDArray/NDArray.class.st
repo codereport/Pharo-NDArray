@@ -298,6 +298,8 @@ NDArray >> notMatches: anObject [
 NDArray >> outerProduct: anObject with: aBinaryBlock [
    | newData |
    (self rank > 1 or: anObject rank > 1) ifTrue: [ ^ RankError signal ].
+   "this is fundamentally broken. you cannot apply this as a scalar to every element of 'data'"
+   "you must groupby and then perform"
    newData := data collect: [ :e | aBinaryBlock value: e asNDArray value: anObject asNDArray ].
    ^ self class new
         withShape: {
