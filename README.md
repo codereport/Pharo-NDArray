@@ -55,6 +55,7 @@ Each step of the above code creates the following:
 * `reduce:`
 * `reduceFirst:`
 * `scan:`
+* `triangleProduct:`
 * `windowed:reduce:`
 
 ### Verbs (Scalar Monadic)
