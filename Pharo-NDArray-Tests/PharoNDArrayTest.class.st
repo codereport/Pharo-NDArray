@@ -122,6 +122,16 @@ PharoNDArrayTest >> testFindDisappearedNumbers [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFindGCD [
+   "Leetcode Problem 255 https://leetcode.com/problems/find-greatest-common-divisor-of-array/"
+   | findGCD |
+   findGCD := [ :arr | arr asNDArray fork: [ :e | e reduce: #max: ] with: [ :a :b | a gcd: b ] with: [ :e | e reduce: #min: ] ].
+   self assert: (findGCD value: #(2 5 6 7 10)) equals: 2.
+   self assert: (findGCD value: #(3 5 6 7 8)) equals: 1.
+   self assert: (findGCD value: #(3 3)) equals: 3
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFirst [
    self assert: (NDArray withAll: #(1 2 3)) first equals: 1.
    self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) first equals: 1.
