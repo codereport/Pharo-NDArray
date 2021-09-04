@@ -133,6 +133,7 @@ PharoNDArrayTest >> testFindGCD [
 
 { #category : #tests }
 PharoNDArrayTest >> testFindLucky [
+   "LeetCode Problem: https://leetcode.com/problems/find-lucky-integer-in-an-array/"
 	| a |
 	a := #(2 2 3 4) asNDArray.
 	(a outerProduct: a with: #=) sum eq: a equals: #(1 1 0 0)
