@@ -132,6 +132,13 @@ PharoNDArrayTest >> testFindGCD [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFindLucky [
+	| a |
+	a := #(2 2 3 4) asNDArray.
+	(a outerProduct: a with: #=) sum eq: a equals: #(1 1 0 0)
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFirst [
    self assert: (NDArray withAll: #(1 2 3)) first equals: 1.
    self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) first equals: 1.
