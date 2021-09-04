@@ -147,9 +147,13 @@ NDArray >> data [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> eq: anObject [
+   | newData |
    anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: [ :e | (anObject first = e) asBit ])].
    self rank = 0 ifTrue: [ ^ self class new withShape: anObject shape with: (anObject data collect: [ :e | (self first = e) asBit])].
-   (self rank = anObject rank and: self shape ~~ anObject shape) ifTrue: [ ^ ShapeError signal ].
+   (self rank = anObject rank and: (self shape = anObject shape) not) ifTrue: [ ^ ShapeError signal ].
+   (self rank = anObject rank) ifTrue: [ 
+      ^ self class new withShape: shape with: data "TODO".
+   ].
    ^ self error: 'Need to implement scalar for both self/anObject not rank 0'
 ]
 
