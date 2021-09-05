@@ -142,8 +142,8 @@ PharoNDArrayTest >> testFindLucky [
    e := #(7 7 7 7 7 7 7) asNDArray.
    self assert: ((a filter: ((a outerProduct: a with: #=) sum eq: a)) reduce: #max:) equals: 2.
    self assert: ((b filter: ((b outerProduct: b with: #=) sum eq: b)) reduce: #max:) equals: 3.
-   "self assert: ((c filter: ((c outerProduct: c with: #=) sum eq: c)) reduce: #max:) equals: -1.
-   self assert: ((d filter: ((d outerProduct: d with: #=) sum eq: d)) reduce: #max:) equals: -1. TODO"
+   self assert: ((c filter: ((c outerProduct: c with: #=) sum eq: c)), -1 reduce: #max:) equals: -1.
+   self assert: ((d filter: ((d outerProduct: d with: #=) sum eq: d)), -1 reduce: #max:) equals: -1.
    self assert: ((e filter: ((e outerProduct: e with: #=) sum eq: e)) reduce: #max:) equals: 7
 ]
 
