@@ -46,7 +46,7 @@ NDArray >> + anObject [
    ^ self class new withShape: shape with: (data collect: anObject @@ #+)
 ]
 
-{ #category : #copying }
+{ #category : #'verbs (dyadic)' }
 NDArray >> , anObject [
    (self rank = 1) ifFalse: [ ^ RankError signal ]. "TODO"
    (anObject asNDArray rank = 0) ifFalse: [ ^ RankError signal ]. "TODO"
