@@ -468,6 +468,11 @@ NDArray >> transpose [
    ^ self class new withShape: shape reversed with: newData flattened
 ]
 
+{ #category : #adverbs }
+NDArray >> triangleProduct: aBinaryBlock [
+	^ (self outerProduct: self with: aBinaryBlock) split asArray with: self size iota collect: [ :a :i | a drop: (i - 1) ]
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> unique [
    | atoms newData newShape |
