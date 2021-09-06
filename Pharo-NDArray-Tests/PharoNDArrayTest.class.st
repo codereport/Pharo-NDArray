@@ -236,7 +236,7 @@ PharoNDArrayTest >> testLessThanOrEqualTo [
    self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) <= 2 equals: #(#(1 1 0) #(1 1 0)).
    self assert: (NDArray withAll: #(#(1 2) #(4 5))) <= 5 equals: #(#(1 1) #(1 1)).
    self assert: 2 <= #(1 2 3) asNDArray equals: #(0 1 1).
-   "self assert: 1 asNDArray <= 3 iota asNDArray equals: #(1 0 0) TODO fixme"
+   self assert: 1 asNDArray <= 3 iota asNDArray equals: #(1 1 1)
 ]
 
 { #category : #tests }
@@ -337,8 +337,7 @@ PharoNDArrayTest >> testOuterProduct [
    self assert: ((4 iota outerProduct: 4 iota with: #=) ints reduce: #+) equals: #(1 1 1 1).
    self assert: ('()' asNDArray outerProduct: '()(())' with: #=) equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
    self assert: (arr outerProduct: arr with: #=) equals: #(#(1 0 0) #(0 1 0) #(0 0 1)).
-   self assert: (arr outerProduct: arr with: #<=) equals: #(#(1 0 0) #(0 1 0) #(0 0 1))
-   "self assert: ('()' outerProduct: '()(())' with: #=) ints equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1))"
+   self assert: (arr outerProduct: arr with: #<=) equals: #(#(1 1 1) #(0 1 1) #(0 0 1))
 ]
 
 { #category : #tests }
