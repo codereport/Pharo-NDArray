@@ -153,6 +153,17 @@ NDArray >> data [
    ^ data
 ]
 
+{ #category : #'verbs (dyadic)' }
+NDArray >> drop: anInteger [
+	anInteger isNDArray ifTrue: [ ^ self error: 'take: only supports integer parameter currently' ].
+	self rank = 0 ifTrue: [ anInteger = 0 ifTrue: [ ^ self ] ifFalse: [ ^ #() asNDArray ] ].
+	self rank = 1 ifTrue: [ 
+		data size >= anInteger
+			ifTrue: [ ^ (data last: (data size - anInteger)) asNDArray ] "TODO check to see if there is drop:?"
+			ifFalse: [ ^ #() asNDArray ] ].
+	^ self error: 'Implement for higher ranks'
+]
+
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> eq: anObject [
    anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: [ :e | (anObject first = e) asBit ]) ].
