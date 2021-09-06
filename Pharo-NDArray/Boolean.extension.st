@@ -11,6 +11,11 @@ Boolean >> asBoolean [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Boolean >> ints [
+   ^ self asBit
+]
+
+{ #category : #'*Pharo-NDArray' }
 Boolean >> isBoolean [
    ^ true
 ]
