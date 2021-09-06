@@ -105,6 +105,7 @@ Each step of the above code creates the following:
 
 ### Verbs (Dyadic)
 
+* `drop:`
 * `filter:`
 * `filterPred:`
 * `matches:`
