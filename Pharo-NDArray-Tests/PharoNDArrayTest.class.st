@@ -330,6 +330,14 @@ PharoNDArrayTest >> testNotMatches [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testNumberOfGoodPairs [
+   "Problem Link: https://leetcode.com/problems/number-of-good-pairs/"
+   self assert: (#(1 2 3 1 1 3) asNDArray triangleProduct: #=) asNDArray mix ravel sum equals: 4.
+   self assert: (#(1 1 1 1) asNDArray triangleProduct: #=) asNDArray mix ravel sum equals: 6.
+   self assert: (#(1 2 3) asNDArray triangleProduct: #=) asNDArray mix ravel sum equals: 0.
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testOuterProduct [
    | arr |
    arr := 3 iota asNDArray.
