@@ -222,6 +222,12 @@ NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
    ^ binaryBlock value: (leftBlock value: self) value: (rightBlock value: self)
 ]
 
+{ #category : #enumerating }
+NDArray >> gather: anNDArray [
+   (self rank = 1 and: anNDArray rank = 1) ifFalse: [ ^ RankError signal ].
+   ^ self class new withShape: anNDArray shape with: (anNDArray asNDArray collect: [ :i | i = 0 ifTrue: [ 0 ] ifFalse: [data at: i ]])
+]
+
 { #category : #trains }
 NDArray >> hook: binaryBlock with: unaryBlock [
    "rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ]."
