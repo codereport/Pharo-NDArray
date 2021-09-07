@@ -443,6 +443,18 @@ PharoNDArrayTest >> testRotate [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testRotateArray [
+   "Problem Link: https://leetcode.com/problems/rotate-array/"
+   | a b c d |
+   a := 7 iota asNDArray.
+   b := 3.
+   c := #(-1 -100 3 99).
+   d := 2.
+   self assert: (a rotate: a size - (b % a size)) equals: #(5 6 7 1 2 3 4).
+   self assert: (c rotate: c size - (d % c size)) equals: #(3 99 -1 -100)	
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testScan [
    "self assert: ((NDArray withAll: #()) reduce: #+) asArray equals: 0."
    self assert: ((NDArray withAll: #(1 2 3)) scan: #+) equals: #(1 3 6).
