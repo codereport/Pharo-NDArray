@@ -67,6 +67,20 @@ PharoNDArrayTest >> testContainsDuplicates [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testCountNegativeNumbers [
+   "Problem Link: https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/"
+   | a b c d |
+   a := #(#(4 3 2 -1) #(3 2 1 -1) #(1 1 -1 -2) #(-1 -1 -2 -3)) asNDArray.
+   b := #(#(3 2) #(1 0)) asNDArray.
+   c := #(#(1 -1) #(-1 -1)) asNDArray.
+   d := #(#(-1)) asNDArray.
+   self assert: (a ravel < 0) sum equals: 8.
+   self assert: (b ravel < 0) sum equals: 0.
+   self assert: (c ravel < 0) sum equals: 3.
+   self assert: (d ravel < 0) sum equals: 1
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testEquals [
    self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(1 0 0).
    self assert: 1 = (NDArray withAll: #(1 2 3)) equals: #(1 0 0).
