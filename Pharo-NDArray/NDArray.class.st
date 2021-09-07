@@ -55,6 +55,9 @@ NDArray >> , anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> - anObject [
+   (self rank = anObject rank and: (self shape = anObject shape)) ifTrue: [ 
+      ^ self class new withShape: shape with: (self data with: anObject asNDArray data collect: #-)
+	].
    ^ self class new withShape: shape with: (data collect: #- @@ anObject)
 ]
 
@@ -87,6 +90,7 @@ NDArray >> > anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> >= anObject [
+   self rank = 0 ifTrue: [ ^ anObject <= data first ].
    ^ self class new withShape: shape with: (data collect: [ :e | (e >= anObject) asBit ])
 ]
 
