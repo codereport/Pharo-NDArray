@@ -56,6 +56,9 @@ Each step of the above code creates the following:
 * `reduceFirst:`
 * `scan:`
 * `triangleProduct:`
+* `triangleProduct2:`
+* `upperProduct:`
+* `upperProduct2:`
 * `windowed:reduce:`
 
 ### Verbs (Scalar Monadic)
@@ -108,6 +111,7 @@ Each step of the above code creates the following:
 * `drop:`
 * `filter:`
 * `filterPred:`
+* `gather:`
 * `matches:`
 * `memberOf:`
 * `notMatches:`
