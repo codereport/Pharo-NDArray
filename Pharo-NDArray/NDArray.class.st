@@ -389,6 +389,7 @@ NDArray >> reshape: aCollection [
 { #category : #'verbs (monadic)' }
 NDArray >> reverse [
    | newData |
+   self data isEmpty ifTrue: [ ^ self ].
    newData := data groupsOf: shape last 
            :> collect: [ :e | e reversed ] as: Array.
    ^ self class new withShape: shape with: newData

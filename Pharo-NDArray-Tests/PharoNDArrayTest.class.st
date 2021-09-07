@@ -420,7 +420,8 @@ PharoNDArrayTest >> testReshape [
 PharoNDArrayTest >> testReverse [
    self assert: (NDArray withAll: #(1 2 3)) reverse equals: #(3 2 1).
    self assert: (NDArray withAll: #(#(1 2 3) #(1 2 3))) reverse equals: #(#(3 2 1) #(3 2 1)).
-   self assert: (12 iota reshape: #(2 3) :> reverse) equals: #((3 2 1) (6 5 4))
+   self assert: (12 iota reshape: #(2 3) :> reverse) equals: #((3 2 1) (6 5 4)).
+   self assert: #() asNDArray reverse equals: #()
 ]
 
 { #category : #tests }
