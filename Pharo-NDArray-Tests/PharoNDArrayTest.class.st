@@ -108,9 +108,13 @@ PharoNDArrayTest >> testFilter [
 { #category : #tests }
 PharoNDArrayTest >> testFinalPricesWithDiscount [
    "Problem Link: https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/"
-   | arr |
-   arr := #(8 4 6 2 3) asNDArray.
-   self assert: ((arr triangleProduct: #>) collect: [ :e | (e without: 0) first ]) - arr equals: #(4 2 4 2 3)
+   | a b c |
+   a := #(8 4 6 2 3) asNDArray.
+   b := #(1 2 3 4 5) asNDArray.
+   c := #(10 1 1 6) asNDArray.
+   self assert: a - (a gather: ((a upperProduct: #>=) collect: [ :e | ((e where without: 0) , 0) first ])) equals: #(4 2 4 2 3).
+   self assert: b - (b gather: ((b upperProduct: #>=) collect: [ :e | ((e where without: 0) , 0) first ])) equals: b.
+   self assert: c - (c gather: ((c upperProduct: #>=) collect: [ :e | ((e where without: 0) , 0) first ])) equals: #(9 0 1 6)
 ]
 
 { #category : #tests }

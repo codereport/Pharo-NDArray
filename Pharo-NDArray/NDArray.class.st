@@ -481,8 +481,13 @@ NDArray >> transpose [
 ]
 
 { #category : #adverbs }
+NDArray >> triangleProduct2: aBinaryBlock [
+   ^ (self outerProduct: self with: aBinaryBlock) split asArray with: self size iota collect: [ :a :i | a drop: i - 1 ]
+]
+
+{ #category : #adverbs }
 NDArray >> triangleProduct: aBinaryBlock [
-	^ (self outerProduct: self with: aBinaryBlock) split asArray with: self size iota collect: [ :a :i | a drop: (i - 1) ]
+   ^ (self outerProduct: self with: aBinaryBlock) split asArray with: self size iota collect: [ :a :i | a drop: i ]
 ]
 
 { #category : #'verbs (monadic)' }
@@ -505,6 +510,22 @@ NDArray >> uniqueMask [
    newData := (data groupsOf: atoms) asArray uniqueMask.
    newShape := Array with: shape first.
    ^ self class new withShape: newShape with: newData
+]
+
+{ #category : #adverbs }
+NDArray >> upperProduct2: aBinaryBlock [
+   | n |
+   n := self size.
+   ^ (self outerProduct: self with: aBinaryBlock) split asArray with: n iota collect: [ :a :i | ((a drop: i - 1) reverse take: n) reverse asNDArray ]
+]
+
+{ #category : #adverbs }
+NDArray >> upperProduct: aBinaryBlock [
+   | n |
+   n := self size.
+   ^ (self outerProduct: self with: aBinaryBlock) split asArray
+        with: n iota
+        collect: [ :a :i | ((a drop: i) reverse take: n) reverse asNDArray ]
 ]
 
 { #category : #'verbs (monadic)' }
