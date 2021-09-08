@@ -216,7 +216,7 @@ NDArray >> floor [
    ^ self class new withShape: shape with: (data collect: #floor)
 ]
 
-{ #category : #trains }
+{ #category : #'trains / combinators' }
 NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
    rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ].
    ^ binaryBlock value: (leftBlock value: self) value: (rightBlock value: self)
@@ -228,7 +228,7 @@ NDArray >> gather: anNDArray [
    ^ self class new withShape: anNDArray shape with: (anNDArray asNDArray collect: [ :i | i = 0 ifTrue: [ 0 ] ifFalse: [data at: i ]])
 ]
 
-{ #category : #trains }
+{ #category : #'trains / combinators' }
 NDArray >> hook: binaryBlock with: unaryBlock [
    "rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ]."
    ^ binaryBlock value: self value: (unaryBlock value: self)
