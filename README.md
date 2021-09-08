@@ -91,11 +91,15 @@ Each step of the above code creates the following:
 
 ### Verbs (Monadic)
 
+* `all`
+* `any`
 * `asString`
 * `first`
 * `ints`
 * `invIota`
 * `invWhere`
+* `max`
+* `min`
 * `mix`
 * `ravel`
 * `reverse`
@@ -121,7 +125,8 @@ Each step of the above code creates the following:
 * `take:`
 * `without:`
 
-### Trains
+### Trains / Combinators
 
 * `hook:with:`
 * `fork:with:with:`
+* `over:with:with:`
