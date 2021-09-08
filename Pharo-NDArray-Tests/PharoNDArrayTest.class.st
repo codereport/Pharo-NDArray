@@ -402,14 +402,14 @@ PharoNDArrayTest >> testRansomNote [
    c := 'aa' asNDArray.
    d := 'ab' asNDArray.
    e := 'aab' asNDArray.
-   alphaFreq := [ :arr | (Character alphabet asNDArray outerProduct: arr with: #=) sum ].
+   alphaFreq := [ :arr | (Character alphabet outerProduct: arr with: #=) sum ].
 
    self assert: ((a over: b with: #- with: alphaFreq) <= 0 reduce: #and:) equals: 0.
    self assert: ((c over: d with: #- with: alphaFreq) <= 0 reduce: #and:) equals: 0.
    self assert: ((c over: e with: #- with: alphaFreq) <= 0 reduce: #and:) equals: 1.
-   self assert: (((a over: b with: #- with: alphaFreq) <= 0 )all) equals: 0.
-   self assert: (((c over: d with: #- with: alphaFreq) <= 0 )all) equals: 0.
-   self assert: (((c over: e with: #- with: alphaFreq) <= 0 )all) equals: 1
+   self assert: ((a over: b with: #- with: alphaFreq) <= 0) all equals: 0.
+   self assert: ((c over: d with: #- with: alphaFreq) <= 0) all equals: 0.
+   self assert: ((c over: e with: #- with: alphaFreq) <= 0) all equals: 1
 ]
 
 { #category : #tests }
