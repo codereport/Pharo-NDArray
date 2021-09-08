@@ -111,6 +111,16 @@ NDArray >> adaptToNumber: anInteger andSend: aSymbol [
    aSymbol = #min: ifTrue: [ ^ self min: anInteger ]
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> all [
+   ^ self reduce: #and:
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> any [
+   ^ self reduce: #or:
+]
+
 { #category : #converting }
 NDArray >> asArray [
    | arr |
@@ -281,6 +291,11 @@ NDArray >> matches: anObject [
    ^ self data = anObject asNDArray data
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> max [
+   ^ self reduce: #max:
+]
+
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> max: anInteger [ 
    ^ self class new withShape: shape with: (data collect: anInteger @@ #max:)
@@ -295,6 +310,11 @@ NDArray >> memberOf: aNDArray [
       newData := data collect: [ :e | (hashedValues includes: e) asBit ].
       ^ self class new withShape: shape with: newData ].
    ^ self error: 'Implement for higher ranks'
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> min [
+   ^ self reduce: #min:
 ]
 
 { #category : #'verbs (scalar dyadic)' }
@@ -339,6 +359,12 @@ NDArray >> outerProduct: anObject with: aBinaryBlock [
               self data size.
               anObject size}
         with: (newData collect: #asArray) flattened
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> over: anNDArray with: aBinaryBlock with: aUnaryBlock [
+   "This is also known as the Psi combinator or 'on' from Haskell"
+   ^ aBinaryBlock value: (aUnaryBlock value: self) value: (aUnaryBlock value: anNDArray)
 ]
 
 { #category : #'verbs (dyadic)' }
