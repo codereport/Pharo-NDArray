@@ -60,6 +60,17 @@ PharoNDArrayTest >> testCeiling [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testCheckIfPangram [
+	"Problem Link: https://leetcode.com/problems/check-if-the-sentence-is-pangram/	"
+	| a b alpha |
+	a := 'thequickbrownfoxjumpsoverthelazydog' asNDArray.
+	b := 'leetcode' asNDArray.
+	alpha := Character alphabet asNDArray.
+	self assert: (alpha memberOf: a) all equals: 1.
+	self assert: (alpha memberOf: b) all equals: 0
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testContainsDuplicates [
    "Leetcode Problem 217 https://leetcode.com/problems/contains-duplicate/"
    self assert: (#(1 2 3 1) asNDArray fork: #unique with: #notMatches: with: #yourself) equals: true.
