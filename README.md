@@ -127,6 +127,7 @@ Each step of the above code creates the following:
 
 ### Trains / Combinators
 
-* `hook:with:`
-* `fork:with:with:`
-* `over:with:with:`
+* `binaryFork:with:with:with:` (golden eagle)
+* `hook:with:`                 (starling)
+* `fork:with:with:`            (phoenix)
+* `over:with:with:`            (psi)
