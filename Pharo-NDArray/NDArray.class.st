@@ -152,6 +152,13 @@ NDArray >> asString [
    ^ String newFrom: data
 ]
 
+{ #category : #'trains / combinators' }
+NDArray >> binaryFork: anNDarray with: leftBlock with: binaryBlock with: rightBlock [
+   "This is a specialization of the E^ combinator from Combinatory Logic and the 'bald eagle' from Combinator Birds"
+   rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ].
+   ^ binaryBlock value: (leftBlock value: self value: anNDarray) value: (rightBlock value: self value: anNDarray)
+]
+
 { #category : #'verbs (scalar monadic)' }
 NDArray >> ceiling [
    ^ self class new withShape: shape with: (data collect: #ceiling)
