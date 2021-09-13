@@ -153,10 +153,12 @@ NDArray >> asString [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> binaryFork: anNDarray with: leftBlock with: binaryBlock with: rightBlock [
+NDArray >> binaryFork: anNDarray with: a with: b with: c [
    "This is a specialization of the E^ combinator from Combinatory Logic and the 'bald eagle' from Combinator Birds"
-   rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ].
-   ^ binaryBlock value: (leftBlock value: self value: anNDarray) value: (rightBlock value: self value: anNDarray)
+   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   c numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   ^ b value: (a value: self value: anNDarray) value: (b value: self value: anNDarray)
 ]
 
 { #category : #'verbs (scalar monadic)' }
@@ -234,10 +236,12 @@ NDArray >> floor [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
+NDArray >> fork: a with: b with: c [
    "This is known as the S' combinator from Combinatory Logic and the 'phoenix' from Combinator Birds"
-   rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ].
-   ^ binaryBlock value: (leftBlock value: self) value: (rightBlock value: self)
+   a numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   c numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ b value: (a value: self) value: (c value: self)
 ]
 
 { #category : #'verbs (dyadic)' }
@@ -247,10 +251,11 @@ NDArray >> gather: anNDArray [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> hook: binaryBlock with: unaryBlock [
+NDArray >> hook: f with: g [
    "This is known as the S combinator from Combinatory Logic and the 'starling' from Combinator Birds"
-   "rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ]."
-   ^ binaryBlock value: self value: (unaryBlock value: self)
+   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ f value: self value: (g value: self)
 ]
 
 { #category : #'verbs (monadic)' }
@@ -371,9 +376,11 @@ NDArray >> outerProduct: anObject with: aBinaryBlock [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> over: anNDArray with: aBinaryBlock with: aUnaryBlock [
+NDArray >> over: anNDArray with: f with: g [
    "This is also known as the Psi combinator or 'on' from Haskell"
-   ^ aBinaryBlock value: (aUnaryBlock value: self) value: (aUnaryBlock value: anNDArray)
+   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ f value: (g value: self) value: (g value: anNDArray)
 ]
 
 { #category : #'verbs (dyadic)' }
