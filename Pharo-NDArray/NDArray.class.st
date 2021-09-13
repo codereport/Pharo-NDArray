@@ -228,6 +228,7 @@ NDArray >> floor [
 
 { #category : #'trains / combinators' }
 NDArray >> fork: leftBlock with: binaryBlock with: rightBlock [
+   "This is known as the S' combinator from Combinatory Logic and the 'phoenix' from Combinator Birds"
    rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ].
    ^ binaryBlock value: (leftBlock value: self) value: (rightBlock value: self)
 ]
@@ -240,6 +241,7 @@ NDArray >> gather: anNDArray [
 
 { #category : #'trains / combinators' }
 NDArray >> hook: binaryBlock with: unaryBlock [
+   "This is known as the S combinator from Combinatory Logic and the 'starling' from Combinator Birds"
    "rightBlock numArgsAsBlock = leftBlock numArgsAsBlock ifFalse: [ ^ self error: 'Arity Error' ]."
    ^ binaryBlock value: self value: (unaryBlock value: self)
 ]
