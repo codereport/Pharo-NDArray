@@ -318,7 +318,7 @@ NDArray >> max: anInteger [
 { #category : #'verbs (dyadic)' }
 NDArray >> memberOf: aNDArray [
    | hashedValues newData |
-   self rank = 0 ifTrue: [ ^ RankError signal ].
+   self rank = 0 ifTrue: [ ^ self class new withShape: aNDArray shape with: (aNDArray data collect: [ :e | (e includes: data first) asBit ]) ].
    self rank = 1 ifTrue: [ 
       hashedValues := aNDArray asNDArray data asSet.
       newData := data collect: [ :e | (hashedValues includes: e) asBit ].

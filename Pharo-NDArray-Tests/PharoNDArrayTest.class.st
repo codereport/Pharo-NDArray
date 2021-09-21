@@ -143,6 +143,19 @@ PharoNDArrayTest >> testFinalPricesWithDiscount [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testFinalValue [
+   "Problem Link: https://leetcode.com/problems/final-value-of-variable-after-performing-operations/"
+   | a b c |
+   a := #('--x' 'x++' '++x') asNDArray.
+   b := #('++x' 'x++' '++x') asNDArray.
+   c := #('--x' 'x++' '++x' 'x--') asNDArray.
+
+   self assert: (('+-' outerProduct: a with: #memberOf:) reduceFirst: #-) sum equals: 1.
+   self assert: (('+-' outerProduct: b with: #memberOf:) reduceFirst: #-) sum equals: 3.
+   self assert: (('+-' outerProduct: c with: #memberOf:) reduceFirst: #-) sum equals: 0
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testFindDisappearedNumbers [
    "LeetCode Problem Link: https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/"
    self
