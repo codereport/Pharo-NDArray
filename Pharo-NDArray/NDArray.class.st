@@ -55,9 +55,9 @@ NDArray >> , anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> - anObject [
-   (self rank = anObject rank and: (self shape = anObject shape)) ifTrue: [ 
-      ^ self class new withShape: shape with: (self data with: anObject asNDArray data collect: #-)
-	].
+   self rank = 0 ifTrue: [ ^ anObject negated + data first ].
+   (self rank = anObject rank and: self shape = anObject shape) ifTrue: [ 
+      ^ self class new withShape: shape with: (self data with: anObject asNDArray data collect: #-) ].
    ^ self class new withShape: shape with: (data collect: #- @@ anObject)
 ]
 
@@ -345,6 +345,11 @@ NDArray >> mix [
                     ifTrue: [ e data ]
                     ifFalse: [ e data , (Array new: maxLength - e size withAll: 0) ] ].
    ^ self class new withShape: newShape with: newData
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> negated [
+   ^ self class new withShape: shape with: (data collect: #negated)
 ]
 
 { #category : #'verbs (scalar monadic)' }
