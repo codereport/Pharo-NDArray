@@ -260,9 +260,7 @@ NDArray >> hook: f with: g [
 
 { #category : #'verbs (monadic)' }
 NDArray >> ints [
-   | newData |
-   newData := data collect: #asInteger.
-   ^ self class new withShape: shape with: newData
+   ^ self class new withShape: shape with: (data collect: #asInteger)
 ]
 
 { #category : #'verbs (scalar monadic)' }
