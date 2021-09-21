@@ -78,6 +78,19 @@ PharoNDArrayTest >> testContainsDuplicates [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testCountKDifference [
+   "Problem Link: https://leetcode.com/problems/count-number-of-pairs-with-absolute-difference-k/"
+   | a b c |
+   a := #(1 2 2 1) asNDArray.
+   b := #(1 3) asNDArray.
+   c := #(3 2 1 5 4) asNDArray.
+
+   self assert: ((a outerProduct: a with: #-) eq: 1) ravel sum equals: 4.
+   self assert: ((b outerProduct: b with: #-) eq: 3) ravel sum equals: 0.
+   self assert: ((c outerProduct: c with: #-) eq: 2) ravel sum equals: 3
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testCountNegativeNumbers [
    "Problem Link: https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/"
    | a b c d |
