@@ -101,6 +101,7 @@ Each step of the above code creates the following:
 * `max`
 * `min`
 * `mix`
+* `negated`
 * `ravel`
 * `reverse`
 * `size`
