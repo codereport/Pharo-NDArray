@@ -266,6 +266,12 @@ NDArray >> hook: f with: g [
    ^ f value: self value: (g value: self)
 ]
 
+{ #category : #'verbs (dyadic)' }
+NDArray >> intersection: anNDArray [
+   (self rank = 1 and: anNDArray rank = 1) ifFalse: [ ^ RankError signal ].
+   ^ (data intersection: anNDArray data) asNDArray
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> ints [
    ^ self class new withShape: shape with: (data collect: #asInteger)
@@ -293,6 +299,11 @@ NDArray >> invWhere [
    self rank = 0 ifTrue: [ ^ RankError signal ].
    self rank = 1 ifTrue: [ ^ data last iota asNDArray memberOf: data ].
    ^ self error: 'Implement for higher ranks'
+]
+
+{ #category : #testing }
+NDArray >> isEmpty [
+   ^ data isEmpty
 ]
 
 { #category : #accessing }
