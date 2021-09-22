@@ -105,6 +105,21 @@ PharoNDArrayTest >> testCountNegativeNumbers [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testDisjointSets [
+   "Problem Link: https://theweeklychallenge.org/blog/perl-weekly-challenge-127/"
+   | a b c d |
+   a := #(4 6 7 8 9) asNDArray.
+   b := #(1 2 5 3 4) asNDArray.
+   c := #(0 2 4 6 8) asNDArray.
+   d := #(1 3 5 7 9) asNDArray.
+
+   self assert: (a intersection: b) isEmpty equals: false.
+   self assert: (c intersection: d) isEmpty equals: true.
+   self assert: (a binaryAtop: b with: #intersection: with: #isEmpty) equals: false.
+   self assert: (c binaryAtop: d with: #intersection: with: #isEmpty) equals: true.
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testEquals [
    self assert: (NDArray withAll: #(1 2 3)) = 1 equals: #(1 0 0).
    self assert: 1 = (NDArray withAll: #(1 2 3)) equals: #(1 0 0).
