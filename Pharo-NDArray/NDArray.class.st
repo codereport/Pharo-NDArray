@@ -153,6 +153,14 @@ NDArray >> asString [
 ]
 
 { #category : #'trains / combinators' }
+NDArray >> binaryAtop: anNDArray with: a with: b [ 
+   "This is known as the B1 combinator from Combinatory Logic and the 'blackbird' from Combinator Birds"
+   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   b numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ b value: (a value: self value: anNDArray)
+]
+
+{ #category : #'trains / combinators' }
 NDArray >> binaryFork: anNDarray with: a with: b with: c [
    "This is a specialization of the E^ combinator from Combinatory Logic and the 'bald eagle' from Combinator Birds"
    a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
