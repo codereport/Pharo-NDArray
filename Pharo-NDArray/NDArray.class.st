@@ -197,6 +197,11 @@ NDArray >> drop: anInteger [
 	^ self error: 'Implement for higher ranks'
 ]
 
+{ #category : #'as yet unclassified' }
+NDArray >> enlist [
+	^ (data collect: [ :e | e data ]) flattened asNDArray 
+]
+
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> eq: anObject [
    anObject rank = 0 ifTrue: [ ^ self class new withShape: shape with: (data collect: [ :e | (anObject first = e) asBit ]) ].
