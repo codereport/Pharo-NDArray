@@ -95,6 +95,7 @@ Each step of the above code creates the following:
 * `any`
 * `asString`
 * `first`
+* `enlist`
 * `ints`
 * `invIota`
 * `invWhere`
