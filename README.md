@@ -98,6 +98,7 @@ Each step of the above code creates the following:
 * `ints`
 * `invIota`
 * `invWhere`
+* `isEmpty`
 * `max`
 * `min`
 * `mix`
@@ -117,6 +118,7 @@ Each step of the above code creates the following:
 * `filter:`
 * `filterPred:`
 * `gather:`
+* `intersection:`
 * `matches:`
 * `memberOf:`
 * `notMatches:`
@@ -128,6 +130,7 @@ Each step of the above code creates the following:
 
 ### Trains / Combinators
 
+* `binaryAtop:with:with:`      (blackbird)
 * `binaryFork:with:with:with:` (golden eagle)
 * `hook:with:`                 (starling)
 * `fork:with:with:`            (phoenix)
