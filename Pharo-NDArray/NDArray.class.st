@@ -551,7 +551,7 @@ NDArray >> triangleProduct2: aBinaryBlock [
 
 { #category : #adverbs }
 NDArray >> triangleProduct: aBinaryBlock [
-   ^ (self outerProduct: self with: aBinaryBlock) split asArray with: self size iota collect: [ :a :i | a drop: i ]
+   ^ ((self outerProduct: self with: aBinaryBlock) split asArray with: self size iota collect: [ :a :i | a drop: i ]) asNDArray
 ]
 
 { #category : #'verbs (monadic)' }
