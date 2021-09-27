@@ -355,12 +355,19 @@ PharoNDArrayTest >> testMaxWealth [
 { #category : #tests }
 PharoNDArrayTest >> testMaximumDiffBetweenIncreasingElements [
    "Problem Link: https://leetcode.com/contest/weekly-contest-260/problems/maximum-difference-between-increasing-elements/"
-   | a b|
+   | a b c |
    a := #(7 1 5 4) asNDArray.
    b := #(1 5 2 10) asNDArray.
+   c := #(9 5 3 2) asNDArray.
 
    self assert: (a triangleProduct: #-) enlist negated max equals: 4.
-   self assert: (b triangleProduct: #-) enlist negated max equals: 9
+   self assert: (b triangleProduct: #-) enlist negated max equals: 9.
+   self assert: (a hook: #- with: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: 4.
+   self assert: (b hook: #- with: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: 9.
+   self assert: (c hook: #- with: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: -1.
+   self assert: (a hook: #- with: #mins :> without: 0 :> , -1 :> max) equals: 4.
+   self assert: (b hook: #- with: #mins :> without: 0 :> , -1 :> max) equals: 9.
+   self assert: (c hook: #- with: #mins :> without: 0 :> , -1 :> max) equals: -1
 ]
 
 { #category : #tests }
