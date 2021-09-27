@@ -197,7 +197,7 @@ NDArray >> drop: anInteger [
 	^ self error: 'Implement for higher ranks'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'verbs (monadic)' }
 NDArray >> enlist [
 	^ (data collect: [ :e | e data ]) flattened asNDArray 
 ]
