@@ -337,6 +337,12 @@ NDArray >> max: anInteger [
    ^ self class new withShape: shape with: (data collect: anInteger @@ #max:)
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> maxs [
+   "Name borrowed from q/kx: https://code.kx.com/q4m3/A_Built-in_Functions/#a52-maxs"
+   ^ self scan: #max:
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> memberOf: aNDArray [
    | hashedValues newData |
@@ -356,6 +362,12 @@ NDArray >> min [
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> min: anInteger [ 
    ^ self class new withShape: shape with: (data collect: anInteger @@ #min:)
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> mins [
+   "Name borrowed from q/kx: https://code.kx.com/q4m3/A_Built-in_Functions/#a58-mins"
+   ^ self scan: #min:
 ]
 
 { #category : #'verbs (monadic)' }
@@ -526,6 +538,12 @@ NDArray >> split [
 { #category : #'verbs (monadic)' }
 NDArray >> sum [
    ^ self reduce: #+
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> sums [
+   "Name borrowed from q/kx: https://code.kx.com/q4m3/A_Built-in_Functions/#a92-sums"
+   ^ self scan: #+
 ]
 
 { #category : #'verbs (dyadic)' }
