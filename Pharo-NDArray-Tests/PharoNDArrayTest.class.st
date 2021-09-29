@@ -34,16 +34,17 @@ PharoNDArrayTest >> testAllEqual [
    | v u |
    v := #(1 2 3 4) asNDArray.
    u := #(1 1 1 1) asNDArray.
-   self assert: ((v eq: (v first)) reduce: #and:) equals: false.
-   self assert: ((v unique) size = 1) equals: false.
-   self assert: ((v reduce: #max:) = (v reduce: #min:)) equals: false.
-   self assert: ((v windowed: 2 reduce: #=) reduce: #and:) equals: false.
+   self assert: (v eq: v first) all equals: false.
+   self assert: v unique size = 1 equals: false.
+   self assert: v max = v min equals: false.
+   self assert: (v windowed: 2 reduce: #=) all equals: false.
    self assert: ((v rotate: 1) matches: v) equals: false.
-   self assert: ((u eq: (u first)) reduce: #and:) equals: true.
-   self assert: ((u unique) size = 1) equals: true.
-   self assert: ((u reduce: #max:) = (u reduce: #min:)) equals: true.
-   self assert: ((u windowed: 2 reduce: #=) reduce: #and:) equals: true.
-   self assert: ((u rotate: 1) matches: u) equals: true.
+   self assert: (u eq: u first) all equals: true.
+   self assert: u unique size = 1 equals: true.
+   self assert: u max = u min equals: true.
+   self assert: (u fork: #max with: #= with: #min) equals: true.
+   self assert: (u windowed: 2 reduce: #=) all equals: true.
+   self assert: ((u rotate: 1) matches: u) equals: true
 ]
 
 { #category : #tests }
