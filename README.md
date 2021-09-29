@@ -101,7 +101,9 @@ Each step of the above code creates the following:
 * `invWhere`
 * `isEmpty`
 * `max`
+* `maxs`
 * `min`
+* `mins`
 * `mix`
 * `negated`
 * `ravel`
@@ -109,6 +111,7 @@ Each step of the above code creates the following:
 * `size`
 * `split`
 * `sum`
+* `sums`
 * `transpose`
 * `unique`
 * `where`
