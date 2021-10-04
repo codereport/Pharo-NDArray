@@ -49,7 +49,10 @@ NDArray >> + anObject [
 { #category : #'verbs (dyadic)' }
 NDArray >> , anObject [
    (self rank = 1) ifFalse: [ ^ RankError signal ]. "TODO"
-   (anObject asNDArray rank = 0) ifFalse: [ ^ RankError signal ]. "TODO"
+   (anObject asNDArray rank > 1) ifTrue: [ ^ RankError signal ]. "TODO"
+   (anObject asNDArray rank = 1) ifTrue: [ 
+        ^ (data , anObject data) asNDArray
+	 ].
    ^ (data , {anObject}) asNDArray.
 ]
 
