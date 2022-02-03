@@ -23,6 +23,15 @@ PharoNDArrayTest >> assert: actual equals: expected [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testAOC2021Day1 [
+	| test |
+	test := #(199 200 208 210 200 207 240 269 260 263).
+   self assert: ((test asNDArray windowed: 2 reduce: #<) ints sum) equals: 7.
+   self assert: (((test asNDArray windowed: 3 reduce: #+) windowed: 2 reduce: #<) ints sum) equals: 5
+
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testAbsoluteValue [
    self assert: (NDArray withAll: #(1 -2 3)) abs equals: #(1 2 3).
    self assert: (NDArray withAll: #(#(-1 -2 -3) #(4 5 6))) abs ravel equals: 6 iota asNDArray.
