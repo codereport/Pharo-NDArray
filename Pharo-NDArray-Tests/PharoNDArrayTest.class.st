@@ -39,6 +39,14 @@ PharoNDArrayTest >> testAbsoluteValue [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testAllAsBeforeBs [	
+   self assert: (('aaabbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+   self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+   self assert: (('bbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testAllEqual [
    | v u |
    v := #(1 2 3 4) asNDArray.
@@ -127,6 +135,13 @@ PharoNDArrayTest >> testDisjointSets [
    self assert: (c intersection: d) isEmpty equals: true.
    self assert: (a binaryAtop: b with: #intersection: with: #isEmpty) equals: false.
    self assert: (c binaryAtop: d with: #intersection: with: #isEmpty) equals: true.
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testDivides [
+   self assert: (NDArray withAll: #(1 2 3)) / 2  equals: {(1/2). 1. (3/2)}.
+   self assert: (NDArray withAll: #(#(2 4 6) #(8 10 12))) / 2  equals: #(#(1 2 3) #(4 5 6)).
+   self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) / 1  equals: #(#(1 2 3) #(4 5 6))
 ]
 
 { #category : #tests }
@@ -463,6 +478,13 @@ PharoNDArrayTest >> testPlus [
    self assert: 1 + (NDArray withAll: #(1 2 3)) equals: #(2 3 4).
    self assert: 10 + ((NDArray withAll: #(#(1 2 3) #(4 5 6)))) ravel equals: (6 iota collect: 10 @@ #+).
    self assert: 10 + (NDArray withAll: #(#(1 2 3) #(4 5 6))) equals: #(#(11 12 13) #(14 15 16))
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testPower [
+   self assert: (NDArray withAll: #(1 2 3)) ** 2  equals: #(1 4 9).
+   self assert: (NDArray withAll: #(#(2 4 6) #(8 10 12))) ** 2  equals: #(#(4 16 36) #(64 100 144)).
+   self assert: (NDArray withAll: #(#(1 2 3) #(4 5 6))) ** 3  equals: #(#(1 8 27) #(64 125 216))
 ]
 
 { #category : #tests }

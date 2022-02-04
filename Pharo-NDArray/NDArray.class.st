@@ -42,6 +42,11 @@ NDArray >> * anObject [
 ]
 
 { #category : #'verbs (scalar dyadic)' }
+NDArray >> ** anObject [
+   ^ self class new withShape: shape with: (data collect: #** @@ anObject)
+]
+
+{ #category : #'verbs (scalar dyadic)' }
 NDArray >> + anObject [
    ^ self class new withShape: shape with: (data collect: anObject @@ #+)
 ]
@@ -62,6 +67,11 @@ NDArray >> - anObject [
    (self rank = anObject rank and: self shape = anObject shape) ifTrue: [ 
       ^ self class new withShape: shape with: (self data with: anObject asNDArray data collect: #-) ].
    ^ self class new withShape: shape with: (data collect: #- @@ anObject)
+]
+
+{ #category : #'verbs (scalar dyadic)' }
+NDArray >> / anObject [
+   ^ self class new withShape: shape with: (data collect: #/ @@ anObject)
 ]
 
 { #category : #'verbs (scalar dyadic)' }
