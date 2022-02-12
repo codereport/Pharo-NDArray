@@ -141,3 +141,7 @@ Each step of the above code creates the following:
 * `hook:with:`                 (starling)
 * `fork:with:with:`            (phoenix)
 * `over:with:with:`            (psi)
+
+### Combinators (on Symbol / Block)
+
+* `*-` (dove)
