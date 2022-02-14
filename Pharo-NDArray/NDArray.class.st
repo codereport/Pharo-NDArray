@@ -210,6 +210,12 @@ NDArray >> drop: anInteger [
 	^ self error: 'Implement for higher ranks'
 ]
 
+{ #category : #'trains / combinators' }
+NDArray >> dup: aFullBlockClosure [
+   "This is the W combinator and the Warbler bird. It is known as Self(ie) in APL and Self in BQN"
+	^ aFullBlockClosure value: self value: self
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> enlist [
 	^ (data collect: [ :e | e data ]) flattened asNDArray 

@@ -40,9 +40,28 @@ PharoNDArrayTest >> testAbsoluteValue [
 
 { #category : #tests }
 PharoNDArrayTest >> testAllAsBeforeBs [	
-   self assert: (('aaabbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+	| orScanEqualsId |
+	orScanEqualsId := [ :s | s fork: [ :x | x scan: #or: ] with: #matches: with: #yourself ].
+   self assert: (('aaabbb' asNDArray = $b) fork: [ :x | x scan: #or: ]	 with: #matches: with: #yourself).
    self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
    self assert: (('bbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+   self assert: (orScanEqualsId value: ('aaabbb' asNDArray = $b)).
+   self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+   self assert: (('bbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testAllAsBeforeBs2 [
+	| orScanEqualsId |
+	orScanEqualsId := #matches: *-	#or: scan. 
+	self assert: (('aaabbb' asNDArray = $b) dup: #matches: *-	#or: scan).
+   "self assert: (('aaabbb' asNDArray = $b) fork: [ :x | x scan: #or: ]	 with: #matches: with: #yourself).
+   self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+   self assert: (('bbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+   self assert: (orScanEqualsId value: ('aaabbb' asNDArray = $b)).
+   self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+   self assert: (('bbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself)."
 
 ]
 
@@ -91,8 +110,12 @@ PharoNDArrayTest >> testCheckIfPangram [
 { #category : #tests }
 PharoNDArrayTest >> testContainsDuplicates [
    "Leetcode Problem 217 https://leetcode.com/problems/contains-duplicate/"
-   self assert: (#(1 2 3 1) asNDArray fork: #unique with: #notMatches: with: #yourself) equals: true.
-   self assert: ((#(1 2 3 1) asNDArray uniqueMask not eq: 1) reduce: #or:) equals: true
+   | arr |
+   arr := #(1 2 3 1) asNDArray.
+   self assert: (arr fork: #unique with: #notMatches: with: #yourself) equals: true.
+   self assert: ((arr uniqueMask not eq: 1) reduce: #or:) equals: true.
+   self assert: (arr dup: (#unique -* #notMatches:)) equals: true.
+   self assert: (arr dup: (#notMatches: *- #unique)) equals: true.
 ]
 
 { #category : #tests }
@@ -459,6 +482,16 @@ PharoNDArrayTest >> testOuterProduct [
    self assert: ('()' asNDArray outerProduct: '()(())' with: #=) equals: #(#(1 0 1 1 0 0) #(0 1 0 0 1 1)).
    self assert: (arr outerProduct: arr with: #=) equals: #(#(1 0 0) #(0 1 0) #(0 0 1)).
    self assert: (arr outerProduct: arr with: #<=) equals: #(#(1 1 1) #(0 1 1) #(0 0 1))
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testOverCombinator [
+   "Classic example is to test the difference in length of string"
+	| a b |
+	a := 'mouse'.
+	b := 'cat'.
+   self assert: (a over: b with: #- with: #size) equals: 2.
+
 ]
 
 { #category : #tests }
