@@ -136,12 +136,14 @@ Each step of the above code creates the following:
 
 ### Trains / Combinators
 
-* `binaryAtop:with:with:`      (blackbird)
-* `binaryFork:with:with:with:` (golden eagle)
-* `hook:with:`                 (starling)
-* `fork:with:with:`            (phoenix)
-* `over:with:with:`            (psi)
+* `binaryAtop:with:with:`      (blackbird / B1)
+* `binaryFork:with:with:with:` (golden eagle / -)
+* `hook:with:`                 (starling / S)
+* `fork:with:with:`            (phoenix / S')
+* `over:with:with:`            (psi / Psi)
+* `dup:`                       (warbler / W)
 
 ### Combinators (on Symbol / Block)
 
-* `*-` (dove)
+* `*-` (dove / D)
+* `-*` (dove / D)
