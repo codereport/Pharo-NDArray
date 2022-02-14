@@ -428,11 +428,11 @@ NDArray >> outerProduct: anObject with: aBinaryBlock [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> over: anNDArray with: f with: g [
-   "This is also known as the Psi combinator or 'on' from Haskell"
+NDArray >> over: anObject with: f with: g [
+   "This is also known as the Psi combinator, 'on' in Haskell and 'over' in APL and BQN"
    f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
    g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
-   ^ f value: (g value: self) value: (g value: anNDArray)
+   ^ f value: (g value: self) value: (g value: anObject)
 ]
 
 { #category : #'verbs (dyadic)' }
