@@ -113,15 +113,16 @@ NDArray >> abs [
 ]
 
 { #category : #arithmetic }
-NDArray >> adaptToNumber: anInteger andSend: aSymbol [
-   aSymbol = #+ ifTrue: [ ^ self + anInteger ].
-   aSymbol = #= ifTrue: [ ^ self = anInteger ].
-   aSymbol = #* ifTrue: [ ^ self * anInteger ].
-   aSymbol = #< ifTrue: [ ^ self > anInteger ].
-   aSymbol = #> ifTrue: [ ^ self < anInteger ].
-   aSymbol = #<= ifTrue: [ ^ self >= anInteger ].
-   aSymbol = #>= ifTrue: [ ^ self <= anInteger ].
-   aSymbol = #min: ifTrue: [ ^ self min: anInteger ]
+NDArray >> adaptToNumber: aNumber andSend: aSymbol [
+	^ aNumber asNDArray perform: aSymbol with: self
+"   aSymbol = #+ ifTrue: [ ^ self + aNumber ].
+   aSymbol = #= ifTrue: [ ^ self = aNumber ].
+   aSymbol = #* ifTrue: [ ^ self * aNumber ].
+   aSymbol = #< ifTrue: [ ^ self > aNumber ].
+   aSymbol = #> ifTrue: [ ^ self < aNumber ].
+   aSymbol = #<= ifTrue: [ ^ self >= aNumber ].
+   aSymbol = #>= ifTrue: [ ^ self <= aNumber ].
+   aSymbol = #min: ifTrue: [ ^ self min: aNumber ]"
 ]
 
 { #category : #'verbs (monadic)' }
@@ -212,7 +213,8 @@ NDArray >> drop: anInteger [
 
 { #category : #'trains / combinators' }
 NDArray >> dup: aFullBlockClosure [
-   "This is the W combinator and the Warbler bird. It is known as Self(ie) in APL and Self in BQN"
+   "This is the W combinator and the Warbler bird. It is known as Self(ie) in APL and Self in BQN.
+    The name DUP is taken from FORTH (and other stack based languages)."
 	^ aFullBlockClosure value: self value: self
 ]
 
