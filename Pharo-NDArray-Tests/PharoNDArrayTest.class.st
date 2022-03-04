@@ -41,23 +41,27 @@ PharoNDArrayTest >> testAbsoluteValue [
 { #category : #tests }
 PharoNDArrayTest >> testAllAsBeforeBs [	
 	| orScanEqualsId |
-	orScanEqualsId := [ :s | s fork: [ :x | x scan: #or: ] with: #matches: with: #yourself ].
-   self assert: (('aaabbb' asNDArray = $b) fork: [ :x | x scan: #or: ]	 with: #matches: with: #yourself).
-   self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
-   self assert: (('bbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+	orScanEqualsId := [ :s | s forkWith: [ :x | x scan: #or: ] and: #matches: and: #yourself ].
+   "Using blocks"
    self assert: (orScanEqualsId value: ('aaabbb' asNDArray = $b)).
-   self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
-   self assert: (('bbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
-
+   self deny: (orScanEqualsId value: ('abab' asNDArray = $b)).
+   self assert: (orScanEqualsId value: ('bbb' asNDArray = $b)).
+   "Not using blocks"
+   self assert: (('aaabbb' asNDArray = $b) forkWith: [ :x | x scan: #or: ]	 and: #matches: and: #yourself).
+   self deny: (('abab' asNDArray = $b) forkWith: [ :x | x scan: #or: ] and: #matches: and: #yourself).
+   self assert: (('bbb' asNDArray = $b) forkWith: [ :x | x scan: #or: ] and: #matches: and: #yourself).
+   "Using after"
+   self assert: (('aaabbb' asNDArray = $b) dupWith: #matches: -*-	#or: scan). 
+   
 ]
 
 { #category : #tests }
 PharoNDArrayTest >> testAllAsBeforeBs2 [
-	| orScanEqualsId |
-	orScanEqualsId := #matches: *-	#or: scan. 
-	self assert: (('aaabbb' asNDArray = $b) dup: #matches: *-	#or: scan).
-   "self assert: (('aaabbb' asNDArray = $b) fork: [ :x | x scan: #or: ]	 with: #matches: with: #yourself).
-   self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
+	self assert: (('aaabbb' asNDArray = $b) dupWith: #matches: -*-	#or: scan). 
+   self assert: (('aaabbb' asNDArray = $b) forkWith: [ :x | x scan: #or: ]	 and: #matches: and: #yourself).
+	
+	"	this is beside in APL, the question is do we want it to be instead after in BQN (aka we don't need selfie. would reult in 	"
+   "self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
    self assert: (('bbb' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
    self assert: (orScanEqualsId value: ('aaabbb' asNDArray = $b)).
    self deny: (('abab' asNDArray = $b) fork: [ :x | x scan: #or: ] with: #matches: with: #yourself).
@@ -78,7 +82,7 @@ PharoNDArrayTest >> testAllEqual [
    self assert: (u eq: u first) all equals: true.
    self assert: u unique size = 1 equals: true.
    self assert: u max = u min equals: true.
-   self assert: (u fork: #max with: #= with: #min) equals: true.
+   self assert: (u forkWith: #max and: #= and: #min) equals: true.
    self assert: (u windowed: 2 reduce: #=) all equals: true.
    self assert: ((u rotate: 1) matches: u) equals: true
 ]
@@ -112,10 +116,10 @@ PharoNDArrayTest >> testContainsDuplicates [
    "Leetcode Problem 217 https://leetcode.com/problems/contains-duplicate/"
    | arr |
    arr := #(1 2 3 1) asNDArray.
-   self assert: (arr fork: #unique with: #notMatches: with: #yourself) equals: true.
+   self assert: (arr forkWith: #unique and: #notMatches: and: #yourself) equals: true.
    self assert: ((arr uniqueMask not eq: 1) reduce: #or:) equals: true.
-   self assert: (arr dup: (#unique -* #notMatches:)) equals: true.
-   self assert: (arr dup: (#notMatches: *- #unique)) equals: true.
+   self assert: (arr dupWith: (#unique -*- #notMatches:)) equals: true.
+   self assert: (arr dupWith: (#notMatches: -*- #unique)) equals: true.
 ]
 
 { #category : #tests }
@@ -156,8 +160,8 @@ PharoNDArrayTest >> testDisjointSets [
 
    self assert: (a intersection: b) isEmpty equals: false.
    self assert: (c intersection: d) isEmpty equals: true.
-   self assert: (a binaryAtop: b with: #intersection: with: #isEmpty) equals: false.
-   self assert: (c binaryAtop: d with: #intersection: with: #isEmpty) equals: true.
+   self assert: (a atop: b with: #intersection: and: #isEmpty) equals: false.
+   self assert: (c atop: d with: #intersection: and: #isEmpty) equals: true.
 ]
 
 { #category : #tests }
@@ -235,7 +239,7 @@ PharoNDArrayTest >> testFinalValue [
 PharoNDArrayTest >> testFindDisappearedNumbers [
    "LeetCode Problem Link: https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/"
    self
-      assert: (#(4 3 2 7 8 2 3 1) asNDArray fork: [ :e | e size iota asNDArray ] with: #memberOf: with: #yourself) not where
+      assert: (#(4 3 2 7 8 2 3 1) asNDArray forkWith: [ :e | e size iota asNDArray ] and: #memberOf: and: #yourself) not where
       equals: #(5 6)
 ]
 
@@ -243,7 +247,7 @@ PharoNDArrayTest >> testFindDisappearedNumbers [
 PharoNDArrayTest >> testFindGCD [
    "Leetcode Problem 255 https://leetcode.com/problems/find-greatest-common-divisor-of-array/"
    | findGCD |
-   findGCD := [ :arr | arr asNDArray fork: [ :e | e reduce: #max: ] with: [ :a :b | a gcd: b ] with: [ :e | e reduce: #min: ] ].
+   findGCD := [ :arr | arr asNDArray forkWith: [ :e | e reduce: #max: ] and: [ :a :b | a gcd: b ] and: [ :e | e reduce: #min: ] ].
    self assert: (findGCD value: #(2 5 6 7 10)) equals: 2.
    self assert: (findGCD value: #(3 5 6 7 8)) equals: 1.
    self assert: (findGCD value: #(3 3)) equals: 3
@@ -293,8 +297,8 @@ PharoNDArrayTest >> testFloor [
 
 { #category : #tests }
 PharoNDArrayTest >> testFork [
-   self assert: (#(1 2 3) asNDArray fork: #yourself with: #= with: #first) equals: #(1 0 0).
-   self assert: (#(1 2 3) asNDArray fork: #first with: [ :a :b | b = a ] with: #yourself) equals: #(1 0 0)
+   self assert: (#(1 2 3) asNDArray forkWith: #yourself and: #= and: #first) equals: #(1 0 0).
+   self assert: (#(1 2 3) asNDArray forkWith: #first and: [ :a :b | b = a ] and: #yourself) equals: #(1 0 0)
    "                                                   ^^^^^^^^^^^^^^^^^ TODO: need to think about this"
 ]
 
@@ -318,8 +322,8 @@ PharoNDArrayTest >> testGreaterThan [
 
 { #category : #tests }
 PharoNDArrayTest >> testHook [
-	self assert: (#(1 2 1) asNDArray hook: #= with: #reverse) equals: true. "palindrome"
-	self assert: (#(1 2 1) asNDArray hook: #= with: #reverse) equals: 1 "palindrome"
+	self assert: (#(1 2 1) asNDArray hookWith: #= and: #reverse) equals: true. "palindrome"
+	self assert: (#(1 2 1) asNDArray hookWith: #= and: #reverse) equals: 1 "palindrome"
 ]
 
 { #category : #tests }
@@ -410,12 +414,12 @@ PharoNDArrayTest >> testMaximumDiffBetweenIncreasingElements [
 
    self assert: (a triangleProduct: #-) enlist negated max equals: 4.
    self assert: (b triangleProduct: #-) enlist negated max equals: 9.
-   self assert: (a hook: #- with: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: 4.
-   self assert: (b hook: #- with: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: 9.
-   self assert: (c hook: #- with: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: -1.
-   self assert: (a hook: #- with: #mins :> without: 0 :> , -1 :> max) equals: 4.
-   self assert: (b hook: #- with: #mins :> without: 0 :> , -1 :> max) equals: 9.
-   self assert: (c hook: #- with: #mins :> without: 0 :> , -1 :> max) equals: -1
+   self assert: (a hookWith: #- and: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: 4.
+   self assert: (b hookWith: #- and: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: 9.
+   self assert: (c hookWith: #- and: #scan: @@ #min: :> without: 0 :> , -1 :> max) equals: -1.
+   self assert: (a hookWith: #- and: #mins :> without: 0 :> , -1 :> max) equals: 4.
+   self assert: (b hookWith: #- and: #mins :> without: 0 :> , -1 :> max) equals: 9.
+   self assert: (c hookWith: #- and: #mins :> without: 0 :> , -1 :> max) equals: -1
 ]
 
 { #category : #tests }
@@ -490,7 +494,7 @@ PharoNDArrayTest >> testOverCombinator [
 	| a b |
 	a := 'mouse'.
 	b := 'cat'.
-   self assert: (a over: b with: #- with: #size) equals: 2.
+   self assert: (a over: b with: #- and: #size) equals: 2.
 
 ]
 
@@ -539,12 +543,12 @@ PharoNDArrayTest >> testRansomNote [
    e := 'aab' asNDArray.
    alphaFreq := [ :arr | (Character alphabet outerProduct: arr with: #=) sum ].
 
-   self assert: ((a over: b with: #- with: alphaFreq) <= 0 reduce: #and:) equals: 0.
-   self assert: ((c over: d with: #- with: alphaFreq) <= 0 reduce: #and:) equals: 0.
-   self assert: ((c over: e with: #- with: alphaFreq) <= 0 reduce: #and:) equals: 1.
-   self assert: ((a over: b with: #- with: alphaFreq) <= 0) all equals: 0.
-   self assert: ((c over: d with: #- with: alphaFreq) <= 0) all equals: 0.
-   self assert: ((c over: e with: #- with: alphaFreq) <= 0) all equals: 1
+   self assert: ((a over: b with: #- and: alphaFreq) <= 0 reduce: #and:) equals: 0.
+   self assert: ((c over: d with: #- and: alphaFreq) <= 0 reduce: #and:) equals: 0.
+   self assert: ((c over: e with: #- and: alphaFreq) <= 0 reduce: #and:) equals: 1.
+   self assert: ((a over: b with: #- and: alphaFreq) <= 0) all equals: 0.
+   self assert: ((c over: d with: #- and: alphaFreq) <= 0) all equals: 0.
+   self assert: ((c over: e with: #- and: alphaFreq) <= 0) all equals: 1
 ]
 
 { #category : #tests }
@@ -664,8 +668,8 @@ PharoNDArrayTest >> testSumEvens [
    vals := #(42 1729 4104) asNDArray.
    self assert: (vals filter: (vals % 2 :> not) :> reduce: #+) equals: 4146.
    self assert: (vals filterPred: #even :> reduce: #+) equals: 4146.
-   self assert: ((vals fork: [ :e | e ] with: #filter: with: [ :e | e % 2 :> not ]) reduce: #+) equals: 4146.
-   self assert: ((vals fork: #yourself with: #filter: with: [ :e | e % 2 :> not ]) reduce: #+) equals: 4146
+   self assert: ((vals forkWith: [ :e | e ] and: #filter: and: [ :e | e % 2 :> not ]) reduce: #+) equals: 4146.
+   self assert: ((vals forkWith: #yourself and: #filter: and: [ :e | e % 2 :> not ]) reduce: #+) equals: 4146
 ]
 
 { #category : #tests }

@@ -125,6 +125,14 @@ NDArray >> adaptToNumber: aNumber andSend: aSymbol [
    aSymbol = #min: ifTrue: [ ^ self min: aNumber ]"
 ]
 
+{ #category : #'trains / combinators' }
+NDArray >> after: anNDArray with: f and: g [
+   "This is known as the D combinator from Combinatory Logic and the 'dove' from Combinator Birds"
+   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ f value: self value: (g value: anNDArray).
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> all [
    ^ self reduce: #and:
@@ -167,7 +175,7 @@ NDArray >> asString [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> binaryAtop: anNDArray with: a with: b [ 
+NDArray >> atop: anNDArray with: a and: b [ 
    "This is known as the B1 combinator from Combinatory Logic and the 'blackbird' from Combinator Birds"
    a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
    b numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
@@ -175,12 +183,11 @@ NDArray >> binaryAtop: anNDArray with: a with: b [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> binaryFork: anNDarray with: a with: b with: c [
-   "This is a specialization of the E^ combinator from Combinatory Logic and the 'bald eagle' from Combinator Birds"
-   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   c numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   ^ b value: (a value: self value: anNDarray) value: (b value: self value: anNDarray)
+NDArray >> before: anNDArray with: f and: g [
+   "This is known as the D combinator from Combinatory Logic and the 'dove' from Combinator Birds"
+   f numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   ^ g value: (f value: self) value: anNDArray
 ]
 
 { #category : #'verbs (scalar monadic)' }
@@ -212,7 +219,7 @@ NDArray >> drop: anInteger [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> dup: aFullBlockClosure [
+NDArray >> dupWith: aFullBlockClosure [
    "This is the W combinator and the Warbler bird. It is known as Self(ie) in APL and Self in BQN.
     The name DUP is taken from FORTH (and other stack based languages)."
 	^ aFullBlockClosure value: self value: self
@@ -264,13 +271,30 @@ NDArray >> first [
    ^ data first
 ]
 
+{ #category : #'trains / combinators' }
+NDArray >> flip: anNDArray with: f [
+   "This is known as the C combinator from Combinatory Logic and the 'cardinal' from Combinator Birds"
+   "It is known as flip in Haskell and swap in APL/BQN"
+   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   ^ f value: anNDArray value: self.
+]
+
 { #category : #'verbs (scalar monadic)' }
 NDArray >> floor [
    ^ self class new withShape: shape with: (data collect: #floor)
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> fork: a with: b with: c [
+NDArray >> fork: anNDarray with: a and: b and: c [
+   "This is a specialization of the E^ combinator from Combinatory Logic and the 'bald eagle' from Combinator Birds"
+   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   c numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   ^ b value: (a value: self value: anNDarray) value: (b value: self value: anNDarray)
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> forkWith: a and: b and: c [
    "This is known as the S' combinator from Combinatory Logic and the 'phoenix' from Combinator Birds"
    a numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
    b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
@@ -285,7 +309,7 @@ NDArray >> gather: anNDArray [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> hook: f with: g [
+NDArray >> hookWith: f and: g [
    "This is known as the S combinator from Combinatory Logic and the 'starling' from Combinator Birds"
    f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
    g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
@@ -436,7 +460,7 @@ NDArray >> outerProduct: anObject with: aBinaryBlock [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> over: anObject with: f with: g [
+NDArray >> over: anObject with: f and: g [
    "This is also known as the Psi combinator, 'on' in Haskell and 'over' in APL and BQN"
    f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
    g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
