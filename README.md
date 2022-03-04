@@ -136,14 +136,20 @@ Each step of the above code creates the following:
 
 ### Trains / Combinators
 
-* `binaryAtop:with:with:`      (blackbird / B1)
-* `binaryFork:with:with:with:` (golden eagle / -)
-* `hook:with:`                 (starling / S)
-* `fork:with:with:`            (phoenix / S')
-* `over:with:with:`            (psi / Psi)
-* `dup:`                       (warbler / W)
+* ✔️ `after:with:and`     (dove / D)
+* ✔️ `atop:with:and:`     (blackbird / B1)
+* ✔️ `before:with:and`    ( __ no bird / combinator __ )
+* `dupWith:`           (warbler / W)
+* `flip:with:`         (cardinal / C)
+* `fork:with:and:and:` (golden eagle / -)
+* `forkWith:and:and:`  (phoenix / S')
+* ✔️ `hookWith:and:`      (starling / S)
+* ✔️ `over:with:and:`     (psi / Psi)
 
 ### Combinators (on Symbol / Block)
 
-* `*-` (dove / D)
-* `-*` (dove / D)
+|Binary Symbol|M/D|Combinator| Bird| APL Name | BQN Name| J Name |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|`-*-`|Dyadic| D & _ | Dove & ___ | ___ & beside |before & after||
+|`-?-`|Monadic|S & _ | Starling & ___ | | before & after | hook & ___ |
+|`-\|-`|Dyadic| B1 & Psi| Blackbird & Psi | atop & over | atop & over |atop & over |
