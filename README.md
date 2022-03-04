@@ -150,6 +150,6 @@ Each step of the above code creates the following:
 
 |Binary Symbol|M/D|Combinator| Bird| APL Name | BQN Name| J Name |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|`-*-`|Dyadic| D & _ | Dove & ___ | ___ & beside |before & after||
-|`-?-`|Monadic|S & _ | Starling & ___ | | before & after | hook & ___ |
-|`-\|-`|Dyadic| B1 & Psi| Blackbird & Psi | atop & over | atop & over |atop & over |
+|`<->`|Dyadic| D & _ | Dove & ___ | ___ & beside |before & after||
+|`<*>`|Monadic|S & _ | Starling & ___ | | before & after | hook & ___ |
+|`<\|>`|Dyadic| B1 & Psi| Blackbird & Psi | atop & over | atop & over |atop & over |
