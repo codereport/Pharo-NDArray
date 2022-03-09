@@ -125,17 +125,50 @@ NDArray >> adaptToNumber: aNumber andSend: aSymbol [
    aSymbol = #min: ifTrue: [ ^ self min: aNumber ]"
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> all [
+   ^ self reduce: #and:
+]
+
 { #category : #'trains / combinators' }
-NDArray >> after: anNDArray with: f and: g [
+NDArray >> and: anNDArray with: a atop: b [ 
+   "This is known as the B1 combinator from Combinatory Logic and the 'blackbird' from Combinator Birds"
+   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   b numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ b value: (a value: self value: anNDArray)
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> and: anNDArray with: f backHook: g [
+   "This is known as the D combinator from Combinatory Logic and the 'dove' from Combinator Birds"
+   f numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   ^ g value: (f value: self) value: anNDArray
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> and: anNDarray with: a fork: b and: c [
+   "This is a specialization of the E^ combinator from Combinatory Logic and the 'bald eagle' from Combinator Birds"
+   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   c numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   ^ b value: (a value: self value: anNDarray) value: (b value: self value: anNDarray)
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> and: anNDArray with: f hook: g [
    "This is known as the D combinator from Combinatory Logic and the 'dove' from Combinator Birds"
    f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
    g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
    ^ f value: self value: (g value: anNDArray).
 ]
 
-{ #category : #'verbs (monadic)' }
-NDArray >> all [
-   ^ self reduce: #and:
+{ #category : #'trains / combinators' }
+NDArray >> and: anObject with: f over: g [
+   "This is also known as the Psi combinator, 'on' in Haskell and 'over' in APL and BQN"
+   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ f value: (g value: self) value: (g value: anObject)
 ]
 
 { #category : #'verbs (monadic)' }
@@ -174,22 +207,6 @@ NDArray >> asString [
    ^ String newFrom: data
 ]
 
-{ #category : #'trains / combinators' }
-NDArray >> atop: anNDArray with: a and: b [ 
-   "This is known as the B1 combinator from Combinatory Logic and the 'blackbird' from Combinator Birds"
-   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   b numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
-   ^ b value: (a value: self value: anNDArray)
-]
-
-{ #category : #'trains / combinators' }
-NDArray >> before: anNDArray with: f and: g [
-   "This is known as the D combinator from Combinatory Logic and the 'dove' from Combinator Birds"
-   f numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
-   g numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   ^ g value: (f value: self) value: anNDArray
-]
-
 { #category : #'verbs (scalar monadic)' }
 NDArray >> ceiling [
    ^ self class new withShape: shape with: (data collect: #ceiling)
@@ -223,6 +240,47 @@ NDArray >> dupWith: aFullBlockClosure [
    "This is the W combinator and the Warbler bird. It is known as Self(ie) in APL and Self in BQN.
     The name DUP is taken from FORTH (and other stack based languages)."
 	^ aFullBlockClosure value: self value: self
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> dupWith: f atop: g [
+   "This does not map to a combinator from Combinatory Logic"
+   f numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   ^ f value: (g value: self value: self)
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> dupWith: f backHook: g [
+   "The name backhook is taken from I, a predecssor language to BQN."
+   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ g value: (f value: self) value: self
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> dupWith: a fork: b and: c [
+   "This is known as the S' combinator from Combinatory Logic and the 'phoenix' from Combinator Birds"
+   a numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   c numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ b value: (a value: self) value: (c value: self)
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> dupWith: f hook: g [
+   "This is known as the S combinator from Combinatory Logic and the 'starling' from Combinator Birds"
+   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ f value: self value: (g value: self)
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> dupWith: f over: g [
+   "This does not map to a combinator from Combinatory Logic"
+   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ f value: (g value: self) value: (g value: self)
 ]
 
 { #category : #'verbs (monadic)' }
@@ -284,36 +342,10 @@ NDArray >> floor [
    ^ self class new withShape: shape with: (data collect: #floor)
 ]
 
-{ #category : #'trains / combinators' }
-NDArray >> fork: anNDarray with: a and: b and: c [
-   "This is a specialization of the E^ combinator from Combinatory Logic and the 'bald eagle' from Combinator Birds"
-   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   c numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   ^ b value: (a value: self value: anNDarray) value: (b value: self value: anNDarray)
-]
-
-{ #category : #'trains / combinators' }
-NDArray >> forkWith: a and: b and: c [
-   "This is known as the S' combinator from Combinatory Logic and the 'phoenix' from Combinator Birds"
-   a numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
-   b numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   c numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
-   ^ b value: (a value: self) value: (c value: self)
-]
-
 { #category : #'verbs (dyadic)' }
 NDArray >> gather: anNDArray [
    (self rank = 1 and: anNDArray rank = 1) ifFalse: [ ^ RankError signal ].
    ^ self class new withShape: anNDArray shape with: (anNDArray asNDArray collect: [ :i | i = 0 ifTrue: [ 0 ] ifFalse: [data at: i ]])
-]
-
-{ #category : #'trains / combinators' }
-NDArray >> hookWith: f and: g [
-   "This is known as the S combinator from Combinatory Logic and the 'starling' from Combinator Birds"
-   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
-   ^ f value: self value: (g value: self)
 ]
 
 { #category : #'verbs (dyadic)' }
@@ -457,14 +489,6 @@ NDArray >> outerProduct: anObject with: aBinaryBlock [
               self data size.
               anObject size}
         with: (newData collect: #asArray) flattened
-]
-
-{ #category : #'trains / combinators' }
-NDArray >> over: anObject with: f and: g [
-   "This is also known as the Psi combinator, 'on' in Haskell and 'over' in APL and BQN"
-   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
-   ^ f value: (g value: self) value: (g value: anObject)
 ]
 
 { #category : #'verbs (dyadic)' }
@@ -679,6 +703,15 @@ NDArray >> windowed: anInteger reduce: aBinaryBlock [
       coll add: ((data copyFrom: i to: i + anInteger - 1) reduce: aBinaryBlock).
    ].
    ^ self class new withAll: coll asArray 
+]
+
+{ #category : #'trains / combinators' }
+NDArray >> with: f atop: g [
+   "This is known as the B cominator from Combinatory Logic and also the 'bluebird."
+   "It is called 'compose' in most languages and is . in Haskell"
+   f numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   ^ f value: (g value: self)
 ]
 
 { #category : #'instance creation' }
