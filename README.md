@@ -136,20 +136,29 @@ Each step of the above code creates the following:
 
 ### Trains / Combinators
 
-* ✔️ `after:with:and`     (dove / D)
-* ✔️ `atop:with:and:`     (blackbird / B1)
-* ✔️ `before:with:and`    ( __ no bird / combinator __ )
-* `dupWith:`           (warbler / W)
-* `flip:with:`         (cardinal / C)
-* `fork:with:and:and:` (golden eagle / -)
-* `forkWith:and:and:`  (phoenix / S')
-* ✔️ `hookWith:and:`      (starling / S)
-* ✔️ `over:with:and:`     (psi / Psi)
+| | Smalltalk| Bird | Combinator | 
+|:-:|:-:|:-:|:-:|
+| ✔️| `and:with:atop:`|     blackbird | B1|
+| ✔️| `and:with:backHook:`|||
+| |`and:with:fork:and:`| golden eagle ||
+| ✔️| `and:with:hook:`     |dove | D|
+| ✔️ |`and:with:over:`     |psi | Psi
+| |`dupWith:`           |warbler | W|
+| |`dupWith:atop:`|||
+| ✔️| `dupWith:backHook:`|
+| |`dupWith:fork:and:`  |phoenix | S'|
+| ✔️| `dupWith:hook:`      |starling | S|
+| |`dupWith:over:`|
+| |`flip:with:`         |cardinal | C|
+| ✔️| `with:atop:` |bluebird | B|
+
+✔️ means it has a symbol spelling below ⬇️
+
 
 ### Combinators (on Symbol / Block)
 
-|Binary Symbol|M/D|Combinator| Bird| APL Name | BQN Name| J Name |
+|Binary Symbol|M/D|Combinator| Bird| APL Name | BQN Name| J / I* Name |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|`<->`|Dyadic| D & _ | Dove & ___ | ___ & beside |before & after||
-|`<*>`|Monadic|S & _ | Starling & ___ | | before & after | hook & ___ |
+|`<->`|Dyadic| D & _ | Dove & ___ | ___ & beside |before & after|hook & backHook*|
+|`<*>`|Monadic|S & _ | Starling & ___ | | before & after | hook & backHook* |
 |`<\|>`|Dyadic| B1 & Psi| Blackbird & Psi | atop & over | atop & over |atop & over |
