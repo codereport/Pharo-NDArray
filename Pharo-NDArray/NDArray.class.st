@@ -114,7 +114,8 @@ NDArray >> abs [
 
 { #category : #arithmetic }
 NDArray >> adaptToNumber: aNumber andSend: aSymbol [
-	^ aNumber asNDArray perform: aSymbol with: self
+	"^ aNumber asNDArray perform: aSymbol with: self"
+	^ self perform: (aSymbol commuted) with: aNumber
 "   aSymbol = #+ ifTrue: [ ^ self + aNumber ].
    aSymbol = #= ifTrue: [ ^ self = aNumber ].
    aSymbol = #* ifTrue: [ ^ self * aNumber ].

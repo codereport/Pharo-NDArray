@@ -25,3 +25,12 @@ Symbol >> <|> aFullBlockClosure [
    "B1 or 'atop'"
    ^ [ : x : y | aFullBlockClosure value: (self value: x value: 	y) ]
 ]
+
+{ #category : #'*Pharo-NDArray' }
+Symbol >> commuted [
+   (#(#+, #=, #*, #min:, #max:) includes: self) ifTrue: [ ^ self ].
+   self = #< ifTrue: [ ^ #> ].
+   self = #> ifTrue: [ ^ #< ].
+   self = #<= ifTrue: [ ^ #>= ].
+   self = #>= ifTrue: [ ^ #<= ].
+]
