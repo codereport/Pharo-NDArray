@@ -4,3 +4,8 @@ Extension { #name : #BlockClosure }
 BlockClosure >> numArgsAsBlock [
 	^ self numArgs
 ]
+
+{ #category : #'*Pharo-NDArray' }
+BlockClosure >> scan [
+	^ [ : x | x asNDArray scan: self ]
+]
