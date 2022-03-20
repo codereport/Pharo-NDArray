@@ -48,3 +48,8 @@ Symbol >> commuted [
    self = #<= ifTrue: [ ^ #>= ].
    self = #>= ifTrue: [ ^ #<= ].
 ]
+
+{ #category : #'*Pharo-NDArray' }
+Symbol >> scan [
+	^ [ :x | x asNDArray scan: self ]
+]
