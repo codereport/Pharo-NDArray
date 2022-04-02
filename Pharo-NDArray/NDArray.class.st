@@ -591,7 +591,7 @@ NDArray >> sign [
 
 { #category : #accessing }
 NDArray >> size [
-   ^ shape last
+   ^ shape first
 ]
 
 { #category : #'verbs (monadic)' }
