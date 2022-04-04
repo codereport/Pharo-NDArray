@@ -482,14 +482,12 @@ NDArray >> notMatches: anObject [
 NDArray >> outerProduct: anObject with: aBinaryBlock [
    | newData |
    (self rank > 1 or: anObject rank > 1) ifTrue: [ ^ RankError signal ].
-   "this is fundamentally broken. you cannot apply this as a scalar to every element of 'data'"
-   "you must groupby and then perform"
-   newData := data collect: [ :e | aBinaryBlock value: e asNDArray value: anObject asNDArray ].
-   ^ self class new
+   newData := anObject asNDArray collect: [ :e | (aBinaryBlock value: self asNDArray value: e) ].
+   ^ (self class new
         withShape: {
-              self data size.
-              anObject size}
-        with: (newData collect: #asArray) flattened
+              anObject size. 
+				  self data size}
+        with: newData enlist asArray) transpose
 ]
 
 { #category : #'verbs (dyadic)' }
