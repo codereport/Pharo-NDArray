@@ -349,6 +349,18 @@ NDArray >> gather: anNDArray [
    ^ self class new withShape: anNDArray shape with: (anNDArray asNDArray collect: [ :i | i = 0 ifTrue: [ 0 ] ifFalse: [data at: i ]])
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> indices [
+   | newData |
+   self max > 1 ifTrue: [ ^ DomainError signal ].
+   self min < 0 ifTrue: [ ^ DomainError signal ].
+   self rank > 1 ifTrue: [ ^ NotYetImplemented signal ].
+   newData := self data collectWithIndex: #@
+           :> select: [ :p | p x = 1 ]
+           :> collect: #y.
+   ^ newData asNDArray
+]
+
 { #category : #'verbs (dyadic)' }
 NDArray >> intersection: anNDArray [
    (self rank = 1 and: anNDArray rank = 1) ifFalse: [ ^ RankError signal ].
