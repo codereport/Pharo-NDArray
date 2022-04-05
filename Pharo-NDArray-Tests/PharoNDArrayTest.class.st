@@ -681,6 +681,36 @@ PharoNDArrayTest >> testTake [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testThesis3_1 [
+| vector |
+   self assert: (10 iota asNDArray * 2 - 1) equals: #(1 3 5 7 9 11 13 15 17 19).
+   self assert: (10 iota * 2 - 1) equals: #(1 3 5 7 9 11 13 15 17 19).
+   self assert: ((3 iota) outerProduct: (3 iota) with: #*) equals: #((1 2 3) (2 4 6) (3 6 9)).
+   self assert: (3 iota dupWith: (#* outerProduct)) equals: #((1 2 3) (2 4 6) (3 6 9)).
+   vector := #(1 1 0 1 1 1 0 0 0 1).
+   self assert: (vector dupWith: #partition: :> collect: #size :> max) equals: 3.
+   vector := #(55 42 1429 343).
+   self assert: (vector windowed: 2 reduce: #- :> abs :> min) equals: 13.
+   vector := #(1 -5 3 -8 6).
+   self assert: (vector triangleProduct2: #- :> abs :> enlist :> unique) equals: #(0 6 2 9 5 8 3 11 14)
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testThesis3_2 [
+| vector matrix matrixFromArray matrixA matrixB|
+   matrix := 12 iota reshape: #(3 4).
+   self assert: matrix equals: #((1 2 3 4) (5 6 7 8) (9 10 11 12)).
+   matrixFromArray := NDArray withAll: #(1 2 3).
+   self assert: matrixFromArray equals: #(1 2 3).
+   matrixA := NDArray withShape: #(2 4) with: 8 iota.
+   matrixB := NDArray withShape: #(2 4) with: 5 iota.
+   self assert: matrixA equals: #((1 2 3 4) (5 6 7 8)).
+   self assert: matrixB equals: #((1 2 3 4) (5 1 2 3)).
+   vector := #(1 2 3 4) asNDArray.
+   self assert: vector equals: #(1 2 3 4).
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testTimes [
    self assert: (NDArray withAll: #(1 2 3)) * 1 equals: #(1 2 3).
    self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) * 10) ravel equals: (6 iota collect: 10 @@ #*).
