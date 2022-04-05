@@ -34,10 +34,30 @@ SequenceableCollection >> shape [
 ]
 
 { #category : #'*Pharo-NDArray' }
+SequenceableCollection >> triangleProduct2: aFullBlockClosure [
+	^ self asNDArray triangleProduct2: aFullBlockClosure
+]
+
+{ #category : #'*Pharo-NDArray' }
+SequenceableCollection >> triangleProduct: aFullBlockClosure [
+   ^ self asNDArray triangleProduct: aFullBlockClosure
+]
+
+{ #category : #'*Pharo-NDArray' }
 SequenceableCollection >> uniqueMask [
    | values |
    values := Set new.
    ^ self collect: [ :e | (values includes: e) 
           ifTrue: [ 0 ] 
          ifFalse: [ values add: e. 1 ]]
+]
+
+{ #category : #'*Pharo-NDArray' }
+SequenceableCollection >> upperProduct: aFullBlockClosure [ 
+   ^ self asNDArray upperProduct: aFullBlockClosure 
+]
+
+{ #category : #'*Pharo-NDArray' }
+SequenceableCollection >> windowed: anInteger reduce: aFullBlockClosure [ 
+   ^ self asNDArray windowed: anInteger reduce: aFullBlockClosure
 ]

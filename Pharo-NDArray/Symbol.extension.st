@@ -50,6 +50,16 @@ Symbol >> commuted [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Symbol >> outerProduct [
+	^ [ :x :y | x outerProduct: y with: self ]	
+]
+
+{ #category : #'*Pharo-NDArray' }
 Symbol >> scan [
 	^ [ :x | x asNDArray scan: self ]
+]
+
+{ #category : #'*Pharo-NDArray' }
+Symbol >> upperProduct [
+	^ [ :x | x upperProduct: self ]
 ]
