@@ -98,6 +98,7 @@ Each step of the above code creates the following:
 * `asString`
 * `first`
 * `enlist`
+* `indices`
 * `ints`
 * `invIota`
 * `invWhere`
