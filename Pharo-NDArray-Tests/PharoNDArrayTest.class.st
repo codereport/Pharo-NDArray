@@ -460,6 +460,14 @@ PharoNDArrayTest >> testMultipleVerbs [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testNot [
+   self assert: #(1 0 1 0 1) asNDArray not equals: #(0 1 0 1 0).
+   self assert: #(true false true) asNDArray not equals: #(0 1 0).
+   self should: [ #(1 2 3) asNDArray not ] raise: DomainError
+   
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testNotMatches [
    self deny: (1 asNDArray notMatches: 1).
    self assert: ((NDArray withAll: #(1 2 3)) notMatches:1).

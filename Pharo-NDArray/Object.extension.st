@@ -12,6 +12,7 @@ Object >> isBoolean [
 
 { #category : #'*Pharo-NDArray' }
 Object >> isBooleanValue [
+   self isBoolean ifTrue: [ ^ true ].
    ^ false
 ]
 
