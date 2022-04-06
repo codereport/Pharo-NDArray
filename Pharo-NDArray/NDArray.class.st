@@ -473,7 +473,7 @@ NDArray >> mix [
    ^ self class new withShape: newShape with: newData
 ]
 
-{ #category : #'verbs (monadic)' }
+{ #category : #'verbs (scalar monadic)' }
 NDArray >> negated [
    ^ self class new withShape: shape with: (data collect: #negated)
 ]
