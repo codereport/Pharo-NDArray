@@ -14,3 +14,8 @@ Number >> rank [
 Number >> reshape: aCollection [ 
    ^ self asNDArray reshape: aCollection
 ]
+
+{ #category : #'*Pharo-NDArray' }
+Number >> shape [
+	^ #()
+]

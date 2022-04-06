@@ -38,7 +38,7 @@ NDArray >> % anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> * anObject [
-   ^ self class new withShape: shape with: (data collect: anObject @@ #*)
+   ^ self genericScalarDyadic: anObject with: #*
 ]
 
 { #category : #'verbs (scalar dyadic)' }
@@ -48,7 +48,7 @@ NDArray >> ** anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> + anObject [
-   ^ self class new withShape: shape with: (data collect: anObject @@ #+)
+   ^ self genericScalarDyadic: anObject with: #+
 ]
 
 { #category : #'verbs (dyadic)' }
@@ -63,15 +63,12 @@ NDArray >> , anObject [
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> - anObject [
-   self rank = 0 ifTrue: [ ^ anObject negated + data first ].
-   (self rank = anObject rank and: self shape = anObject shape) ifTrue: [ 
-      ^ self class new withShape: shape with: (self data with: anObject asNDArray data collect: #-) ].
-   ^ self class new withShape: shape with: (data collect: #- @@ anObject)
+   ^ self genericScalarDyadic: anObject with: #-
 ]
 
 { #category : #'verbs (scalar dyadic)' }
 NDArray >> / anObject [
-   ^ self class new withShape: shape with: (data collect: #/ @@ anObject)
+   ^ self genericScalarDyadic: anObject with: #/
 ]
 
 { #category : #'verbs (scalar dyadic)' }
@@ -349,6 +346,22 @@ NDArray >> gather: anNDArray [
    ^ self class new withShape: anNDArray shape with: (anNDArray asNDArray collect: [ :i | i = 0 ifTrue: [ 0 ] ifFalse: [data at: i ]])
 ]
 
+{ #category : #'verbs (scalar dyadic)' }
+NDArray >> genericScalarDyadic: anObject with: aBlock [
+   | rank0 shapesEqual |
+   rank0 := self rank = 0 or: anObject rank = 0.
+   shapesEqual := shape = anObject shape.
+   (rank0 not and: shapesEqual not) ifTrue: [ ^ ShapeError signal ].
+   shapesEqual ifTrue: [ 
+      ^ self class new withShape: shape
+           with:
+           (self data with: anObject data
+               collect: aBlock)
+      ].
+   ^ self class new withShape: shape
+        with: (data collect: aBlock @@ anObject)
+]
+
 { #category : #'verbs (monadic)' }
 NDArray >> indices [
    | newData |
@@ -423,8 +436,8 @@ NDArray >> max [
 ]
 
 { #category : #'verbs (scalar dyadic)' }
-NDArray >> max: anInteger [ 
-   ^ self class new withShape: shape with: (data collect: anInteger @@ #max:)
+NDArray >> max: aNumber [
+   ^ self genericScalarDyadic: aNumber with: #max:
 ]
 
 { #category : #'verbs (monadic)' }
@@ -450,8 +463,8 @@ NDArray >> min [
 ]
 
 { #category : #'verbs (scalar dyadic)' }
-NDArray >> min: anInteger [ 
-   ^ self class new withShape: shape with: (data collect: anInteger @@ #min:)
+NDArray >> min: aNumber [
+   ^ self genericScalarDyadic: aNumber with: #min:
 ]
 
 { #category : #'verbs (monadic)' }
