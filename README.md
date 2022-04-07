@@ -113,6 +113,7 @@ Each step of the above code creates the following:
 * `ravel`
 * `reverse`
 * `size`
+* `sort`
 * `split`
 * `sum`
 * `sums`
