@@ -217,9 +217,21 @@ PharoNDArrayTest >> testFinalPricesWithDiscount [
    a := #(8 4 6 2 3) asNDArray.
    b := #(1 2 3 4 5) asNDArray.
    c := #(10 1 1 6) asNDArray.
-   self assert: a - (a gather: ((a upperProduct: #>=) collect: [ :e | ((e where without: 0) , 0) first ])) equals: #(4 2 4 2 3).
-   self assert: b - (b gather: ((b upperProduct: #>=) collect: [ :e | ((e where without: 0) , 0) first ])) equals: b.
-   self assert: c - (c gather: ((c upperProduct: #>=) collect: [ :e | ((e where without: 0) , 0) first ])) equals: #(9 0 1 6)
+   self
+      assert:
+         a - (a gather: ((a upperProduct: #>=) collect: [ :e | 
+                 ((e indices without: 0) , 0) first ]))
+      equals: #(4 2 4 2 3).
+   self
+      assert:
+         b - (b gather: ((b upperProduct: #>=) collect: [ :e | 
+                 ((e indices without: 0) , 0) first ]))
+      equals: b.
+   self
+      assert:
+         c - (c gather: ((c upperProduct: #>=) collect: [ :e | 
+                 ((e indices without: 0) , 0) first ]))
+      equals: #(9 0 1 6)
 ]
 
 { #category : #tests }
@@ -239,7 +251,10 @@ PharoNDArrayTest >> testFinalValue [
 PharoNDArrayTest >> testFindDisappearedNumbers [
    "LeetCode Problem Link: https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/"
    self
-      assert: (#(4 3 2 7 8 2 3 1) asNDArray dupWith: [ :e | e size iota asNDArray ] fork: #memberOf: and: #yourself) not where
+      assert: (#(4 3 2 7 8 2 3 1) asNDArray dupWith: [ :e | 
+             e size iota asNDArray ]
+             fork: #memberOf:
+             and: #yourself) not indices
       equals: #(5 6)
 ]
 
@@ -280,13 +295,25 @@ PharoNDArrayTest >> testFirst [
 PharoNDArrayTest >> testFirstUniqueCharacher [
    | a b c d |
    a := #(1 3) asNDArray.
-   self assert: (((a outerProduct: a with: #=) reduce: #+) eq: 1) where first - 1 equals: 0.
+   self assert:
+      (((a outerProduct: a with: #=) reduce: #+) eq: 1) indices first
+      - 1
+      equals: 0.
    b := #(1 3 1 3 2 5 5).
-   self assert: (((b outerProduct: b with: #=) reduce: #+) eq: 1) where first - 1 equals: 4.
+   self assert:
+      (((b outerProduct: b with: #=) reduce: #+) eq: 1) indices first
+      - 1
+      equals: 4.
    c := #(1 3 2 5 2 5 4 1).
-   self assert: (((c outerProduct: c with: #=) reduce: #+) eq: 1) where first - 1 equals: 1.
+   self assert:
+      (((c outerProduct: c with: #=) reduce: #+) eq: 1) indices first
+      - 1
+      equals: 1.
    d := #(1 3 2 5 2 5 4 1 3).
-   self assert: (((d outerProduct: d with: #=) reduce: #+) eq: 1) where first - 1 equals: 6
+   self assert:
+      (((d outerProduct: d with: #=) reduce: #+) eq: 1) indices first
+      - 1
+      equals: 6
 ]
 
 { #category : #tests }
@@ -504,6 +531,12 @@ PharoNDArrayTest >> testOverCombinator [
 	a := 'mouse'.
 	b := 'cat'.
    self assert: (a and: b with: #- over: #size) equals: 2.
+   "self assert: (#- |* #size value: a value: b) equals: 2.
+	self assert: (#- |* #size : a : b) equals: 2.
+   self assert: a (#- |* #size) b equals: 2.
+   a (#foo ||| #bar).
+   self assert: ( {a. b}  #- @- #size) equals: 2.
+   self assert: ( a ~> (#- @- #size) <~ b) equals: 2."
 
 ]
 
@@ -822,9 +855,12 @@ PharoNDArrayTest >> testUniqueMask [
 
 { #category : #tests }
 PharoNDArrayTest >> testWhere [
-   self assert: #(1 0 1 0) asNDArray where equals: #(1 3).
-   self assert: (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix equals: #(#(1 2) #(4 0)) asNDArray.
-   self assert: (10 iota asNDArray % 2) where equals: 5 iota asNDArray * 2 - 1
+   self assert: #(1 0 1 0) asNDArray indices equals: #(1 3).
+   self assert:
+      (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix
+      equals: #(#(1 2) #(4 0)) asNDArray.
+   self assert: (10 iota asNDArray % 2) indices
+      equals: 5 iota asNDArray * 2 - 1
    "self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
 ]
 

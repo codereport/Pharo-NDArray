@@ -620,6 +620,7 @@ NDArray >> sign [
 
 { #category : #accessing }
 NDArray >> size [
+   shape isEmpty ifTrue: [ ^ 1 ].
    ^ shape first
 ]
 
@@ -722,25 +723,18 @@ NDArray >> upperProduct: aBinaryBlock [
         collect: [ :a :i | ((a drop: i) reverse take: n) reverse asNDArray ]
 ]
 
-{ #category : #'verbs (monadic)' }
-NDArray >> where [
-   self rank = 0 ifTrue: [ ^ RankError signal ].
-   self rank = 1 ifTrue: [ 
-      ^ data withIndexCollect: #@ 
-         :> select: [ :p | p x == 1 ]
-         :> collect: #y 
-         :> asNDArray ].
-   ^ self error: 'Implement for higher ranks'
-]
-
 { #category : #adverbs }
-NDArray >> windowed: anInteger reduce: aBinaryBlock [ 
-   | coll |
-   coll := OrderedCollection new.
-   1 to: (self size - anInteger + 1) do: [ :i |
-      coll add: ((data copyFrom: i to: i + anInteger - 1) reduce: aBinaryBlock).
-   ].
-   ^ self class new withAll: coll asArray 
+NDArray >> windowed: anInteger reduce: aBlock [
+   | n newData fold |
+   self rank = 0 ifTrue: [ ^ RankError signal ].
+   self rank > 1 ifTrue: [ ^ NotYetImplemented ].
+   anInteger isInteger ifFalse: [ ^ InvalidArgumentError signal ].
+   anInteger > self size ifTrue: [ ^ ShapeError signal ].
+   n := self size - anInteger + 1.
+   fold := [ :i :j | (data copyFrom: i to: j) reduce: aBlock ].
+   newData := n iota with: n iota + anInteger - 1
+                 collect: fold.
+   ^ self class new withAll: newData asArray
 ]
 
 { #category : #'trains / combinators' }
