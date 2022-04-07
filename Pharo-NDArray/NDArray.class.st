@@ -558,7 +558,8 @@ NDArray >> reduce: aBlock [
    | newData |
    self rank = 1 ifTrue: [ ^ data reduce: aBlock ].
    newData := data groupsOf: shape last 
-           :> collect: [ :e | e reduce: aBlock ] as: Array.
+           :> collect: (aBlock reduce)
+           :> asArray.
    ^ self class new withShape: shape allButLast with: newData
 ]
 
@@ -601,10 +602,11 @@ NDArray >> rotate: anInteger [
 ]
 
 { #category : #adverbs }
-NDArray >> scan: aBinaryBlock [
+NDArray >> scan: aBlock [
    | newData |
-   newData := data groupsOf: shape last 
-           :> collect: [ :e | e scan: aBinaryBlock ] as: Array.
+   newData := data groupsOf: shape last
+           :> collect: (aBlock scan)
+           :> asArray.
    ^ self class new withShape: shape with: newData
 ]
 

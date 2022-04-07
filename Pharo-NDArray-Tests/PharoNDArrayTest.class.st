@@ -818,6 +818,19 @@ PharoNDArrayTest >> testThesis3_3_monadic_scalar [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testThesis3_5_adverbs [
+   | vector matrix |
+   vector := #(1 2 3 4 5) asNDArray.
+   matrix := 9 iota reshape: #(3 3).
+   self assert: (vector reduce: #+) equals: 15.
+   self assert: (vector reduce: #*) equals: 120.
+   self assert: (matrix reduce: #+) equals: #(6 15 24).
+   self assert: (matrix reduce: #*) equals: #(6 120 504).
+   self assert: (vector scan: #+) equals: #(1 3 6 10 15).
+   self assert: (vector scan: #*) equals: #(1 2 6 24 120)
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testTimes [
    self assert: (NDArray withAll: #(1 2 3)) * 1 equals: #(1 2 3).
    self assert: ((NDArray withAll: #(#(1 2 3) #(4 5 6))) * 10) ravel equals: (6 iota collect: 10 @@ #*).
