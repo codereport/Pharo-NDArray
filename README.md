@@ -103,6 +103,7 @@ Each step of the above code creates the following:
 * `invIota`
 * `invWhere`
 * `isEmpty`
+* `last`
 * `max`
 * `maxs`
 * `min`
