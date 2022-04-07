@@ -657,6 +657,13 @@ PharoNDArrayTest >> testShape [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testSort [
+   self assert: #(3 4 2 5 1) asNDArray sort equals: #(1 2 3 4 5).
+   self assert: 10 asNDArray sort equals: 10.
+   self assert: #() asNDArray sort equals: #()
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testSplit [
    self assert: (4 iota asNDArray partition: #(1 0 1 0)) equals: #(#(1) #(3)) asNDArray split.
    self assert: (4 iota asNDArray partition: #(1 1 0 1)) mix split equals: #(#(1 2) #(4 0)) asNDArray split
@@ -741,7 +748,7 @@ PharoNDArrayTest >> testThesis3_3_dyadic_scalar [
 
 { #category : #tests }
 PharoNDArrayTest >> testThesis3_3_monadic [
-   | vector matrix vectorA vectorB |
+   | vector matrix vectorA vectorB cube |
    vector := 3 iota asNDArray.
    matrix := 9 iota reshape: #(3 3).
    self assert: vector reverse equals: (#(3 2 1) :> + 0).
@@ -751,7 +758,13 @@ PharoNDArrayTest >> testThesis3_3_monadic [
    vectorA := #(1 0 1 0 1).
    vectorB := #(0 1 0 1 0).
    self assert: vectorA indices equals: #(1 3 5).
-   self assert: vectorB indices equals: #(2 4)
+   self assert: vectorB indices equals: #(2 4).
+   vector := #(3 4 2 1 3 5 2 1 4 4 3) asNDArray.
+   self assert: vector unique sort equals: #(1 2 3 4 5).
+   matrix := 9 iota reshape: #(6 3).
+   self assert: matrix unique equals: (9 iota reshape: #(3 3)).
+   cube := 9 iota reshape: #(2 3 3).
+   self assert: cube unique equals: (9 iota reshape: #(1 3 3))
 ]
 
 { #category : #tests }

@@ -624,6 +624,12 @@ NDArray >> size [
 ]
 
 { #category : #'verbs (monadic)' }
+NDArray >> sort [
+   self rank > 1 ifTrue: [ ^ NotYetImplemented signal ].
+   ^ self class new withShape: shape with: data sort
+]
+
+{ #category : #'verbs (monadic)' }
 NDArray >> split [
    self rank = 0 ifTrue: [ ^ self ].
    self rank = 1 ifTrue: [ ^ self enclose ].
