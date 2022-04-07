@@ -723,9 +723,10 @@ PharoNDArrayTest >> testSumEvens [
 
 { #category : #tests }
 PharoNDArrayTest >> testTake [
-   self assert: (10 iota asNDArray take: 5) equals: 5 iota asNDArray.
-   self assert: ((10 iota asNDArray take: 5) take: 10) equals: #(1 2 3 4 5 0 0 0 0 0).
-   self assert: (3 asNDArray reshape: #(3 4)) equals: (3 asNDArray take: #(3 4))
+   self assert: (10 iota asNDArray take: 5)
+      equals: 5 iota asNDArray.
+   self assert: ((10 iota asNDArray take: 5) take: 10)
+      equals: #(1 2 3 4 5 0 0 0 0 0).
 ]
 
 { #category : #tests }
@@ -762,7 +763,24 @@ PharoNDArrayTest >> testThesis3_2 [
 ]
 
 { #category : #tests }
-PharoNDArrayTest >> testThesis3_3_dyadic_scalar [
+PharoNDArrayTest >> testThesis3_3_1_monadic_scalar [
+   | matrixA matrixB |
+   matrixA := 9 iota reshape: #(3 3) :> - 5 .
+   matrixB := matrixA abs.
+   self assert: matrixA equals: #((-4 -3 -2) (-1 0 1) (2 3 4)).
+   self assert: matrixB equals: #((4 3 2) (1 0 1) (2 3 4)).
+   matrixB := matrixA sign.
+   self assert: matrixB equals: #((-1 -1 -1) (-1 0 1) (1 1 1)).
+   matrixA := 12 iota reshape: #(3 4) :> + 4 :> / 10.0.
+   matrixB := matrixA ceiling.
+   self assert: matrixB equals: #((1 1 1 1) (1 1 2 2) (2 2 2 2)).
+   matrixA := 9 iota reshape: #(3 3) :> % 2.
+   matrixB := matrixA not.
+   self assert: matrixB equals: #((0 1 0) (1 0 1) (0 1 0)).
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testThesis3_3_2_dyadic_scalar [
    | scalar vector matrix |
    scalar := 10.
    vector := 3 iota asNDArray.
@@ -780,7 +798,7 @@ PharoNDArrayTest >> testThesis3_3_dyadic_scalar [
 ]
 
 { #category : #tests }
-PharoNDArrayTest >> testThesis3_3_monadic [
+PharoNDArrayTest >> testThesis3_3_3_monadic [
    | vector matrix vectorA vectorB cube |
    vector := 3 iota asNDArray.
    matrix := 9 iota reshape: #(3 3).
@@ -801,24 +819,16 @@ PharoNDArrayTest >> testThesis3_3_monadic [
 ]
 
 { #category : #tests }
-PharoNDArrayTest >> testThesis3_3_monadic_scalar [
+PharoNDArrayTest >> testThesis3_3_4_dyadic [
    | matrixA matrixB |
-   matrixA := 9 iota reshape: #(3 3) :> - 5 .
-   matrixB := matrixA abs.
-   self assert: matrixA equals: #((-4 -3 -2) (-1 0 1) (2 3 4)).
-   self assert: matrixB equals: #((4 3 2) (1 0 1) (2 3 4)).
-   matrixB := matrixA sign.
-   self assert: matrixB equals: #((-1 -1 -1) (-1 0 1) (1 1 1)).
-   matrixA := 12 iota reshape: #(3 4) :> + 4 :> / 10.0.
-   matrixB := matrixA ceiling.
-   self assert: matrixB equals: #((1 1 1 1) (1 1 2 2) (2 2 2 2)).
-   matrixA := 9 iota reshape: #(3 3) :> % 2.
-   matrixB := matrixA not.
-   self assert: matrixB equals: #((0 1 0) (1 0 1) (0 1 0)).
+   matrixA := 10 iota asNDArray + 10 reshape: #(5 2).
+   matrixB := (20 iota asNDArray drop: 10) reshape: #(5 2).
+   self assert: (matrixA matches: matrixB ).
+   self deny: (matrixA matches: matrixB transpose).
 ]
 
 { #category : #tests }
-PharoNDArrayTest >> testThesis3_5_adverbs [
+PharoNDArrayTest >> testThesis3_3_5_adverbs [
    | vector matrix |
    vector := #(1 2 3 4 5) asNDArray.
    matrix := 9 iota reshape: #(3 3).
@@ -827,7 +837,16 @@ PharoNDArrayTest >> testThesis3_5_adverbs [
    self assert: (matrix reduce: #+) equals: #(6 15 24).
    self assert: (matrix reduce: #*) equals: #(6 120 504).
    self assert: (vector scan: #+) equals: #(1 3 6 10 15).
-   self assert: (vector scan: #*) equals: #(1 2 6 24 120)
+   self assert: (vector scan: #*) equals: #(1 2 6 24 120).
+   self assert: (matrix scan: #+)
+      equals: #(#(1 3 6) #(4 9 15) #(7 15 24)).
+   self assert: (matrix scan: #*)
+      equals: #(#(1 2 6) #(4 20 120) #(7 56 504)).
+   self assert: (vector windowed: 2 reduce: #+) equals: #(3 5 7 9).
+   self assert: (vector windowed: 2 reduce: #*)
+      equals: #(2 6 12 20).
+   self assert: (vector windowed: 3 reduce: #+) equals: #(6 9 12).
+   self assert: (vector windowed: 3 reduce: #*) equals: #(6 24 60)
 ]
 
 { #category : #tests }

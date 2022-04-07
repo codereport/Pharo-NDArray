@@ -224,13 +224,15 @@ NDArray >> data [
 
 { #category : #'verbs (dyadic)' }
 NDArray >> drop: anInteger [
-	anInteger isNDArray ifTrue: [ ^ self error: 'take: only supports integer parameter currently' ].
-	self rank = 0 ifTrue: [ anInteger = 0 ifTrue: [ ^ self ] ifFalse: [ ^ #() asNDArray ] ].
-	self rank = 1 ifTrue: [ 
-		data size >= anInteger
-			ifTrue: [ ^ (data last: (data size - anInteger)) asNDArray ] "TODO check to see if there is drop:?"
-			ifFalse: [ ^ #() asNDArray ] ].
-	^ self error: 'Implement for higher ranks'
+   anInteger isInteger ifFalse: [ ^ InvalidArgumentError signal ].
+   self rank > 1 ifTrue: [ ^ NotYetImplemented signal ].
+   self rank = 0 ifTrue: [ 
+      anInteger = 0 ifTrue: [ ^ self ]
+         ifFalse: [ ^ #() asNDArray ]
+      ].
+   data size >= anInteger ifTrue: [ 
+      ^ (data last: data size - anInteger) asNDArray ]
+      ifFalse: [ ^ #() asNDArray ]
 ]
 
 { #category : #'trains / combinators' }
@@ -509,15 +511,14 @@ NDArray >> notMatches: anObject [
 ]
 
 { #category : #adverbs }
-NDArray >> outerProduct: anObject with: aBinaryBlock [
-   | newData |
-   (self rank > 1 or: anObject rank > 1) ifTrue: [ ^ RankError signal ].
-   newData := anObject asNDArray collect: [ :e | (aBinaryBlock value: self asNDArray value: e) ].
-   ^ (self class new
-        withShape: {
-              anObject size. 
-				  self data size}
-        with: newData enlist asArray) transpose
+NDArray >> outerProduct: anObject with: aBlock [
+   | newData newShape |
+   self rank > 1 ifTrue: [ ^ RankError signal ].
+   anObject rank > 1 ifTrue: [ ^ RankError signal ].
+   newData := anObject asNDArray collect: self @@ aBlock.
+   newShape := { anObject size. self data size }.
+   ^ self class new withShape: newShape with: newData enlist asArray
+      :> transpose
 ]
 
 { #category : #'verbs (dyadic)' }
@@ -658,12 +659,13 @@ NDArray >> sums [
 
 { #category : #'verbs (dyadic)' }
 NDArray >> take: anInteger [
-   anInteger isNDArray ifTrue: [ ^ self error: 'take: only supports integer parameter currently' ].
+   | n |
+   anInteger isInteger ifFalse: [ ^ InvalidArgumentError signal ].
+   self rank > 1 ifTrue: [ ^ NotYetImplemented signal ].
    self rank = 0 ifTrue: [ ^ data reshape: anInteger asArray ].
-   self rank = 1 ifTrue: [ 
-      data size >= anInteger ifTrue: [ ^ (data first: anInteger) asNDArray ]
-                             ifFalse: [ ^ data , (Array new: (anInteger - data size) withAll: 0) ] ].
-   ^ self error: 'Implement for higher ranks'
+   n := data size min: anInteger.
+   ^ ((data first: n) , (0 repeat: anInteger - n))
+        asNDArray
 ]
 
 { #category : #'verbs (monadic)' }
