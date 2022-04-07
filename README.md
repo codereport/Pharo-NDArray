@@ -119,7 +119,7 @@ Each step of the above code creates the following:
 * `sums`
 * `transpose`
 * `unique`
-* `where`
+* `where` (see `indices`)
 
 ### Verbs (Dyadic)
 
