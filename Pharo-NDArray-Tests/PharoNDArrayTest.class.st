@@ -722,6 +722,39 @@ PharoNDArrayTest >> testThesis3_2 [
 ]
 
 { #category : #tests }
+PharoNDArrayTest >> testThesis3_3_dyadic_scalar [
+   | scalar vector matrix |
+   scalar := 10.
+   vector := 3 iota asNDArray.
+   matrix := 9 iota reshape: #(3 3).
+   self assert: scalar + vector equals: #(11 12 13).
+   self assert: vector + scalar equals: (#(11 12 13) :> + 0).
+   self assert: scalar + matrix equals: (9 iota + 10 reshape: #(3 3)).
+   self assert: vector + vector equals: 3 iota * 2.
+   self should: [ matrix + vector ] raise: ShapeError.
+   self assert: scalar * vector equals: 3 iota * 10.
+   self assert: vector * scalar equals: 3 iota * 10.
+   self assert: scalar * matrix equals: (9 iota * 10 reshape: #(3 3)).
+   self assert: vector * vector equals: 3 iota * 3 iota.
+   self should: [ matrix * vector ] raise: ShapeError
+]
+
+{ #category : #tests }
+PharoNDArrayTest >> testThesis3_3_monadic [
+   | vector matrix vectorA vectorB |
+   vector := 3 iota asNDArray.
+   matrix := 9 iota reshape: #(3 3).
+   self assert: vector reverse equals: (#(3 2 1) :> + 0).
+   self assert: matrix reverse equals: #(#(3 2 1) #(6 5 4) #(9 8 7)).
+   self assert: vector ravel equals: vector.
+   self assert: matrix ravel equals: 9 iota asArray.
+   vectorA := #(1 0 1 0 1).
+   vectorB := #(0 1 0 1 0).
+   self assert: vectorA indices equals: #(1 3 5).
+   self assert: vectorB indices equals: #(2 4)
+]
+
+{ #category : #tests }
 PharoNDArrayTest >> testThesis3_3_monadic_scalar [
    | matrixA matrixB |
    matrixA := 9 iota reshape: #(3 3) :> - 5 .

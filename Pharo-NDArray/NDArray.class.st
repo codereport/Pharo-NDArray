@@ -380,7 +380,7 @@ NDArray >> intersection: anNDArray [
    ^ (data intersection: anNDArray data) asNDArray
 ]
 
-{ #category : #'verbs (monadic)' }
+{ #category : #'verbs (scalar monadic)' }
 NDArray >> ints [
    ^ self class new withShape: shape with: (data collect: #asInteger)
 ]
@@ -422,6 +422,11 @@ NDArray >> isNDArray [
 { #category : #accessing }
 NDArray >> isNested [
    ^ self first isNDArray
+]
+
+{ #category : #'verbs (monadic)' }
+NDArray >> last [
+   ^ data last
 ]
 
 { #category : #'verbs (dyadic)' }
@@ -575,7 +580,8 @@ NDArray >> reverse [
    | newData |
    self data isEmpty ifTrue: [ ^ self ].
    newData := data groupsOf: shape last 
-           :> collect: [ :e | e reversed ] as: Array.
+           :> collect: #reversed 
+           :> asArray.
    ^ self class new withShape: shape with: newData
 ]
 
@@ -621,11 +627,13 @@ NDArray >> size [
 NDArray >> split [
    self rank = 0 ifTrue: [ ^ self ].
    self rank = 1 ifTrue: [ ^ self enclose ].
-   self rank = 2 ifTrue: [
+   self rank = 2 ifTrue: [ 
       | newData |
-      newData := (data groupsOf: shape last) collect: #asNDArray as: Array.
-      ^ self class new withShape: shape allButLast with: newData ].
-   ^ self error: 'Implement for higher ranks'
+      newData := (data groupsOf: shape last) collect: #asNDArray
+                    as: Array.
+      ^ self class new withShape: shape allButLast with: newData
+      ].
+   ^ NotYetImplemented signal.
 ]
 
 { #category : #'verbs (monadic)' }

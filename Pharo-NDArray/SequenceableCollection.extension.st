@@ -6,6 +6,16 @@ SequenceableCollection >> asNDArray [
 ]
 
 { #category : #'*Pharo-NDArray' }
+SequenceableCollection >> data [
+   ^ self asNDArray data
+]
+
+{ #category : #'*Pharo-NDArray' }
+SequenceableCollection >> indices [
+   ^ self asNDArray indices
+]
+
+{ #category : #'*Pharo-NDArray' }
 SequenceableCollection >> outerProduct: anObject with: aBinaryBlock [
    ^ self asNDArray outerProduct: anObject with: aBinaryBlock
 ]
