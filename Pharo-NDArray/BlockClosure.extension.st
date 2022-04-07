@@ -7,5 +7,5 @@ BlockClosure >> numArgsAsBlock [
 
 { #category : #'*Pharo-NDArray' }
 BlockClosure >> scan [
-	^ [ : x | x asNDArray scan: self ]
+   ^ [ :x | x scan: self ]
 ]

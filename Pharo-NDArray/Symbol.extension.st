@@ -55,8 +55,13 @@ Symbol >> outerProduct [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Symbol >> reduce [
+   ^ [ :e | e reduce: self ]
+]
+
+{ #category : #'*Pharo-NDArray' }
 Symbol >> scan [
-	^ [ :x | x asNDArray scan: self ]
+   ^ [ :e | e scan: self ]
 ]
 
 { #category : #'*Pharo-NDArray' }
