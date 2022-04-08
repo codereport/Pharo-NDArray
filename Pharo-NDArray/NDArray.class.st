@@ -549,7 +549,7 @@ NDArray >> ravel [
    ^ self class new withAll: data
 ]
 
-{ #category : #'verbs (monadic)' }
+{ #category : #'verbs (scalar monadic)' }
 NDArray >> reciprocal [
    ^ self class new withShape: shape with: (data collect: #reciprocal)
 ]
@@ -598,7 +598,8 @@ NDArray >> roll [
 NDArray >> rotate: anInteger [
    | newData |
    newData := data groupsOf: shape last 
-           :> collect: [ :e | e rotate: anInteger ] as: Array.
+           :> collect: #rotate: @@ anInteger 
+           :> asArray.		
    ^ self class new withShape: shape with: newData
 ]
 

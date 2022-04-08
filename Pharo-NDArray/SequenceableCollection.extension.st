@@ -62,9 +62,10 @@ SequenceableCollection >> triangleProduct: aFullBlockClosure [
 SequenceableCollection >> uniqueMask [
    | values |
    values := Set new.
-   ^ self collect: [ :e | (values includes: e) 
-          ifTrue: [ 0 ] 
-         ifFalse: [ values add: e. 1 ]]
+   ^ self collect: [ :e | 
+        (values includes: e) ifTrue: [ 0 ]
+           ifFalse: [ values add: e. 1 ]
+        ]
 ]
 
 { #category : #'*Pharo-NDArray' }
