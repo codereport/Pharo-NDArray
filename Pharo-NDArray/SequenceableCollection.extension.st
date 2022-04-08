@@ -44,6 +44,11 @@ SequenceableCollection >> shape [
 ]
 
 { #category : #'*Pharo-NDArray' }
+SequenceableCollection >> take: anInteger [ 
+   ^ self asNDArray take: anInteger 
+]
+
+{ #category : #'*Pharo-NDArray' }
 SequenceableCollection >> triangleProduct2: aFullBlockClosure [
 	^ self asNDArray triangleProduct2: aFullBlockClosure
 ]

@@ -820,11 +820,17 @@ PharoNDArrayTest >> testThesis3_3_3_monadic [
 
 { #category : #tests }
 PharoNDArrayTest >> testThesis3_3_4_dyadic [
-   | matrixA matrixB |
+   | matrixA matrixB scalar vector |
    matrixA := 10 iota asNDArray + 10 reshape: #(5 2).
    matrixB := (20 iota asNDArray drop: 10) reshape: #(5 2).
-   self assert: (matrixA matches: matrixB ).
+   self assert: (matrixA matches: matrixB).
    self deny: (matrixA matches: matrixB transpose).
+   scalar := 10.
+   vector := #(1 2 3 4 5).
+   self assert: (scalar take: 5) equals: #(10 10 10 10 10).
+   self assert: (vector take: 3) equals: #(1 2 3).
+   self assert: (vector take: 5) equals: #(1 2 3 4 5).
+   self assert: (vector take: 10) equals: #(1 2 3 4 5 0 0 0 0 0).
 ]
 
 { #category : #tests }

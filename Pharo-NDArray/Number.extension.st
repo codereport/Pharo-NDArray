@@ -1,6 +1,11 @@
 Extension { #name : #Number }
 
 { #category : #'*Pharo-NDArray' }
+Number >> asArray [
+   ^ { self }
+]
+
+{ #category : #'*Pharo-NDArray' }
 Number >> first [
    ^ self
 ]
@@ -11,6 +16,11 @@ Number >> rank [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Number >> repeat: anInteger [ 
+   ^ Array new: anInteger withAll: self
+]
+
+{ #category : #'*Pharo-NDArray' }
 Number >> reshape: aCollection [ 
    ^ self asNDArray reshape: aCollection
 ]
@@ -18,4 +28,9 @@ Number >> reshape: aCollection [
 { #category : #'*Pharo-NDArray' }
 Number >> shape [
 	^ #()
+]
+
+{ #category : #'*Pharo-NDArray' }
+Number >> take: anInteger [ 
+   ^ self asNDArray take: anInteger 
 ]
