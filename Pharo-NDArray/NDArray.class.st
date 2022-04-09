@@ -371,7 +371,7 @@ NDArray >> indices [
    self min < 0 ifTrue: [ ^ DomainError signal ].
    self rank > 1 ifTrue: [ ^ NotYetImplemented signal ].
    newData := self data collectWithIndex: #@
-           :> select: [ :p | p x = 1 ]
+           :> select: #= @@ 1 <| #x
            :> collect: #y.
    ^ newData asNDArray
 ]
@@ -525,8 +525,8 @@ NDArray >> outerProduct: anObject with: aBlock [
 NDArray >> partition: anObject [
    ^ data with: anObject asNDArray data collect: #@
       :> groupByRuns: #y
-      :> select: [ :e | e first y asBoolean ]
-      :> collect: [ :e | (e collect: #x) asNDArray ]
+      :> select: #first |> #y |> #asBoolean
+      :> collect: #collect: @@ #x |> #asNDArray
       :> asNDArray
 ]
 

@@ -27,6 +27,12 @@ Symbol >> <-> aFullBlockClosure [
 ]
 
 { #category : #'*Pharo-NDArray' }
+Symbol >> <| aFullBlockClosure [
+   (self numArgsAsBlock = 1 and: aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ ^ ArityError signal ].
+   ^ [ : x | self value: (aFullBlockClosure value: x) ]
+]
+
+{ #category : #'*Pharo-NDArray' }
 Symbol >> <|> aFullBlockClosure [
    "This is the noth the B1 combinator and the Psi combinator"
    (self numArgsAsBlock = 2 and: aFullBlockClosure numArgsAsBlock = 2) ifTrue: [ ^ ArityError signal ].
@@ -67,4 +73,11 @@ Symbol >> scan [
 { #category : #'*Pharo-NDArray' }
 Symbol >> upperProduct [
 	^ [ :x | x upperProduct: self ]
+]
+
+{ #category : #'*Pharo-NDArray' }
+Symbol >> |> aFullBlockClosure [
+   "This is the B combinator also known as the Bluebird"
+   (self numArgsAsBlock = 1 and: aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ ^ ArityError signal ].
+      ^ [ : x | aFullBlockClosure value: (self value: x) ]
 ]
