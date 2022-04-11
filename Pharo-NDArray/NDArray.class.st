@@ -694,10 +694,10 @@ NDArray >> triangleProduct: aBinaryBlock [
 NDArray >> unique [
    | atoms newData newShape |
    self rank = 0 ifTrue: [ ^ self ].
-   self rank = 1 ifTrue: [ ^ self class new withAll: data unique ].
+   self rank = 1 ifTrue: [ ^ data unique asNDArray ].
    atoms := shape allButFirst product.
    newData := (data groupsOf: atoms) asArray unique.
-   newShape := (Array with: newData size) , shape allButFirst.
+   newShape := (Array with: newData size) , shape allButFirst.		
    ^ self class new withShape: newShape with: newData
 ]
 
@@ -705,7 +705,7 @@ NDArray >> unique [
 NDArray >> uniqueMask [
    | atoms newData newShape |
    self rank = 0 ifTrue: [ ^ 1 ].
-   self rank = 1 ifTrue: [ ^ self class new withAll: data uniqueMask ].
+   self rank = 1 ifTrue: [ ^ data uniqueMask asNDArray ].
    atoms := shape allButFirst product.
    newData := (data groupsOf: atoms) asArray uniqueMask.
    newShape := Array with: shape first.

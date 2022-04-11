@@ -815,7 +815,13 @@ PharoNDArrayTest >> testThesis3_3_3_monadic [
    matrix := 9 iota reshape: #(6 3).
    self assert: matrix unique equals: (9 iota reshape: #(3 3)).
    cube := 9 iota reshape: #(2 3 3).
-   self assert: cube unique equals: (9 iota reshape: #(1 3 3))
+   self assert: cube unique equals: (9 iota reshape: #(1 3 3)).
+   vectorA := #(1 2 3 4 5) asNDArray.
+   vectorB := #(1 2 2 3 3 3) asNDArray.
+   self assert: vectorA uniqueMask equals: #(1 1 1 1 1).
+   self assert: vectorB uniqueMask equals: #(1 1 0 1 0 0).
+   self assert: matrix uniqueMask equals: #(1 1 1 0 0 0).
+   self assert: cube uniqueMask equals: #(1 0).
 ]
 
 { #category : #tests }
