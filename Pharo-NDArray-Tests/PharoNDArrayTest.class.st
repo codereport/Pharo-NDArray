@@ -831,6 +831,7 @@ PharoNDArrayTest >> testThesis3_3_4_dyadic [
    self assert: (vector take: 3) equals: #(1 2 3).
    self assert: (vector take: 5) equals: #(1 2 3 4 5).
    self assert: (vector take: 10) equals: #(1 2 3 4 5 0 0 0 0 0).
+   self assert: (vector rotate: 2) equals: #(3 4 5 1 2)
 ]
 
 { #category : #tests }
