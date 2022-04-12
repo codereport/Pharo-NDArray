@@ -129,16 +129,16 @@ NDArray >> all [
 ]
 
 { #category : #'trains / combinators' }
-NDArray >> and: anNDArray with: a atop: b [ 
+NDArray >> and: anNDArray with: f atop: g [
    "This is known as the B1 combinator from Combinatory Logic and the 'blackbird' from Combinator Birds"
-   a numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   b numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
-   ^ b value: (a value: self value: anNDArray)
+   f numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
+   ^ f value: (g value: self value: anNDArray)
 ]
 
 { #category : #'trains / combinators' }
 NDArray >> and: anNDArray with: f backHook: g [
-   "This is known as the D combinator from Combinatory Logic and the 'dove' from Combinator Birds"
+   "This is known as (dyadic) before in BQN."
    f numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
    g numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
    ^ g value: (f value: self) value: anNDArray
@@ -253,8 +253,8 @@ NDArray >> dupWith: f atop: g [
 { #category : #'trains / combinators' }
 NDArray >> dupWith: f backHook: g [
    "The name backhook is taken from I, a predecssor language to BQN."
-   f numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
-   g numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   f numArgsAsBlock = 1 ifFalse: [ ^ ArityError signal ].
+   g numArgsAsBlock = 2 ifFalse: [ ^ ArityError signal ].
    ^ g value: (f value: self) value: self
 ]
 
@@ -539,6 +539,11 @@ NDArray >> printOn: aStream [
    shape printOn: aStream
 ]
 
+{ #category : #'verbs (monadic)' }
+NDArray >> product [
+   ^ self reduce: #*
+]
+
 { #category : #accessing }
 NDArray >> rank [
    ^ shape size
@@ -559,7 +564,7 @@ NDArray >> reduce: aBlock [
    | newData |
    self rank = 1 ifTrue: [ ^ data reduce: aBlock ].
    newData := data groupsOf: shape last 
-           :> collect: (aBlock reduce)
+           :> collect: aBlock reduce
            :> asArray.
    ^ self class new withShape: shape allButLast with: newData
 ]
@@ -607,7 +612,7 @@ NDArray >> rotate: anInteger [
 NDArray >> scan: aBlock [
    | newData |
    newData := data groupsOf: shape last
-           :> collect: (aBlock scan)
+           :> collect: aBlock scan
            :> asArray.
    ^ self class new withShape: shape with: newData
 ]
