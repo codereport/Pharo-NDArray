@@ -110,6 +110,7 @@ Each step of the above code creates the following:
 * `mins`
 * `mix`
 * `negated`
+* `product`
 * `ravel`
 * `reverse`
 * `size`
