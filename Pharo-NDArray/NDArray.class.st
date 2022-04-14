@@ -353,12 +353,10 @@ NDArray >> genericScalarDyadic: anObject with: aBlock [
    | rank0 shapesEqual |
    rank0 := self rank = 0 or: anObject rank = 0.
    shapesEqual := shape = anObject shape.
-   (rank0 not and: shapesEqual not) ifTrue: [ ^ ShapeError signal ].
+   (rank0 or: shapesEqual) ifFalse: [ ^ ShapeError signal ].
    shapesEqual ifTrue: [ 
       ^ self class new withShape: shape
-           with:
-           (self data with: anObject data
-               collect: aBlock)
+           with: (self data with: anObject data collect: aBlock)
       ].
    ^ self class new withShape: shape
         with: (data collect: aBlock @@ anObject)

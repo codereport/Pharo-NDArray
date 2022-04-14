@@ -14,21 +14,23 @@ Symbol >> <*> aBlock [
 ]
 
 { #category : #'*Pharo-NDArray' }
-Symbol >> <-> aFullBlockClosure [
-   (self numArgsAsBlock = 2 and: aFullBlockClosure numArgsAsBlock = 2) ifTrue: [ ^ ArityError signal ].
-   "This is the B combinator also known as the Bluebird"
-   (self numArgsAsBlock = 1 and: aFullBlockClosure numArgsAsBlock = 1) ifTrue: [ 
-      ^ [ : x | aFullBlockClosure value: (self value: x) ]
-   ].
+Symbol >> <-> aBlock [
+   | a b |
+   a := self numArgsAsBlock.
+   b := aBlock numArgsAsBlock.
+   (a + b = 3 and: (a min: b) > 0) ifFalse: [ ^ ArityError signal ].
    "This is the D combinator also known as the Dove bird"
-   self numArgsAsBlock = 2 ifTrue: [ ^ [ : x : y | self value: x value: (aFullBlockClosure value: y) ] ].
-   ^ [ : x : y | aFullBlockClosure value: (self value: x) value: y ]
+   a = 2 ifTrue: [ ^ [ : x : y | self value: x value: (aBlock value: y) ] ].
+   ^ [ : x : y | aBlock value: (self value: x) value: y ]
 ]
 
 { #category : #'*Pharo-NDArray' }
-Symbol >> <| aFullBlockClosure [
-   (self numArgsAsBlock = 1 and: aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ ^ ArityError signal ].
-   ^ [ : x | self value: (aFullBlockClosure value: x) ]
+Symbol >> <| aBlock [
+   "This is the Q combinator known as the Queer Bird"
+   (self numArgsAsBlock = 1 and:
+       aBlock numArgsAsBlock = 1) ifFalse: [ 
+      ^ ArityError signal ].
+   ^ [ :x | self value: (aBlock value: x) ]
 ]
 
 { #category : #'*Pharo-NDArray' }
@@ -75,8 +77,10 @@ Symbol >> upperProduct [
 ]
 
 { #category : #'*Pharo-NDArray' }
-Symbol >> |> aFullBlockClosure [
+Symbol >> |> aBlock [
    "This is the B combinator also known as the Bluebird"
-   (self numArgsAsBlock = 1 and: aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ ^ ArityError signal ].
-      ^ [ : x | aFullBlockClosure value: (self value: x) ]
+   (self numArgsAsBlock = 1 and:
+       aBlock numArgsAsBlock = 1) ifFalse: [ 
+      ^ ArityError signal ].
+   ^ [ :x | aBlock value: (self value: x) ]
 ]

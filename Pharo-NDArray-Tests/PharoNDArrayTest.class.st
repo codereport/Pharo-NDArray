@@ -865,7 +865,7 @@ PharoNDArrayTest >> testThesis_3_5_1_ndarray_combinators [
 
 { #category : #tests }
 PharoNDArrayTest >> testThesis_3_5_2_symbol_combinators [
-   | vectorA vectorB vectorC cat horse shore |
+   | vectorA vectorB vectorC cat horse shore matrixA matrixB vector matrix |
    vectorA := 'tacocat' asNDArray.
    vectorB := 'tacodog' asNDArray.
    vectorC := #(1 2 3 4 5) asNDArray.
@@ -884,8 +884,16 @@ PharoNDArrayTest >> testThesis_3_5_2_symbol_combinators [
    vectorA := #(1 2 3) asNDArray.
    vectorB := #(2 3 4) asNDArray.
    vectorC := #(4 5 6) asNDArray.
-   self deny: (#isEmpty <|> #intersection: value: vectorA value: vectorB).
-   self assert: (#isEmpty <|> #intersection: value: vectorA value: vectorC).
+   self deny:
+      (#isEmpty <|> #intersection: value: vectorA value: vectorB).
+   self assert:
+      (#isEmpty <|> #intersection: value: vectorA value: vectorC).
+   matrixA := 12 iota reshape: #(3 4).
+   matrixB := 9 iota reshape: #(3 3).
+   self assert: (#reshape: <-> #shape value: matrixA value: matrixB) equals: matrixB.
+   vector := 6 iota asNDArray * 2 - 1.
+   matrix := 12 iota reshape: #(3 4).
+   self assert: (#ravel <-> #without: value: matrix value: vector) equals: #(2 4 6 8 10 12)
 ]
 
 { #category : #tests }
