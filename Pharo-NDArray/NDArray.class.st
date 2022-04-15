@@ -23,12 +23,12 @@ Class {
 { #category : #'instance creation' }
 NDArray class >> withAll: anArray [
    "Create NDArray from anArray"
-   ^ super new withAll: anArray 
+   ^ self new withAll: anArray
 ]
 
 { #category : #initialization }
 NDArray class >> withShape: aCollection with: anArray [
-   ^ super new withShape: aCollection with: anArray
+   ^ self new withShape: aCollection with: anArray
 ]
 
 { #category : #'verbs (scalar dyadic)' }
