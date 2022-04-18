@@ -1,6 +1,11 @@
 Extension { #name : #SequenceableCollection }
 
 { #category : #'*Pharo-NDArray' }
+SequenceableCollection >> % anInteger [ 
+   ^ self asNDArray % anInteger
+]
+
+{ #category : #'*Pharo-NDArray' }
 SequenceableCollection >> asNDArray [
    ^ NDArray withAll: self asArray 
 ]
@@ -11,8 +16,18 @@ SequenceableCollection >> data [
 ]
 
 { #category : #'*Pharo-NDArray' }
+SequenceableCollection >> filter: aCollection [ 
+   ^ self asNDArray filter: aCollection 
+]
+
+{ #category : #'*Pharo-NDArray' }
 SequenceableCollection >> indices [
    ^ self asNDArray indices
+]
+
+{ #category : #'*Pharo-NDArray' }
+SequenceableCollection >> matches: anObject [ 
+   ^ self asNDArray matches: anObject.
 ]
 
 { #category : #'*Pharo-NDArray' }
