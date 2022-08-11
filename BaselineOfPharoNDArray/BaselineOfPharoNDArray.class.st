@@ -15,7 +15,7 @@ BaselineOfPharoNDArray >> baseline: spec [
 				baseline: 'PharoFunctional' with: [ spec repository: 'github://dvmason/Pharo-Functional' ].
 		"Packages"
 			spec
-				package: 'Pharo-NDArray' with: [ spec requires: #('Pharo-Functional') ];
+				package: 'Pharo-NDArray' with: [ spec requires: #('PharoFunctional') ];
 				package: 'Pharo-NDArray-Tests'  with: [ spec requires: #('Pharo-NDArray') ].
 		"Groups"
 			spec
