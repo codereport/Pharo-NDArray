@@ -1,41 +1,6 @@
 Extension { #name : #BlockClosure }
 
 { #category : #'*Pharo-NDArray' }
-BlockClosure >> <*> aBlock [
-   | a b |
-   a := self numArgsAsBlock.
-   b := aBlock numArgsAsBlock.
-   (a + b = 3 and: (a min: b) > 0) ifFalse: [ ^ ArityError signal ].
-   "This is the backHook from I"
-   b = 2 ifTrue: [ 
-      ^ [ :x | aBlock value: (self value: x) value: x ] ].
-   "This is the S combinator also known as the Starling"
-   ^ [ :x | self value: x value: (aBlock value: x) ]
-]
-
-{ #category : #'*Pharo-NDArray' }
-BlockClosure >> <| aFullBlockClosure [
-   (self numArgsAsBlock = 1 and:
-       aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ 
-      ^ ArityError signal ].
-   ^ [ :x | self value: (aFullBlockClosure value: x) ]
-]
-
-{ #category : #'*Pharo-NDArray' }
-BlockClosure >> numArgsAsBlock [
-	^ self numArgs
-]
-
-{ #category : #'*Pharo-NDArray' }
 BlockClosure >> scan [
    ^ [ :x | x scan: self ]
-]
-
-{ #category : #'*Pharo-NDArray' }
-BlockClosure >> |> aFullBlockClosure [
-   "This is the B combinator also known as the Bluebird"
-   (self numArgsAsBlock = 1 and:
-       aFullBlockClosure numArgsAsBlock = 1) ifFalse: [ 
-      ^ ArityError signal ].
-   ^ [ :x | aFullBlockClosure value: (self value: x) ]
 ]
