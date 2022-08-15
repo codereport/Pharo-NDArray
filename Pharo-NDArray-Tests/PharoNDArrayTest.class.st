@@ -143,12 +143,6 @@ PharoNDArrayTest >> testCombinatorOver [
    self deny: 'horse' (#= <|> #sorted): 'cat'.
    self assert: 'horse' (#= <|> #sorted): 'shore'
 
-"   vectorA := #(1 2 3) asNDArray.
-   vectorB := #(2 3 4) asNDArray.
-   vectorC := #(4 5 6) asNDArray.
-   self deny: vectorA (#isEmpty <|> #intersection:): vectorB.
-   self assert: vectorA (#isEmpty <|> #intersection:): vectorC."
-
 ]
 
 { #category : #tests }
