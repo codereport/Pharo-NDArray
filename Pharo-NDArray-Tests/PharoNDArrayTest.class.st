@@ -43,9 +43,9 @@ PharoNDArrayTest >> testAllAsBeforeBs [
 	| orScanEqualsId |
 	orScanEqualsId := [ :s | s dupWith: [ :x | x scan: #or: ] fork: #matches: and: #yourself ].
    "Using blocks"
-   self assert: (orScanEqualsId value: ('aaabbb' asNDArray = $b)).
-   self deny: (orScanEqualsId value: ('abab' asNDArray = $b)).
-   self assert: (orScanEqualsId value: ('bbb' asNDArray = $b)).
+   self assert: ('aaabbb' asNDArray = $b) (orScanEqualsId).
+   self deny: ('abab' asNDArray = $b) (orScanEqualsId).
+   self assert: ('bbb' asNDArray = $b) (orScanEqualsId).
    "Not using blocks"
    self assert: (('aaabbb' asNDArray = $b) dupWith: [ :x | x scan: #or: ]	 fork: #matches: and: #yourself).
    self deny: (('abab' asNDArray = $b) dupWith: [ :x | x scan: #or: ] fork: #matches: and: #yourself).
@@ -160,10 +160,8 @@ PharoNDArrayTest >> testDisjointSets [
 
    self assert: (a intersection: b) isEmpty equals: false.
    self assert: (c intersection: d) isEmpty equals: true.
-   self assert: (a and: b with: #isEmpty atop: #intersection:)
-      equals: false.
-   self assert: (c and: d with: #isEmpty atop: #intersection:)
-      equals: true
+   self assert: (a and: b with: #isEmpty atop: #intersection:) equals: false.
+   self assert: (c and: d with: #isEmpty atop: #intersection:) equals: true
 ]
 
 { #category : #tests }
@@ -265,9 +263,9 @@ PharoNDArrayTest >> testFindGCD [
    "Leetcode Problem 255 https://leetcode.com/problems/find-greatest-common-divisor-of-array/"
    | findGCD |
    findGCD := [ :arr | arr asNDArray dupWith: [ :e | e reduce: #max: ] fork: [ :a :b | a gcd: b ] and: [ :e | e reduce: #min: ] ].
-   self assert: (findGCD value: #(2 5 6 7 10)) equals: 2.
-   self assert: (findGCD value: #(3 5 6 7 8)) equals: 1.
-   self assert: (findGCD value: #(3 3)) equals: 3
+   self assert: #(2 5 6 7 10) (findGCD) equals: 2.
+   self assert: #(3 5 6 7 8) (findGCD) equals: 1.
+   self assert: #(3 3) (findGCD) equals: 3
 ]
 
 { #category : #tests }
@@ -533,12 +531,7 @@ PharoNDArrayTest >> testOverCombinator [
 	a := 'mouse'.
 	b := 'cat'.
    self assert: (a and: b with: #- over: #size) equals: 2.
-   "self assert: (#- |* #size value: a value: b) equals: 2.
-	self assert: (#- |* #size : a : b) equals: 2.
-   self assert: a (#- |* #size) b equals: 2.
-   a (#foo ||| #bar).
-   self assert: ( {a. b}  #- @- #size) equals: 2.
-   self assert: ( a ~> (#- @- #size) <~ b) equals: 2."
+   self assert: (a (#- <|> #size):  b) equals: 2.
 
 ]
 
@@ -820,13 +813,10 @@ PharoNDArrayTest >> testThesis_3_4_5_adverbs [
    self assert: (matrix reduce: #*) equals: #(6 120 504).
    self assert: (vector scan: #+) equals: #(1 3 6 10 15).
    self assert: (vector scan: #*) equals: #(1 2 6 24 120).
-   self assert: (matrix scan: #+)
-      equals: #(#(1 3 6) #(4 9 15) #(7 15 24)).
-   self assert: (matrix scan: #*)
-      equals: #(#(1 2 6) #(4 20 120) #(7 56 504)).
+   self assert: (matrix scan: #+) equals: #(#(1 3 6) #(4 9 15) #(7 15 24)).
+   self assert: (matrix scan: #*) equals: #(#(1 2 6) #(4 20 120) #(7 56 504)).
    self assert: (vector windowed: 2 reduce: #+) equals: #(3 5 7 9).
-   self assert: (vector windowed: 2 reduce: #*)
-      equals: #(2 6 12 20).
+   self assert: (vector windowed: 2 reduce: #*) equals: #(2 6 12 20).
    self assert: (vector windowed: 3 reduce: #+) equals: #(6 9 12).
    self assert: (vector windowed: 3 reduce: #*) equals: #(6 24 60)
 ]
@@ -841,10 +831,8 @@ PharoNDArrayTest >> testThesis_3_5_1_ndarray_combinators [
    self assert: (vectorA dupWith: #reverse backHook: #matches:).
    self deny: (vectorB dupWith: #matches: hook: #reverse).
    self deny: (vectorB dupWith: #reverse backHook: #matches:).
-   self assert: (vectorC dupWith: #filter: hook: #% @@ 2)
-      equals: #(1 3 5).
-   self assert: (vectorC dupWith: #* @@ 2 backHook: #intersection:)
-      equals: #(2 4).
+   self assert: (vectorC dupWith: #filter: hook: #% @@ 2) equals: #(1 3 5).
+   self assert: (vectorC dupWith: #* @@ 2 backHook: #intersection:) equals: #(2 4).
    cat := 'cat' asNDArray.
    horse := 'horse' asNDArray.
    shore := 'shore' asNDArray.
@@ -854,10 +842,8 @@ PharoNDArrayTest >> testThesis_3_5_1_ndarray_combinators [
    vectorA := #(1 2 3) asNDArray.
    vectorB := #(2 3 4) asNDArray.
    vectorC := #(4 5 6) asNDArray.
-   self deny:
-      (vectorA and: vectorB with: #isEmpty atop: #intersection:).
-   self assert:
-      (vectorA and: vectorC with: #isEmpty atop: #intersection:).
+   self deny: (vectorA and: vectorB with: #isEmpty atop: #intersection:).
+   self assert: (vectorA and: vectorC with: #isEmpty atop: #intersection:).
    matrixA := 12 iota reshape: #(3 4).
    matrixB := 9 iota reshape: #(3 3).
    self assert: (matrixA and: matrixB with: #reshape: hook: #shape) equals: matrixB.
@@ -869,31 +855,27 @@ PharoNDArrayTest >> testThesis_3_5_2_symbol_combinators [
    vectorA := 'tacocat' asNDArray.
    vectorB := 'tacodog' asNDArray.
    vectorC := #(1 2 3 4 5) asNDArray.
-   self assert: (#matches: <*> #reverse value: vectorA).
-   self deny: (#matches: <*> #reverse value: vectorB).
-   self assert: (#filter: <*> (#% @@ 2) value: vectorC)
-      equals: #(1 3 5).
-   self assert: (#* @@ 2 <*> #intersection: value: vectorC)
-      equals: #(2 4).
+   self assert: vectorA (#matches: <*> #reverse).
+   self deny: vectorB (#matches: <*> #reverse).
+   self assert: vectorC (#filter: <*> (#% @@ 2)) equals: #(1 3 5).
+   self assert: vectorC (#* @@ 2 <*> #intersection:) equals: #(2 4).
    cat := 'cat' asNDArray.
    horse := 'horse' asNDArray.
    shore := 'shore' asNDArray.
-   self assert: (#- <|> #size value: horse value: cat) equals: 2.
-   self deny: (#matches: <|> #sort value: horse value: cat).
-   self assert: (#matches: <|> #sort value: horse value: shore).
+   self assert: horse (#- <|> #size): cat equals: 2.
+   self deny: horse (#matches: <|> #sort): cat.
+   self assert: horse (#matches: <|> #sort): shore.
    vectorA := #(1 2 3) asNDArray.
    vectorB := #(2 3 4) asNDArray.
    vectorC := #(4 5 6) asNDArray.
-   self deny:
-      (#isEmpty <|> #intersection: value: vectorA value: vectorB).
-   self assert:
-      (#isEmpty <|> #intersection: value: vectorA value: vectorC).
+   self deny: vectorA (#isEmpty <|> #intersection:): vectorB.
+   self assert: vectorA (#isEmpty <|> #intersection:): vectorC.
    matrixA := 12 iota reshape: #(3 4).
    matrixB := 9 iota reshape: #(3 3).
-   self assert: (#reshape: <-> #shape value: matrixA value: matrixB) equals: matrixB.
+   self assert: matrixA (#reshape: <-> #shape): matrixB equals: matrixB.
    vector := 6 iota asNDArray * 2 - 1.
    matrix := 12 iota reshape: #(3 4).
-   self assert: (#ravel <-> #without: value: matrix value: vector) equals: #(2 4 6 8 10 12)
+   self assert: matrix (#ravel <-> #without:): vector equals: #(2 4 6 8 10 12)
 ]
 
 { #category : #tests }
@@ -945,11 +927,8 @@ PharoNDArrayTest >> testUniqueMask [
 { #category : #tests }
 PharoNDArrayTest >> testWhere [
    self assert: #(1 0 1 0) asNDArray indices equals: #(1 3).
-   self assert:
-      (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix
-      equals: #(#(1 2) #(4 0)) asNDArray.
-   self assert: (10 iota asNDArray % 2) indices
-      equals: 5 iota asNDArray * 2 - 1
+   self assert: (4 iota asNDArray partition: #(1 1 0 1) asNDArray) mix equals: #(#(1 2) #(4 0)) asNDArray.
+   self assert: (10 iota asNDArray % 2) indices equals: 5 iota asNDArray * 2 - 1
    "self assert: (4 iota asNDArray partitionedEnclose: #(1 0 1 0) asNDArray) mix equals: #(#(1 2) #(3 4)) asNDArray"
 ]
 
